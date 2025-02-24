@@ -1,5 +1,7 @@
 ---
 import '@fontsource-variable/inter';
+import '@fontsource/cormorant-garamond';
+import '@fontsource/raleway';
 
 // 'DM Sans'
 // Nunito
@@ -13,7 +15,6 @@ import '@fontsource-variable/inter';
 // 'Fira Sans'
 // 'Libre Franklin'
 // Inconsolata
-// Raleway
 // Oswald
 // 'Space Grotesk'
 // Urbanist
@@ -21,43 +22,45 @@ import '@fontsource-variable/inter';
 
 <style is:inline>
   :root {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    --aw-font-sans: 'Raleway';
+    --aw-font-serif: 'Cormorant Garamond';
+    --aw-font-heading: 'Cormorant Garamond';
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    /* Warmer, more energetic colors with orange undertones */
+    --aw-color-primary: rgb(198, 137, 98);     /* Warm terracotta */
+    --aw-color-secondary: rgb(171, 112, 74);   /* Rich copper */
+    --aw-color-accent: rgb(226, 164, 122);     /* Soft peach */
 
-    --aw-color-text-heading: rgb(0 0 0);
-    --aw-color-text-default: rgb(16 16 16);
-    --aw-color-text-muted: rgb(16 16 16 / 66%);
-    --aw-color-bg-page: rgb(255 255 255);
+    --aw-color-text-heading: rgb(89, 49, 27);  /* Deep bronze */
+    --aw-color-text-default: rgb(66, 41, 24);  /* Rich brown */
+    --aw-color-text-muted: rgb(66, 41, 24 / 66%);
+    --aw-color-bg-page: rgb(255, 252, 248);    /* Warm white */
 
-    --aw-color-bg-page-dark: rgb(3 6 32);
+    --aw-color-bg-page-dark: rgb(48, 32, 24);  /* Deep warm brown */
 
     ::selection {
-      background-color: lavender;
+      background-color: var(--aw-color-accent);
+      color: white;
     }
   }
 
   .dark {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    --aw-font-sans: 'Raleway';
+    --aw-font-serif: 'Cormorant Garamond';
+    --aw-font-heading: 'Cormorant Garamond';
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    --aw-color-primary: rgb(226, 164, 122);    /* Soft peach */
+    --aw-color-secondary: rgb(198, 137, 98);   /* Warm terracotta */
+    --aw-color-accent: rgb(241, 190, 155);     /* Light peach */
 
-    --aw-color-text-heading: rgb(247, 248, 248);
-    --aw-color-text-default: rgb(229 236 246);
-    --aw-color-text-muted: rgb(229 236 246 / 66%);
-    --aw-color-bg-page: rgb(3 6 32);
+    --aw-color-text-heading: rgb(255, 252, 248);
+    --aw-color-text-default: rgb(255, 243, 235);
+    --aw-color-text-muted: rgb(255, 243, 235 / 66%);
+    --aw-color-bg-page: rgb(48, 32, 24);       /* Deep warm brown */
 
     ::selection {
-      background-color: black;
-      color: snow;
+      background-color: var(--aw-color-accent);
+      color: var(--aw-color-bg-page);
     }
   }
 </style>

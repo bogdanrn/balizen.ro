@@ -17,6 +17,7 @@ const {
   image = await Astro.slots.render('image'),
   isReversed = false,
   isAfterContent = false,
+  showFullImage = false,
 
   id,
   isDark = false,
@@ -63,7 +64,7 @@ const {
             panel: 'max-w-none',
             title: 'text-lg font-medium leading-6 dark:text-white ml-2 rtl:ml-0 rtl:mr-2',
             description: 'text-muted dark:text-slate-400 ml-2 rtl:ml-0 rtl:mr-2',
-            icon: 'flex h-7 w-7 items-center justify-center rounded-full bg-green-600 dark:bg-green-700 text-gray-50 p-1',
+            icon: 'flex h-7 w-7 items-center justify-center rounded-full bg-primary dark:bg-primary text-gray-50 p-1',
             action: 'text-lg font-medium leading-6 dark:text-white ml-2 rtl:ml-0 rtl:mr-2',
           }}
         />
@@ -71,17 +72,19 @@ const {
       <div aria-hidden="true" class="mt-10 md:mt-0 md:basis-1/2">
         {
           image && (
-            <div class="relative m-auto max-w-4xl">
+            <div class={`relative m-auto max-w-4xl ${showFullImage ? 'h-full flex items-center justify-center' : ''}`}>
               {typeof image === 'string' ? (
                 <Fragment set:html={image} />
               ) : (
                 <Image
-                  class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
+                  class={`mx-auto rounded-lg bg-gray-500 shadow-lg ${
+                    showFullImage ? 'w-full h-auto object-contain' : 'w-full'
+                  }`}
                   width={500}
-                  height={500}
+                  height={showFullImage ? undefined : 500}
                   widths={[400, 768]}
                   sizes="(max-width: 768px) 100vw, 432px"
-                  layout="responsive"
+                  layout={showFullImage ? undefined : "responsive"}
                   {...image}
                 />
               )}

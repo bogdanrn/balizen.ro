@@ -5,9 +5,9 @@ import { ANALYTICS } from 'astrowind:config';
 {ANALYTICS?.enabled && (
   <>
     <!-- Google Tag Manager with Consent Mode -->
-    <script define:vars={{ ANALYTICS }} type="text/partytown">
+    <script define:vars={{ ANALYTICS }} is:inline>
       console.log('Client-side analytics config:', ANALYTICS);
-      // Initialize dataLayer and gtag
+      // Initialize dataLayer and gtag function
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       
@@ -34,6 +34,7 @@ import { ANALYTICS } from 'astrowind:config';
           // Load GTM if not already loaded
           if (!window.gtmLoaded && ANALYTICS?.vendors?.googleTagManager?.id) {
             window.gtmLoaded = true;
+            // Load Google Tag Manager
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=

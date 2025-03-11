@@ -50,7 +50,21 @@ export default defineConfig({
     }),
     ...whenExternalScripts(() =>
       partytown({
-        config: { forward: ['dataLayer.push', 'gtag'] },
+        config: {
+          forward: ['dataLayer.push', 'gtag'],
+          resolveUrl: (url) => {
+            // Handle Google Tag Manager URLs to avoid CORS issues
+            if (url.hostname.includes('googletagmanager.com')) {
+              const proxyUrl = new URL(url);
+              // Remove the debug part from the URL to avoid CORS issues
+              if (proxyUrl.pathname.includes('/debug/')) {
+                proxyUrl.pathname = proxyUrl.pathname.replace('/debug/', '/');
+              }
+              return proxyUrl;
+            }
+            return url;
+          },
+        },
       })
     ),
     compress({

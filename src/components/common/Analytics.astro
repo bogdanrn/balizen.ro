@@ -1,19 +1,21 @@
 ---
 import { ANALYTICS } from 'astrowind:config';
-
 ---
 
 {ANALYTICS?.enabled && (
   <>
     <!-- Google Tag Manager with Consent Mode -->
-    <script type="text/partytown">
+    <script define:vars={{ ANALYTICS }} type="text/partytown">
+      console.log('Client-side analytics config:', ANALYTICS);
       // Initialize dataLayer
       window.dataLayer = window.dataLayer || [];
       
-      // Default consent - denied state
+      // Default consent - denied state for all signals
       gtag('consent', 'default', {
         'ad_storage': 'denied',
         'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
         'wait_for_update': 500
       });
       
@@ -22,22 +24,28 @@ import { ANALYTICS } from 'astrowind:config';
         if (consent.analytics) {
           // User granted consent
           gtag('consent', 'update', {
-            'analytics_storage': 'granted'
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted'
           });
           
           // Load GTM if not already loaded
-          if (!window.gtmLoaded) {
+          if (!window.gtmLoaded && ANALYTICS.vendors.googleTagManager && ANALYTICS.vendors.googleTagManager.id) {
             window.gtmLoaded = true;
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer',ANALYTICS.googleTagManager.id);
+            })(window,document,'script','dataLayer',ANALYTICS.vendors.googleTagManager.id);
           }
         } else {
           // User denied consent
           gtag('consent', 'update', {
-            'analytics_storage': 'denied'
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied'
           });
         }
       }
@@ -47,13 +55,15 @@ import { ANALYTICS } from 'astrowind:config';
       
       // Load base GA script (will respect consent settings)
       const gaScript = document.createElement('script');
-      gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${ANALYTICS.googleAnalytics.id}`;
+      let gaId = ANALYTICS.vendors.googleAnalytics.id;
+      
+      gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
       gaScript.async = true;
       document.head.appendChild(gaScript);
       
       // Initialize GA - this will still load but respect consent settings
       gtag('js', new Date());
-      gtag('config', ANALYTICS.googleAnalytics.id, {
+      gtag('config', gaId, {
         'anonymize_ip': true
       });
       
@@ -71,9 +81,9 @@ import { ANALYTICS } from 'astrowind:config';
   </>
 )}
 
-{ANALYTICS?.enabled && (
+{ANALYTICS?.enabled && ANALYTICS.vendors.googleTagManager && ANALYTICS.vendors.googleTagManager.id && (
   <noscript>
-    <iframe src={`https://www.googletagmanager.com/ns.html?id=${ANALYTICS.googleTagManager.id}`}
+    <iframe src={`https://www.googletagmanager.com/ns.html?id=${ANALYTICS.vendors.googleTagManager.id}`}
     height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
 )}

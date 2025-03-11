@@ -59,6 +59,7 @@ apps:
     relatedPostsCount: 4
 
 analytics:
+  enabled: true
   vendors:
     googleAnalytics:
       id: G-QZ8FEVGH7X # or "G-XXXXXXXXXX"

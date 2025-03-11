@@ -72,7 +72,7 @@ export default defineConfig({
           readOnly: true,
         },
         analytics: {
-          enabled: false,
+          enabled: true,
           readOnly: false,
         },
       },

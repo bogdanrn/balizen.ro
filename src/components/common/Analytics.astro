@@ -1,13 +1,79 @@
 ---
-import { GoogleAnalytics } from '@astrolib/analytics';
 import { ANALYTICS } from 'astrowind:config';
+
 ---
 
-{
-  ANALYTICS?.vendors?.googleAnalytics?.id ? (
-    <GoogleAnalytics
-      id={String(ANALYTICS.vendors.googleAnalytics.id)}
-      partytown={ANALYTICS?.vendors?.googleAnalytics?.partytown}
-    />
-  ) : null
-}
+{ANALYTICS?.enabled && (
+  <>
+    <!-- Google Tag Manager with Consent Mode -->
+    <script type="text/partytown">
+      // Initialize dataLayer
+      window.dataLayer = window.dataLayer || [];
+      
+      // Default consent - denied state
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+      });
+      
+      // Function to handle consent changes
+      function handleConsentUpdate(consent) {
+        if (consent.analytics) {
+          // User granted consent
+          gtag('consent', 'update', {
+            'analytics_storage': 'granted'
+          });
+          
+          // Load GTM if not already loaded
+          if (!window.gtmLoaded) {
+            window.gtmLoaded = true;
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer',ANALYTICS.googleTagManager.id);
+          }
+        } else {
+          // User denied consent
+          gtag('consent', 'update', {
+            'analytics_storage': 'denied'
+          });
+        }
+      }
+      
+      // Initialize gtag
+      function gtag(){dataLayer.push(arguments);}
+      
+      // Load base GA script (will respect consent settings)
+      const gaScript = document.createElement('script');
+      gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${ANALYTICS.googleAnalytics.id}`;
+      gaScript.async = true;
+      document.head.appendChild(gaScript);
+      
+      // Initialize GA - this will still load but respect consent settings
+      gtag('js', new Date());
+      gtag('config', ANALYTICS.googleAnalytics.id, {
+        'anonymize_ip': true
+      });
+      
+      // Listen for initial and subsequent consent changes
+      document.addEventListener('astro:cookieconsent', (e) => {
+        handleConsentUpdate(e.detail);
+      });
+      
+      // Check if consent was previously given
+      if (document.cookie.indexOf('cc_analytics=true') > -1) {
+        handleConsentUpdate({analytics: true});
+      }
+    </script>
+    <!-- End Google Tag Manager -->
+  </>
+)}
+
+{ANALYTICS?.enabled && (
+  <noscript>
+    <iframe src={`https://www.googletagmanager.com/ns.html?id=${ANALYTICS.googleTagManager.id}`}
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+)}

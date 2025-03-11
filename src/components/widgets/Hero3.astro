@@ -18,7 +18,7 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative -mt-[190px] lg:-mt-[250px] not-prose min-h-screen" {...id ? { id } : {}}>
+<section class="relative -mt-[150px] sm:-mt-[190px] lg:-mt-[250px] not-prose min-h-screen pt-[75px] sm:pt-[90px] lg:pt-[110px]" {...id ? { id } : {}}>
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     {
       image && (
@@ -43,7 +43,7 @@ const {
     </slot>
   </div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-screen flex items-center justify-center">
-    <div class="text-center max-w-5xl   p-8 rounded-xl  ">
+    <div class="text-center max-w-5xl  p-8 rounded-xl  ">
       {
         tagline && (
           <p

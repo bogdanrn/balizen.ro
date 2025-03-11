@@ -7,8 +7,9 @@ import { ANALYTICS } from 'astrowind:config';
     <!-- Google Tag Manager with Consent Mode -->
     <script define:vars={{ ANALYTICS }} type="text/partytown">
       console.log('Client-side analytics config:', ANALYTICS);
-      // Initialize dataLayer
+      // Initialize dataLayer and gtag
       window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
       
       // Default consent - denied state for all signals
       gtag('consent', 'default', {
@@ -31,7 +32,7 @@ import { ANALYTICS } from 'astrowind:config';
           });
           
           // Load GTM if not already loaded
-          if (!window.gtmLoaded && ANALYTICS.vendors.googleTagManager && ANALYTICS.vendors.googleTagManager.id) {
+          if (!window.gtmLoaded && ANALYTICS?.vendors?.googleTagManager?.id) {
             window.gtmLoaded = true;
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -50,22 +51,21 @@ import { ANALYTICS } from 'astrowind:config';
         }
       }
       
-      // Initialize gtag
-      function gtag(){dataLayer.push(arguments);}
-      
       // Load base GA script (will respect consent settings)
-      const gaScript = document.createElement('script');
-      let gaId = ANALYTICS.vendors.googleAnalytics.id;
-      
-      gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
-      gaScript.async = true;
-      document.head.appendChild(gaScript);
-      
-      // Initialize GA - this will still load but respect consent settings
-      gtag('js', new Date());
-      gtag('config', gaId, {
-        'anonymize_ip': true
-      });
+      if (ANALYTICS?.vendors?.googleAnalytics?.id) {
+        const gaScript = document.createElement('script');
+        let gaId = ANALYTICS.vendors.googleAnalytics.id;
+        
+        gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        gaScript.async = true;
+        document.head.appendChild(gaScript);
+        
+        // Initialize GA - this will still load but respect consent settings
+        gtag('js', new Date());
+        gtag('config', gaId, {
+          'anonymize_ip': true
+        });
+      }
       
       // Listen for initial and subsequent consent changes
       document.addEventListener('astro:cookieconsent', (e) => {
@@ -81,7 +81,7 @@ import { ANALYTICS } from 'astrowind:config';
   </>
 )}
 
-{ANALYTICS?.enabled && ANALYTICS.vendors.googleTagManager && ANALYTICS.vendors.googleTagManager.id && (
+{ANALYTICS?.enabled && ANALYTICS?.vendors?.googleTagManager?.id && (
   <noscript>
     <iframe src={`https://www.googletagmanager.com/ns.html?id=${ANALYTICS.vendors.googleTagManager.id}`}
     height="0" width="0" style="display:none;visibility:hidden"></iframe>

@@ -69,14 +69,35 @@ import { ANALYTICS } from 'astrowind:config';
         });
       }
       
-      // Listen for initial and subsequent consent changes
-      document.addEventListener('astro:cookieconsent', (e) => {
-        handleConsentUpdate(e.detail);
+      // Listen for standard vanilla-cookieconsent events
+      window.addEventListener('cc:onConsent', (e) => {
+        const categories = e.detail.cookie.categories || [];
+        handleConsentUpdate({analytics: categories.includes('analytics')});
+      });
+      
+      window.addEventListener('cc:onChange', (e) => {
+        const categories = e.detail.cookie.categories || [];
+        handleConsentUpdate({analytics: categories.includes('analytics')});
       });
       
       // Check if consent was previously given
-      if (document.cookie.indexOf('cc_analytics=true') > -1) {
-        handleConsentUpdate({analytics: true});
+      if (document.cookie.indexOf('cc_cookie') > -1) {
+        try {
+          const cookieValue = decodeURIComponent(
+            document.cookie
+              .split('; ')
+              .find(row => row.startsWith('cc_cookie='))
+              ?.split('=')[1] || ''
+          );
+          
+          if (cookieValue) {
+            const cookieData = JSON.parse(cookieValue);
+            const categories = cookieData.categories || [];
+            handleConsentUpdate({analytics: categories.includes('analytics')});
+          }
+        } catch (e) {
+          console.error('Error parsing cookie consent data:', e);
+        }
       }
     </script>
     <!-- End Google Tag Manager -->

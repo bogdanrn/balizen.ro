@@ -1,5 +1,5 @@
 ---
-import '@fontsource-variable/inter';
+import '@fontsource/source-sans-pro';
 import '@fontsource/cormorant-garamond';
 import '@fontsource/raleway';
 
@@ -22,41 +22,41 @@ import '@fontsource/raleway';
 
 <style is:inline>
   :root {
-    --aw-font-sans: 'Raleway';
+    --aw-font-sans: 'Source Sans Pro';
     --aw-font-serif: 'Cormorant Garamond';
     --aw-font-heading: 'Cormorant Garamond';
 
-    /* Warmer, more energetic colors with orange undertones */
-    --aw-color-primary: rgb(198, 137, 98);     /* Warm terracotta */
-    --aw-color-secondary: rgb(171, 112, 74);   /* Rich copper */
-    --aw-color-accent: rgb(226, 164, 122);     /* Soft peach */
+    /* Warm beige palette with rgb(200, 190, 183) background */
+    --aw-color-bg-page: rgb(155, 140, 113);     /* Main beige background */
+    --aw-color-primary: rgb(255 175 115);     /* Darker beige for contrast */
+    --aw-color-secondary: rgb(51,41,31);   /* Even darker beige */
+    --aw-color-accent: rgb(255 214 181);         /* Deep warm gray for emphasis */
+    
+    --aw-color-text-heading: rgb(66, 62, 58);   /* Dark gray for headings */
+    --aw-color-text-default: rgb(48, 45, 42);   /* Nearly black for main text */
+    --aw-color-text-muted: rgb(48, 45, 42 / 66%); /* Semi-transparent text */
 
-    --aw-color-text-heading: rgb(89, 49, 27);  /* Deep bronze */
-    --aw-color-text-default: rgb(66, 41, 24);  /* Rich brown */
-    --aw-color-text-muted: rgb(66, 41, 24 / 66%);
-    --aw-color-bg-page: rgb(255, 252, 248);    /* Warm white */
-
-    --aw-color-bg-page-dark: rgb(48, 32, 24);  /* Deep warm brown */
+    --aw-color-bg-page-dark: rgb(48, 45, 42);   /* Dark mode background */
 
     ::selection {
       background-color: var(--aw-color-accent);
-      color: white;
+      color: var(--aw-color-text-default);
     }
   }
 
   .dark {
-    --aw-font-sans: 'Raleway';
+    --aw-font-sans: 'Source Sans Pro';
     --aw-font-serif: 'Cormorant Garamond';
     --aw-font-heading: 'Cormorant Garamond';
 
-    --aw-color-primary: rgb(226, 164, 122);    /* Soft peach */
-    --aw-color-secondary: rgb(198, 137, 98);   /* Warm terracotta */
-    --aw-color-accent: rgb(241, 190, 155);     /* Light peach */
-
-    --aw-color-text-heading: rgb(255, 252, 248);
-    --aw-color-text-default: rgb(255, 243, 235);
-    --aw-color-text-muted: rgb(255, 243, 235 / 66%);
-    --aw-color-bg-page: rgb(48, 32, 24);       /* Deep warm brown */
+    --aw-color-bg-page: rgb(48, 45, 42);        /* Dark background */
+    --aw-color-primary: rgb(200, 190, 183);     /* Original beige as primary */
+    --aw-color-secondary: rgb(166, 154, 145);   /* Lighter beige */
+    --aw-color-accent: rgb(226, 220, 215);      /* Very light beige */
+    
+    --aw-color-text-heading: rgb(226, 220, 215);
+    --aw-color-text-default: rgb(200, 190, 183);
+    --aw-color-text-muted: rgb(200, 190, 183 / 66%);
 
     ::selection {
       background-color: var(--aw-color-accent);

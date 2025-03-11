@@ -1,0 +1,80 @@
+---
+import type { Item3, MassagePricing, ItemGrid3 as Props } from '~/types';
+import { twMerge } from 'tailwind-merge';
+import Button from './Button.astro';
+import { Icon } from 'astro-icon/components';
+import Image from '~/components/common/Image.astro';
+
+const { categorizedItems = {}, columns, defaultIcon = '', classes = {} } = Astro.props;
+
+const {
+  container: containerClass = '',
+  panel: panelClass = '',
+  title: titleClass = '',
+  description: descriptionClass = '',
+  icon: defaultIconClass = 'text-primary',
+  action: actionClass = '',
+} = classes;
+
+// Group items by category
+const categories = Object.entries(categorizedItems)
+  .map(([category, items]) => ({
+    category,
+    items: (items as Item3[]).sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  }));
+---
+
+<div class="space-y-12">
+  {categories.map(({ category, items }) => (
+    <div class="category-section">
+      <h2 class="text-3xl font-bold text-primary mb-8 mt-12 text-center ">{category}</h2>
+      <div class={twMerge('grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto', containerClass)}>
+        {items.map((item) => (
+          <div class="intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+            <div class={twMerge('flex flex-row max-w-md mx-auto', panelClass, item.classes?.panel)}>
+              <div class="flex justify-center">
+                {item.image && (
+                  <div class="w-16 h-16 mr-4 flex-shrink-0">
+                    <Image 
+                      {...item.image}
+                      class="w-full h-full object-cover rounded-full"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                )}
+              </div>
+              <div class="mt-0.5">
+                {item.title && (
+                  <h3 class={twMerge('flex items-center', titleClass, item.classes?.title)}>
+                    <span class={twMerge('text-xl font-bold flex-grow', titleClass, item.classes?.title)}>{item.title}</span>
+                    {item.pricing &&
+                      <div class='text-sm text-right text-muted opacity-70 uppercase'>
+                        <div class="">
+                          {item.pricing?.map(({duration})=> `${duration}`).join(' / ')}
+                          min
+                        </div>
+                        <div>{item.pricing?.map(({price})=> `${price}`).join(' / ')} ron</div>
+                      </div>
+                    }
+                  </h3>
+                )}
+                {item.description && (
+                  <p
+                    class={twMerge(`${item.title ? 'mt-3' : ''} text-muted text-justify`, descriptionClass, item.classes?.description)}
+                    set:html={item.description}
+                  />
+                )}
+                {item.callToAction && (
+                  <div class={twMerge(`${item.title || item.description ? 'mt-3' : ''}`, actionClass, item.classes?.actionClass)}>
+                    <Button variant="link" {...item.callToAction} />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>

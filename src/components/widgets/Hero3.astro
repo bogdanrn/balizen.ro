@@ -18,7 +18,7 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative -mt-[105px] lg:-mt-[133px] not-prose min-h-screen" {...id ? { id } : {}}>
+<section class="relative -mt-[190px] lg:-mt-[250px] not-prose min-h-screen" {...id ? { id } : {}}>
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     {
       image && (
@@ -29,12 +29,12 @@ const {
             <Image
               class="w-full h-full object-cover object-top"
               widths={[400, 768, 1024, 2040]}
-              sizes="100vw"
+              sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
               loading="eager"
               {...image}
             />
           )}
-          <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+          <div class="absolute inset-0 bg-black bg-opacity-20"></div>
         </div>
       )
     }
@@ -43,11 +43,11 @@ const {
     </slot>
   </div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 h-screen flex items-center justify-center">
-    <div class="text-center max-w-5xl">
+    <div class="text-center max-w-5xl   p-8 rounded-xl  ">
       {
         tagline && (
           <p
-            class="text-base text-white font-bold tracking-wide uppercase intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
+            class="text-base text-black font-bold tracking-wide uppercase intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
             set:html={tagline}
           />
         )
@@ -55,7 +55,7 @@ const {
       {
         title && (
           <h1
-            class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading text-white intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
+            class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading text-black intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
             set:html={title}
           />
         )
@@ -64,7 +64,7 @@ const {
         {
           subtitle && (
             <p
-              class="text-xl text-white mb-6 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
+              class="text-xl text-black mb-6 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter drop-shadow-[0_1px_1px_rgba(107,114,128,0.3)]"
               set:html={subtitle}
             />
           )
@@ -72,11 +72,11 @@ const {
 
         {
           actions && (
-            <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 lg:justify-start lg:m-0 lg:max-w-7xl intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
+            <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 lg:justify-center lg:m-0 lg:max-w-7xl intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter items-center">
               {Array.isArray(actions) ? (
                 actions.map((action) => (
                   <div class="flex w-full sm:w-auto">
-                    <Button {...(action || {})} class="w-full sm:mb-0" />
+                    <Button {...(action || {})} class="w-full sm:mb-0 whitespace-nowrap" />
                   </div>
                 ))
               ) : (

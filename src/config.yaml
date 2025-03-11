@@ -8,14 +8,14 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: Bali Zen Ploiesti
-    template: '%s — Bali Zen Ploiesti'
-  description: 'Bali Zen Ploiesti - Sanctuarul tau pentru relaxare si armonie din Ploiesti. Studioul nostru de masaj este dedicat oferirii unui refugiu linistitor, departe de agitatia vietii cotidiene.'
+    default: Bali Zen - Ploiesti
+    template: '%s — Bali Zen | Ploiesti'
+  description: 'Bali Zen | Ploiesti - Sanctuarul tau pentru relaxare si armonie din Ploiesti. Studioul nostru de masaj este dedicat oferirii unui refugiu linistitor, departe de agitatia vietii cotidiene.'
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: Bali Zen Ploiesti
+    site_name: Bali Zen | Ploiesti
     images:
       - url: '~/assets/images/balizen_50.jpg'
         width: 1200
@@ -64,4 +64,4 @@ analytics:
       id: null # or "G-XXXXXXXXXX"
 
 ui:
-  theme: 'dark:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
+  theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

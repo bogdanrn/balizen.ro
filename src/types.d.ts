@@ -135,7 +135,22 @@ export interface Stat {
 export interface Item {
   title?: string;
   description?: string;
+  order?: number;
   icon?: string;
+  classes?: Record<string, string>;
+  callToAction?: CallToAction;
+  image?: Image;
+}
+export interface MassagePricing {
+  price?: number | string;
+  duration?: number;
+}
+export interface Item3 {
+  title?: string;
+  description?: string;
+  order?: number;
+  icon?: string;
+  pricing?: MassagePricing[];
   classes?: Record<string, string>;
   callToAction?: CallToAction;
   image?: Image;
@@ -196,6 +211,13 @@ export interface ItemGrid {
   classes?: Record<string, string>;
 }
 
+export interface ItemGrid3 {
+  categorizedItems?: Record<string, Array<Item3>>;
+  columns?: number;
+  defaultIcon?: string;
+  classes?: Record<string, string>;
+}
+
 export interface Collapse {
   iconUp?: string;
   iconDown?: string;
@@ -245,6 +267,19 @@ export interface Features extends Omit<Headline, 'classes'>, Widget {
   image?: string | unknown;
   video?: Video;
   items?: Array<Item>;
+  categorizedItems?: Record<string, Array<Item>>;
+  columns?: number;
+  defaultIcon?: string;
+  callToAction1?: CallToAction;
+  callToAction2?: CallToAction;
+  isReversed?: boolean;
+  isBeforeContent?: boolean;
+  isAfterContent?: boolean;
+}
+export interface Features4 extends Omit<Headline, 'classes'>, Widget {
+  image?: string | unknown;
+  video?: Video;
+  categorizedItems?: Record<string, Array<Item3>>;
   columns?: number;
   defaultIcon?: string;
   callToAction1?: CallToAction;

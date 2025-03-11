@@ -1,0 +1,41 @@
+---
+import { twMerge } from 'tailwind-merge';
+import Button from '../ui/Button.astro';
+
+export let classes: Record<string, string> = {};
+---
+
+<div class={twMerge('flex justify-center gap-4 py-12 items-center flex-col md:flex-row', classes.container)}>
+    <!-- <Button
+        variant="primary"
+        text="Programare Online"
+        classes={{
+          button: 'bg-white text-black border-2 border-black hover:bg-black hover:text-white hover:border-black',
+        }}
+        target="_blank"
+        href="https://programari.balizen.ro"
+        icon="tabler:calendar"
+      /> -->
+
+
+      <Button
+        variant="secondary"
+        text="WhatsApp"
+        classes={{
+          button: 'bg-white text-[#25D366] border-2 border-solid border-[#25D366] hover:bg-[#25D366] hover:text-white hover:border-[#25D366] ',
+        }}
+        href="https://wa.me/40733211325"
+        target="_blank"
+        icon="tabler:brand-whatsapp"
+      />
+
+      <Button
+        variant="secondary"
+        text="0733 211 325"
+        classes={{
+          button: 'bg-white text-black border-2 border-solid border-black hover:bg-black hover:text-white hover:border-black',
+        }}
+        href="tel:+40733211325"
+        icon="tabler:phone"
+      />
+</div>

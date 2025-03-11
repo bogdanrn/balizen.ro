@@ -1,12 +1,15 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import { getPermalink, getAsset } from './utils/permalinks';
 
 export const headerData = {
+  fullWidth: true,
+  position: 'center',
+
   links: [
-    { text: 'Servicii', href: '#/servicii' },
-    { text: 'Contact', href: '#/contact' },
-    { text: 'Locatie', href: '#/locatie' },
+    { text: 'SERVICII', href: '/#servicii' },
+    { text: 'ABONAMENTE', href: '/#abonamente' },
+    { text: 'CONTACT', href: '/#programare' },
+    { text: 'LOCATIE', href: '/#locatie' },
   ],
-  actions: [{ text: 'Rezerva online', href: 'https://programari.balizen.ro' }],
 };
 
 export const footerData = {
@@ -18,16 +21,15 @@ export const footerData = {
         { text: 'Politica de confidentialitate', href: getPermalink('/privacy-policy') },
         { text: 'Politica de retur', href: getPermalink('/return-policy') },
         { text: 'Politica de anulare', href: getPermalink('/cancellation-policy') },
-        { text: 'Politica GDPR', href: getPermalink('/gdpr-policy') },
       ],
     },
     {
       title: 'Contact',
       links: [
         { text: 'Email: contact@balizen.ro', href: 'mailto:contact@balizen.ro' },
-        { text: 'Telefon: +40733211325', href: 'tel:+40733211325' },
+        { text: 'Telefon: 0733-211-325', href: 'tel:+40733211325' },
         {
-          text: 'Whatsapp: +40733-211-325',
+          text: 'Whatsapp: 0733-211-325',
           href: 'https://wa.me/40733211325',
         },
       ],
@@ -36,9 +38,12 @@ export const footerData = {
       title: 'Locatie',
       links: [
         {
-          text: 'Program Luni-Duminica <br>Orele 10:00 - 21:00',
+          text: 'Program Luni-Duminica <br>10:00 - 21:00',
         },
-        { text: 'Strada Gheorghe Doja 12 <br> Ploiesti, Romania', href: 'https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7' },
+        {
+          text: 'Strada Gheorghe Grigore Cantacuzino nr 190, Ploiesti',
+          href: 'https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7',
+        },
       ],
     },
   ],

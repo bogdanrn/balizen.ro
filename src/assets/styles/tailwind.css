@@ -4,11 +4,21 @@
 
 @layer utilities {
   .bg-page {
+    /* This creates a soft, silky cream gradient */
     background-color: var(--aw-color-bg-page);
+    /* background-image: radial-gradient(#d4d4d8 0.55px, transparent 0.55px), radial-gradient(#d4d4d8 0.55px, #9b8c71 0.55px); */
+
+
+
+    background-size: 22px 22px;
+    background-position: 0 0, 11px 11px;
   }
 
   .bg-dark {
     background-color: var(--aw-color-bg-page-dark);
+    /* bg-gradient-to-tl from-gray-200 to-zinc-300 */
+    @apply bg-gradient-to-tl from-gray-200 to-zinc-300;
+
   }
 
   .bg-dark\/90 {
@@ -34,11 +44,11 @@
   }
 
   .btn-primary {
-    @apply btn font-semibold bg-primary text-white border-primary hover:bg-secondary hover:border-secondary hover:text-white dark:text-white dark:bg-primary dark:border-primary dark:hover:border-secondary dark:hover:bg-secondary;
+    @apply btn font-semibold bg-primary text-white border-primary hover:bg-accent hover:border-accent hover:text-white dark:text-white dark:bg-primary dark:border-primary dark:hover:border-secondary dark:hover:bg-secondary;
   }
 
   .btn-secondary {
-    @apply btn;
+    @apply btn bg-secondary border-none;
   }
 
   .btn-tertiary {

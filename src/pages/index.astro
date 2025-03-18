@@ -57,6 +57,12 @@ const metadata = {
         text: '0733 211 325',
         href: 'tel:+40733211325',
         icon: 'tabler:phone',
+      },
+      {
+        variant: 'secondary',
+        text: 'Lista completă a serviciilor',
+        href: '#servicii',
+        icon: 'tabler:list',
       }
       
     ]}
@@ -64,22 +70,28 @@ const metadata = {
       src: '~/assets/images/balizen_148_horizontal.jpg',
       alt: 'Perete texturat',
     }}
-    content=`<div class='flex justify-center py-4 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter'><a href='#servicii' class='link'>Lista completă a serviciilor</a></div>`
+
+
+   
   >
     <Fragment slot="title">
-      Mai aproape de Bali,<br>Mai aproape de Zen
+      Mai aproape de Bali<br>Mai aproape de Zen
     </Fragment>
 
     <Fragment slot="subtitle">
-      <span class="font-semibold">Călătoria ta spre armonie și vitalitate</span> începe aici, la Bali Zen - Ploiești.
-      Descoperă puterea vindecătoare a masajului autentic balinez într-un spațiu dedicat relaxării și regenerării tale complete.
-    </Fragment>
+      <div class="text-2xl text-secondary mb-6 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter space-y-1">
+        <p><span class="font-semibold">Călătoria ta spre armonie și vitalitate</span> începe aici, la Bali Zen - Ploiești.</p>
+        <p>Descoperă puterea vindecătoare a masajului autentic balinez într-un spațiu dedicat relaxării și regenerării tale complete.</p>
+
+      </div>
+      </Fragment>
   </Hero3>  
 
 
   <Content  
     tagline="Cine suntem?"
     isReversed
+    showFullImage={true}
     items={[
       {
         title: 'Experiență autentică balineză',

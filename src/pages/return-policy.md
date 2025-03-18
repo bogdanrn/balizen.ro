@@ -7,11 +7,11 @@ _Ultima actualizare_: 01.02.2025
 
 ## Politica de Returnare – Vouchere și Abonamente
 
-Pentru a asigura transparență și o experiență corectă pentru toți clienții noștri, vă rugăm să consultați politica noastră de anulare privind voucherele cadou și abonamentele Bali Zen.
+Pentru a asigura transparență și o experiență corectă pentru toți clienții noștri, vă rugăm să consultați [politica noastră de anulare](/cancellation-policy) privind voucherele cadou și abonamentele Bali Zen.
 
 ### 1. Vouchere Cadou
 
-- Voucherele cadou sunt personalizate și nu pot fi returnate sau rambursate, indiferent de circumstanțe.
+- Voucherele cadou sunt personalizate și nu pot fi returnate, rambursate sau transmisibile indiferent de circumstanțe.
 - Fiecare voucher are o valabilitate de 3 luni de la data achiziției.
 - După expirarea termenului de valabilitate, voucherul nu mai poate fi utilizat și nu se acordă prelungiri.
 

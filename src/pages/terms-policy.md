@@ -53,7 +53,7 @@ Cuvintele cu prima literă majusculă au semnificațiile definite în următoare
 
 - Datele personale sunt colectate și prelucrate conform Regulamentului (UE) 2016/679 (GDPR).
 - Clientul are dreptul de acces, rectificare și ștergere a datelor personale.
-- Pentru mai multe detalii, consultați Politica noastră de Confidențialitate.
+- Pentru mai multe detalii, consultați [Politica noastră de Confidențialitate](/privacy-policy).
 
 ## Responsabilitate și Declinarea Răspunderii
 

@@ -110,7 +110,7 @@ export const serviciileNoastre = {
     },
     {
       order: 2,
-      title: 'Authentic Balinese',
+      title: 'Autentinc Balinez',
       description:
         'Tehnică tradițională balineză ce îmbină presiunea profundă și mișcările fluide pentru relaxare completă și eliberarea tensiunii musculare.',
       pricing: [
@@ -119,7 +119,7 @@ export const serviciileNoastre = {
       ],
       image: {
         src: '~/assets/images/balizen_82.jpg', //temp chosen
-        alt: 'Authentic Balinese Massage la Bali Zen',
+        alt: 'Autentinc Balinez Massage la Bali Zen',
       },
     },
     {

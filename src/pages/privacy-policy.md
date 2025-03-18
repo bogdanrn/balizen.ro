@@ -3,7 +3,7 @@ title: 'Politica de Confidențialitate (GDPR)'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 
-_Ultima actualizare_: 15 Martie 2024
+_Ultima actualizare_: 01.02.2025
 
 ## Introducere
 

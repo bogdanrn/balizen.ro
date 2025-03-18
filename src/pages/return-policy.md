@@ -3,7 +3,7 @@ title: 'Politica de Returnare'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 
-_Ultima actualizare_: 14 Martie 2024
+_Ultima actualizare_: 01.02.2025
 
 ## Politica de Returnare – Vouchere și Abonamente
 
@@ -30,7 +30,7 @@ Pentru anularea unui abonament în termenul specificat, vă rugăm să ne contac
 
 ### Acceptarea Politicii
 
-Prin achiziționarea unui voucher sau abonament Bali Zen, acceptați și sunteți de acord cu politica noastră de anulare.
+Prin achiziționarea unui voucher sau abonament Bali Zen, acceptați și sunteți de acord cu [politica noastră de anulare](/cancellation-policy).
 
 ### Contact
 

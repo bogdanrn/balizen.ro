@@ -3,7 +3,7 @@ title: 'Politica de Anulare'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 
-_Ultima actualizare_: Martie 20, 2024
+_Ultima actualizare_: 01.02.2025
 
 ## POLITICA DE ANULARE – BALI ZEN
 

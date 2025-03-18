@@ -3,7 +3,7 @@ title: 'Termeni și Condiții'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 
-_Ultima actualizare_: 15 Martie 2024
+_Ultima actualizare_: 01.02.2025
 
 Vă rugăm să citiți cu atenție acești termeni și condiții înainte de a utiliza serviciile noastre.
 
@@ -30,7 +30,7 @@ Cuvintele cu prima literă majusculă au semnificațiile definite în următoare
 - Programările se pot face online, telefonic sau la sediu.
 - Anulările trebuie anunțate cu minimum 24 de ore înainte.
 - Neprezentarea fără anunț în prealabil poate duce la perceperea unei taxe de anulare.
-- Vă rugăm să consultați Politica de Anulare pentru mai multe detalii.
+- Vă rugăm să consultați [Politica de Anulare](/cancellation-policy) pentru mai multe detalii.
 
 ## Condiții de Plată
 
@@ -43,10 +43,11 @@ Cuvintele cu prima literă majusculă au semnificațiile definite în următoare
 - Orice comportament inadecvat poate duce la refuzul serviciilor.
 - Vă rugăm să ajungeți cu 5-10 minute înainte de programare.
 
-## Politica de Rambursare
+## Politica de Returnare
 
 - Abonamentele pot fi returnate în termen de 14 zile, dacă nu au fost utilizate.
 - Voucherele cadou nu pot fi returnate sau rambursate.
+- Vă rugăm să consultați [Politica de Returnare](/return-policy) pentru mai multe detalii.
 
 ## Confidențialitate și Protecția Datelor
 

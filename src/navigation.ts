@@ -19,7 +19,7 @@ export const footerData = {
       links: [
         { text: 'Termeni si conditii', href: getPermalink('/terms-policy') },
         { text: 'Politica de confidentialitate', href: getPermalink('/privacy-policy') },
-        { text: 'Politica de retur', href: getPermalink('/return-policy') },
+        { text: 'Politica de returnare', href: getPermalink('/return-policy') },
         { text: 'Politica de anulare', href: getPermalink('/cancellation-policy') },
       ],
     },

@@ -59,7 +59,6 @@ Cuvintele cu prima literă majusculă au semnificațiile definite în următoare
 
 - Clienții sunt responsabili pentru informarea terapeutului despre orice condiții medicale relevante.
 - Bali Zen nu este responsabil pentru reacții adverse cauzate de alergii sau condiții medicale preexistente nedeclarate.
-- În cazul programărilor online prin platforma ONE TIME AGENDA, sunteți responsabil pentru securitatea contului dumneavoastră.
 
 ## Modificări ale Termenilor și Condițiilor
 

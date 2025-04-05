@@ -6,6 +6,7 @@ export const headerData = {
 
   links: [
     { text: 'SERVICII', href: '/#servicii' },
+    { text: 'PROGRAM', href: '/#locatie' },
     { text: 'ABONAMENTE', href: '/#abonamente' },
     { text: 'CONTACT', href: '/#programare' },
     { text: 'LOCATIE', href: '/#locatie' },

@@ -72,6 +72,9 @@ export interface AppBlogConfig {
 export interface AnalyticsConfig {
   enabled?: boolean;
   vendors: {
+    facebookPixel: {
+      id?: string;
+    };
     googleAnalytics: {
       id?: string;
       partytown?: boolean;
@@ -188,6 +191,9 @@ const getAnalytics = (config: Config) => {
   const _default = {
     enabled: false,
     vendors: {
+      facebookPixel: {
+        id: undefined,
+      },
       googleAnalytics: {
         id: undefined,
         partytown: true,

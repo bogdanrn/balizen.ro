@@ -61,6 +61,8 @@ apps:
 analytics:
   enabled: true
   vendors:
+    facebookPixel:
+      id: 2269890693426339
     googleAnalytics:
       id: G-QZ8FEVGH7X # or "G-XXXXXXXXXX"
     googleTagManager:

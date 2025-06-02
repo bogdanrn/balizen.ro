@@ -224,6 +224,8 @@ apps:
 
 analytics:
   vendors:
+    facebookPixel:
+      id: null
     googleAnalytics:
       id: null # or "G-XXXXXXXXXX"
 

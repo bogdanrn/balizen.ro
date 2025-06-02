@@ -6,10 +6,10 @@ export const headerData = {
 
   links: [
     { text: 'SERVICII', href: '/#servicii' },
-    { text: 'PROGRAM', href: '/#locatie' },
+    { text: 'PROGRAM', href: '/#locatie', class: 'js-location-button' },
     { text: 'ABONAMENTE', href: '/#abonamente' },
     { text: 'CONTACT', href: '/#programare' },
-    { text: 'LOCATIE', href: '/#locatie' },
+    { text: 'LOCATIE', href: '/#locatie', class: 'js-location-button' },
   ],
 };
 
@@ -27,11 +27,12 @@ export const footerData = {
     {
       title: 'Contact',
       links: [
-        { text: 'Email: contact@balizen.ro', href: 'mailto:contact@balizen.ro' },
-        { text: 'Telefon: 0733-211-325', href: 'tel:+40733211325' },
+        { text: 'Email: contact@balizen.ro', href: 'mailto:contact@balizen.ro', class: 'js-contact-button' },
+        { text: 'Telefon: 0733-211-325', href: 'tel:+40733211325', class: 'js-contact-button' },
         {
           text: 'Whatsapp: 0733-211-325',
           href: 'https://wa.me/40733211325',
+          class: 'js-contact-button',
         },
       ],
     },
@@ -44,6 +45,7 @@ export const footerData = {
         {
           text: 'Strada Gheorghe Grigore Cantacuzino nr 190, Ploiesti',
           href: 'https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7',
+          class: 'js-location-button',
         },
       ],
     },

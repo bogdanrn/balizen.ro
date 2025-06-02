@@ -138,6 +138,26 @@ import { UI } from 'astrowind:config';
         ticking = true;
       }
     });
+
+    attachEvent('.js-contact-button', 'click', function () {
+      try {
+        if (window.facebookPixelLoaded) {
+          fbq('track', 'Contact');
+        }
+      } catch (e) {
+        console.error('Error tracking contact button click:', e);
+      }
+    });
+
+    attachEvent('.js-location-button', 'click', function () {
+      try {
+        if (window.facebookPixelLoaded) {
+          fbq('track', 'FindLocation');
+        }
+      } catch (e) { 
+        console.error('Error tracking location button click:', e);
+      }
+    });
   };
   const onPageShow = function () {
     document.documentElement.classList.add('motion-safe:scroll-smooth');

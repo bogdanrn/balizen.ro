@@ -11,6 +11,7 @@ const {
 
   content = await Astro.slots.render('content'),
   actions = await Astro.slots.render('actions'),
+  actions2 = await Astro.slots.render('actions2'),
   image = await Astro.slots.render('image'),
 
   id,
@@ -60,7 +61,7 @@ const {
           />
         )
       }
-      <div class="max-w-3xl mx-auto">
+      <div class="max-w-3xl mx-auto space-y-4">
         {
           subtitle && (
             <p
@@ -81,6 +82,21 @@ const {
                 ))
               ) : (
                 <Fragment set:html={actions} />
+              )}
+            </div>
+          )
+        }
+        {
+          actions2 && (
+            <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 lg:justify-center lg:m-0 lg:max-w-7xl intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter items-center">
+              {Array.isArray(actions2) ? (
+                actions2.map((action) => (
+                  <div class="flex w-full sm:w-auto">
+                    <Button {...(action || {})} class="w-full sm:mb-0 whitespace-nowrap" />
+                  </div>
+                ))
+              ) : (
+                <Fragment set:html={actions2} />
               )}
             </div>
           )

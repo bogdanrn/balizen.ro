@@ -238,6 +238,7 @@ export interface Form {
 export interface Hero extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' | 'classes'> {
   content?: string;
   actions?: string | CallToAction[];
+  actions2?: string | CallToAction[];
   image?: string | unknown;
 }
 
@@ -315,7 +316,7 @@ export interface Content extends Omit<Headline, 'classes'>, Widget {
   columns?: number;
   isReversed?: boolean;
   isAfterContent?: boolean;
-  callToAction?: CallToAction;
+  callToAction?: CallToAction | CallToAction[];
   showFullImage?: boolean;
 }
 

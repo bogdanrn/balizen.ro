@@ -149,6 +149,39 @@ import { UI } from 'astrowind:config';
       }
     });
 
+    attachEvent('.js-programari-button', 'click', function (event) {
+      console.log('programare button clicked');
+      event.preventDefault();
+      event.stopPropagation();
+      
+
+      try {
+        if (window.facebookPixelLoaded) {
+          fbq('track', 'ViewContent', {
+            content_name: 'Programare',
+            content_category: 'Programare',
+            content_ids: ['programare']
+          });
+        }
+
+        // Show terms confirmation modal
+        if (window.showModal_termsModal) {
+          window.showModal_termsModal();
+        }
+        
+      } catch (e) {
+        console.error('Error tracking programare button click:', e);
+      }
+    });
+
+    // Handle modal confirmation for programari
+    document.addEventListener('modalConfirm', function(event) {
+      if (event.detail.modalId === 'termsModal') {
+        // Redirect to programari page
+        window.open('https://programari.balizen.ro', '_blank');
+      }
+    });
+
     attachEvent('.js-location-button', 'click', function () {
       try {
         if (window.facebookPixelLoaded) {

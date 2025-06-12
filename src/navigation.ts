@@ -6,10 +6,11 @@ export const headerData = {
 
   links: [
     { text: 'SERVICII', href: '/#servicii' },
-    { text: 'PROGRAM', href: '/#locatie', class: 'js-location-button' },
-    { text: 'ABONAMENTE', href: '/#abonamente' },
+    { text: 'CARD CADOU', href: '/#gift-card' },
+    { text: 'ABONAMENT', href: '/#abonamente' },
     { text: 'CONTACT', href: '/#programare' },
     { text: 'LOCATIE', href: '/#locatie', class: 'js-location-button' },
+    { text: 'PROGRAM', href: '/#locatie', class: 'js-location-button' },
   ],
 };
 
@@ -27,6 +28,11 @@ export const footerData = {
     {
       title: 'Contact',
       links: [
+        {
+          text: 'Programări online',
+          href: 'https://programari.balizen.ro/',
+          class: 'js-programari-button',
+        },
         { text: 'Email: contact@balizen.ro', href: 'mailto:contact@balizen.ro', class: 'js-contact-button' },
         { text: 'Telefon: 0733-211-325', href: 'tel:+40733211325', class: 'js-contact-button' },
         {

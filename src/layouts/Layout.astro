@@ -11,6 +11,8 @@ import Metadata from '~/components/common/Metadata.astro';
 import SiteVerification from '~/components/common/SiteVerification.astro';
 import Analytics from '~/components/common/Analytics.astro';
 import BasicScripts from '~/components/common/BasicScripts.astro';
+import Modal from '~/components/ui/Modal.astro';
+import { getPermalink } from '~/utils/permalinks';
 
 // Comment the line below to disable View Transitions
 import { ClientRouter } from 'astro:transitions';
@@ -42,6 +44,39 @@ const { language, textDirection } = I18N;
 
   <body class="antialiased text-default bg-page tracking-tight">
     <slot />
+    
+    <!-- Terms and Conditions Modal -->
+    <Modal 
+      id="termsModal" 
+      title="Programări Online - Mesaj Important" 
+      content={`
+        <div class="space-y-4">
+          <p class="text-gray-700 dark:text-gray-300">Pentru a continua cu programarea online, vă rugăm să confirmați că ați citit și sunteți de acord cu documentele noastre de politici:</p>
+          
+          <ul class="space-y-2 ml-4">
+            <li class="flex items-start">
+              <span class="text-primary mr-2">•</span>
+              <a class="text-primary hover:text-secondary transition-colors underline" href='${getPermalink('/terms-policy')}' target='_blank'>Termenii și Condițiile de utilizare</a>
+            </li>
+            <li class="flex items-start">
+              <span class="text-primary mr-2">•</span>
+              <a class="text-primary hover:text-secondary transition-colors underline" href='${getPermalink('/return-policy')}' target='_blank'>Politica de Rambursare</a>
+            </li>
+            <li class="flex items-start">
+              <span class="text-primary mr-2">•</span>
+              <a class="text-primary hover:text-secondary transition-colors underline" href='${getPermalink('/cancellation-policy')}' target='_blank'>Politica de Anulare</a>
+            </li>
+          </ul>
+          
+          <p class="text-sm text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-gray-600 pt-3 mt-4">
+            <strong>Prin confirmarea acestui mesaj</strong>, declarați că înțelegeți și acceptați condițiile noastre de serviciu și politicile de plată.
+          </p>
+        </div>
+      `}
+      confirmText="Confirm și Continuă Programarea"
+      cancelText="Nu sunt de acord"
+    />
+    
     <BasicScripts />
   </body>
 </html>

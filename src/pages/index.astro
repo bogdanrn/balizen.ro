@@ -32,13 +32,7 @@ const metadata = {
 
   <Hero3
     actions={[
-      // {
-      //   variant: 'primary',
-      //   text: 'Programare Online',
-      //   target: '_blank',
-      //   href: 'https://programari.balizen.ro',
-      //   icon: 'tabler:calendar',
-      // },
+
       {
         variant: 'secondary',
         text: 'WhatsApp',
@@ -63,8 +57,26 @@ const metadata = {
         text: 'Lista completă a serviciilor',
         href: '#servicii',
         icon: 'tabler:list',
-      }
-      
+      },
+      // {
+      //   variant: 'primary',
+      //   text: 'Programează-te aici',
+      //   target: '_blank',
+      //   href: 'https://programari.balizen.ro',
+      //   icon: 'tabler:calendar'
+      // },
+    ]}
+    actions2={[
+      {
+        variant: 'primary',
+        text: 'Programează-te aici',
+        target: '_blank',
+        href: 'https://programari.balizen.ro',
+        icon: 'tabler:calendar',
+        classes: {
+          button: 'js-programari-button',
+        },
+      },
     ]}
     image={{
       src: '~/assets/images/balizen_148_horizontal.jpg',
@@ -92,6 +104,16 @@ const metadata = {
     tagline="Cine suntem?"
     isReversed
     showFullImage={true}
+    callToAction={
+      {
+        variant: 'primary',
+        text: 'Programează-te aici',
+        target: '_blank',
+        class: 'js-programari-button',
+        href: 'https://programari.balizen.ro',
+        icon: 'tabler:calendar'
+      }
+    }
     items={[
       {
         title: 'Experiență autentică balineză',
@@ -154,11 +176,11 @@ const metadata = {
     callToAction={
       {
         variant: 'primary',
-        text: 'Comandă acum',
-        href: 'https://wa.me/40733211325',
+        text: 'Comandă aici',
+        href: 'https://programari.balizen.ro',
         target: '_blank',
-        icon: 'tabler:brand-whatsapp',
-        class: 'js-contact-button',
+        icon: 'tabler:calendar',
+        class: 'js-programari-button',
       }
     }
      
@@ -196,14 +218,16 @@ const metadata = {
 
   <Content
     callToAction={
-      {
+      [
+        { 
         variant: 'primary',
-        text: 'Comandă acum',
-        href: 'https://wa.me/40733211325',
+        text: 'Comandă aici',
+        href: 'https://programari.balizen.ro',
         target: '_blank',
-        icon: 'tabler:brand-whatsapp',
-        class: 'js-contact-button',
+        icon: 'tabler:calendar',
+        class: 'js-programari-button',
       }
+    ]
     }
     items={[
   
@@ -237,14 +261,16 @@ const metadata = {
 
   <Content
     callToAction={
-      {
+      [
+        { 
         variant: 'primary',
-        text: 'Comandă acum',
-        href: 'https://wa.me/40733211325',
+        text: 'Comandă aici',
+        href: 'https://programari.balizen.ro',
         target: '_blank',
-        icon: 'tabler:brand-whatsapp',
-        class: 'js-contact-button',
+        icon: 'tabler:calendar',
+        class: 'js-programari-button',
       }
+    ]
     }
     isReversed={true}
     items={[
@@ -286,10 +312,10 @@ const metadata = {
     callToAction={{
       variant: 'primary',
       text: 'Comandă Card Cadou',
-      href: 'https://wa.me/40733211325',
+      href: 'https://programari.balizen.ro',
       target: '_blank',
-      icon: 'tabler:brand-whatsapp',
-      class: 'js-contact-button',
+      icon: 'tabler:calendar',
+      class: 'js-programari-button',
     }}
     items={[
       {

@@ -48,10 +48,16 @@ const {
         {content && <div class="mb-12 text-lg dark:text-slate-400" set:html={content} />}
 
         {
-          callToAction && (
+          Array.isArray(callToAction) ? (
+            callToAction.map((action) => (
+              <div class="mt-[-40px] mb-8 text-primary">
+                <Button variant="link" {...action} />
+              </div>
+            ))
+          ) : (
             <div class="mt-[-40px] mb-8 text-primary">
               <Button variant="link" {...callToAction} />
-            </div>
+            </div> 
           )
         }
 

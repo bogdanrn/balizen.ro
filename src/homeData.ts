@@ -134,6 +134,45 @@ export const serviciileNoastre = {
         alt: 'Bali Zen Signature Massage',
       },
     },
+    {
+      order: 11,
+      title: 'Masaj drenaj limfatic',
+      pricing: [{ price: '300', duration: 90 }],
+      description:
+        'Masajul de drenaj limfatic este o terapie delicată care stimulează circulația limfei, ajutând la eliminarea toxinelor și reducerea retenției de apă. Este ideal pentru detoxifiere, combaterea celulitei și susținerea imunității.',
+      image: {
+        src: '~/assets/images/balizen_140.jpg',
+        alt: 'Masaj drenaj limfatic la Bali Zen',
+      },
+    },
+    {
+      order: 12,
+      title: 'Masaj la 4 mâini',
+      pricing: [
+        { price: '400', duration: 60 },
+        { price: '600', duration: 90 },
+      ],
+      description:
+        'Masajul la 4 mâini este o experiență profund relaxantă, realizată de doi terapeuți care lucrează perfect sincronizat pe întreg corpul. Această tehnică stimulează intens circulația și eliberează tensiunea fizică și mentală într-un timp scurt.',
+      image: {
+        src: '~/assets/images/4_maini_1.jpg',
+        alt: 'Masaj la 4 mâini la Bali Zen',
+      },
+    },
+    {
+      order: 13,
+      title: 'Masaj în tandem (2 persoane)',
+      pricing: [
+        { price: '400', duration: 60 },
+        { price: '600', duration: 90 },
+      ],
+      description:
+        'Masajul în tandem pentru 2 persoane se desfășoară simultan, în aceeași cameră, oferind o experiență de relaxare sincronizată alături de cineva drag. Este alegerea perfectă pentru cupluri sau prieteni care doresc să se reconecteze și să se bucure împreună de momente de răsfăț.',
+      image: {
+        src: '~/assets/images/cuplu_1.jpg',
+        alt: 'Masaj în tandem (2 persoane) la Bali Zen',
+      },
+    },
   ],
   'Masaje locale': [
     {
@@ -148,7 +187,7 @@ export const serviciileNoastre = {
         'Combinăm tehnici de frământare și presiune aplicată pentru a elibera tensiunea din spate și umeri. Durerile de spate îți vor fi ameliorate și te vei simți revigorat.',
 
       image: {
-        src: '~/assets/images/balizen_115.jpg', //temp chosen
+        src: '~/assets/images/limfatic_1.jpg', //temp chosen
         alt: 'Back & Shoulders Massage la Bali Zen',
       },
     },

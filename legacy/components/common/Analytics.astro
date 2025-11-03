@@ -1,0 +1,158 @@
+---
+import { ANALYTICS } from 'astrowind:config';
+---
+
+{ANALYTICS?.enabled && (
+  <>
+    <!-- Google Tag Manager with Consent Mode -->
+    <script define:vars={{ ANALYTICS }} is:inline>
+      console.log('Client-side analytics config:', ANALYTICS);
+      // Initialize dataLayer and gtag function
+      window.dataLayer = window.dataLayer || [];
+      //@ts-expect-error: gtag is not typed
+      // eslint-disable-next-line prefer-rest-params
+      function gtag(){dataLayer.push(arguments);}
+      
+      
+
+      // Default consent - denied state for all signals
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'wait_for_update': 500
+      });
+      
+
+      
+      // Function to handle consent changes
+      function handleConsentUpdate(consent) {
+        if (consent.analytics) {
+          // User granted consent
+          gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted'
+          });
+          
+          if (window.facebookPixelLoaded) {
+            fbq('consent', 'grant');
+          }
+          
+          if (!window.facebookPixelLoaded) {
+            // eslint-disable-next-line 
+            !function(f,b,e,v,n,t,s) {if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)}; if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; n.queue=[];t=b.createElement(e);t.async=!0; t.src=v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s)}(window, document,'script', 'https://connect.facebook.net/en_US/fbevents.js');
+            window.facebookPixelLoaded = true;
+          }
+
+          // Load GTM if not already loaded
+          if (!window.gtmLoaded && ANALYTICS?.vendors?.googleTagManager?.id) {
+            window.gtmLoaded = true;
+            // Load Google Tag Manager
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            // eslint-disable-next-line no-var
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer',ANALYTICS.vendors.googleTagManager.id);
+          }
+
+
+
+        } else {
+          
+          // User denied consent
+          gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied'
+          });
+
+          if (window.facebookPixelLoaded) {
+            fbq('consent', 'revoke');
+          }
+        }
+      }
+
+      // Check if consent was previously given
+      function loadInitialConsent() {
+      if (document.cookie.indexOf('cc_cookie') > -1) {
+        try {
+          const cookieValue = decodeURIComponent(
+            document.cookie
+              .split('; ')
+              .find(row => row.startsWith('cc_cookie='))
+              ?.split('=')[1] || ''
+          );
+          
+          if (cookieValue) {
+            const cookieData = JSON.parse(cookieValue);
+            const categories = cookieData.categories || [];
+            handleConsentUpdate({analytics: categories.includes('analytics')});
+          }
+        } catch (e) {
+          console.error('Error parsing cookie consent data:', e);
+        }
+      }
+      }      
+
+
+      //load facebook pixel
+      if (ANALYTICS?.vendors?.facebookPixel?.id && !window.facebookPixelLoaded) {
+          // eslint-disable-next-line 
+          !function(f,b,e,v,n,t,s) {if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)}; if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; n.queue=[];t=b.createElement(e);t.async=!0; t.src=v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s)}(window, document,'script', 'https://connect.facebook.net/en_US/fbevents.js');
+          window.facebookPixelLoaded = true;
+          fbq('consent', 'revoke');
+          fbq('init', `${ANALYTICS.vendors.facebookPixel.id}`);
+          fbq('track', 'PageView');
+      }
+
+      
+      // Load base GA script (will respect consent settings)
+      if (ANALYTICS?.vendors?.googleAnalytics?.id) {
+        const gaScript = document.createElement('script');
+        const gaId = ANALYTICS.vendors.googleAnalytics.id;
+        
+        // Add non-debug version of the script to avoid CORS issues
+        gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        gaScript.async = true;
+        document.head.appendChild(gaScript);
+        
+        // Initialize GA - this will still load but respect consent settings
+        gtag('js', new Date());
+        gtag('config', gaId, {
+          'anonymize_ip': true
+        });
+      }
+      
+      // Listen for standard vanilla-cookieconsent events
+      window.addEventListener('cc:onConsent', (e) => {
+        const categories = e.detail.cookie.categories || [];
+        handleConsentUpdate({analytics: categories.includes('analytics')});
+      });
+      
+      window.addEventListener('cc:onChange', (e) => {
+        const categories = e.detail.cookie.categories || [];
+        handleConsentUpdate({analytics: categories.includes('analytics')});
+      });
+      
+      loadInitialConsent();
+    </script>
+    <!-- End Google Tag Manager -->
+  </>
+)}
+
+{ANALYTICS?.enabled && ANALYTICS?.vendors?.facebookPixel?.id && (
+<noscript><img height="1" width="1" style="display:none"
+src={`https://www.facebook.com/tr?id=${ANALYTICS.vendors.facebookPixel.id}&ev=PageView&noscript=1`}
+/></noscript>
+)}
+{ANALYTICS?.enabled && ANALYTICS?.vendors?.googleTagManager?.id && (
+  <noscript>
+    <iframe src={`https://www.googletagmanager.com/ns.html?id=${ANALYTICS.vendors.googleTagManager.id}`}
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+)}

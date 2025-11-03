@@ -1,0 +1,123 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import { siteConfig } from '../../utils/content';
+
+const { brand, contact, footer } = siteConfig;
+const currentYear = new Date().getFullYear();
+const dynamicFootnote = footer.footnote.replace(/\d{4}/g, String(currentYear));
+---
+
+<footer class="border-t border-slate-200 bg-slate-50">
+  <div class="mx-auto grid max-w-screen-xl gap-12 px-4 py-12 sm:px-6 lg:grid-cols-5 lg:px-8">
+    <div class="lg:col-span-2">
+      <h2 class="font-heading text-xl font-semibold text-slate-900">{brand.name}</h2>
+      <p class="mt-3 max-w-sm text-sm text-slate-600">{brand.description}</p>
+      <dl class="mt-6 space-y-3 text-sm text-slate-600">
+        <div>
+          <dt class="font-semibold uppercase tracking-wide text-slate-500">Adresă</dt>
+          <dd>
+            <a href={contact.mapsUrl} target="_blank" rel="noopener" class="hover:text-primary">
+              {contact.address}
+            </a>
+          </dd>
+        </div>
+        <div>
+          <dt class="font-semibold uppercase tracking-wide text-slate-500">Program</dt>
+          <dd>{contact.schedule}</dd>
+        </div>
+        <div>
+          <dt class="font-semibold uppercase tracking-wide text-slate-500">Contact</dt>
+          <dd>
+            <a class="hover:text-primary" href={`tel:${contact.phone.replace(/\\s+/g, '')}`}>
+              {contact.phoneDisplay}
+            </a>
+            {' · '}
+            <a class="hover:text-primary" href={`mailto:${contact.email}`}>{contact.email}</a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="grid gap-8 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-3">
+      {footer.columns.map((column) => (
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">{column.title}</h3>
+          <ul class="mt-4 space-y-3 text-sm text-slate-600">
+            {column.links.map((link) => (
+              <li>
+                {link.href ? (
+                  <a
+                    href={link.href}
+                    class={`transition hover:text-primary ${link.class ?? ''}`}
+                    target={link.target}
+                    rel={link.rel}
+                  >
+                    {link.text}
+                  </a>
+                ) : (
+                  <span>{link.text}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="border-t border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-screen-xl flex-col gap-6 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <div class="flex flex-wrap gap-4">
+        {footer.secondaryLinks.map((item) => (
+          <a
+            href={item.href}
+            target={item.target}
+            rel={item.rel}
+            class="inline-flex items-center justify-center rounded-md  border border-transparent hover:border-primary hover:shadow"
+          >
+            <img
+              src={item.image.src}
+              alt={item.image.alt}
+              loading="lazy"
+              width={item.image.width ?? 200}
+              class="max-h-12 w-auto"
+            />
+          </a>
+        ))}
+      </div>
+
+      <div class="flex items-center gap-4">
+        {footer.socialLinks.map((social) => (
+          <a
+            href={social.href}
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition hover:border-primary hover:text-primary"
+            target="_blank"
+            rel="noopener"
+            aria-label={social.label}
+          >
+            <Icon name={social.icon} class="h-5 w-5" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-slate-200 bg-slate-50">
+    <div class="mx-auto flex max-w-screen-xl flex-col gap-4 px-4 py-6 text-center text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <p>{dynamicFootnote}</p>
+      <div class="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
+        <a class="text-primary underline-offset-2 hover:underline" href={contact.googleReviewsUrl} target="_blank" rel="noopener">
+          Citește recenziile noastre pe Google
+        </a>
+        <button
+          type="button"
+           class="text-primary underline-offset-2 hover:underline"
+          data-cc="show-preferencesModal"
+        >
+          Setări cookie-uri
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>

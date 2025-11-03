@@ -1,61 +1,54 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import { findImage } from '~/utils/images';
+
+import { findImage } from '../../utils/images';
 import {
-  getImagesOptimized,
   astroAsseetsOptimizer,
-  unpicOptimizer,
+  getImagesOptimized,
   isUnpicCompatible,
+  unpicOptimizer,
   type ImageProps,
-} from '~/utils/images-optimization';
+} from '../../utils/images-optimization';
 
 type Props = ImageProps;
-type ImageType = {
+type OptimizedImage = {
   src: string;
   attributes: HTMLAttributes<'img'>;
 };
 
-const props = Astro.props;
+const props = Astro.props as Props;
 
 if (props.alt === undefined || props.alt === null) {
-  throw new Error();
+  throw new Error('Image component requires an alt attribute for accessibility.');
 }
 
 if (typeof props.width === 'string') {
-  props.width = parseInt(props.width);
+  props.width = parseInt(props.width, 10);
 }
 
 if (typeof props.height === 'string') {
-  props.height = parseInt(props.height);
+  props.height = parseInt(props.height, 10);
 }
 
-if (!props.loading) {
-  props.loading = 'lazy';
-}
+props.loading ??= 'lazy';
+props.decoding ??= 'async';
 
-if (!props.decoding) {
-  props.decoding = 'async';
-}
-
-const _image = await findImage(props.src);
-
-let image: ImageType | undefined = undefined;
+const resolvedImage = await findImage(props.src);
+let optimized: OptimizedImage | undefined;
 
 if (
-  typeof _image === 'string' &&
-  (_image.startsWith('http://') || _image.startsWith('https://')) &&
-  isUnpicCompatible(_image)
+  typeof resolvedImage === 'string' &&
+  (resolvedImage.startsWith('http://') || resolvedImage.startsWith('https://')) &&
+  isUnpicCompatible(resolvedImage)
 ) {
-  image = await getImagesOptimized(_image, props, unpicOptimizer);
-} else if (_image) {
-  image = await getImagesOptimized(_image, props, astroAsseetsOptimizer);
+  optimized = await getImagesOptimized(resolvedImage, props, unpicOptimizer);
+} else if (resolvedImage) {
+  optimized = await getImagesOptimized(resolvedImage, props, astroAsseetsOptimizer);
 }
 ---
 
-{
-  !image ? (
-    <Fragment />
-  ) : (
-    <img src={image.src} crossorigin="anonymous" referrerpolicy="no-referrer" {...image.attributes} />
-  )
-}
+{optimized ? (
+  <img src={optimized.src} crossorigin="anonymous" referrerpolicy="no-referrer" {...optimized.attributes} />
+) : (
+  <Fragment />
+)}

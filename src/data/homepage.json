@@ -1,0 +1,224 @@
+{
+  "hero": {
+    "title": "Mai aproape de Bali\nMai aproape de Zen",
+    "subtitle": [
+      "Călătoria ta spre armonie și vitalitate începe aici, la Bali Zen - Ploiești.",
+      "Descoperă puterea vindecătoare a masajului autentic balinez într-un spațiu dedicat relaxării și regenerării tale complete."
+    ],
+    "heroText": "Bali Zen - Masaj Autentic Balinez",
+    "primaryActions": [
+      {
+        "variant": "secondary",
+        "label": "WhatsApp",
+        "href": "https://wa.me/40733211325",
+        "target": "_blank",
+        "icon": "tabler:brand-whatsapp",
+        "class": "js-contact-button bg-[#25D366] text-white border-[#25D366] border-2 hover:bg-white hover:text-[#25D366]"
+      },
+      {
+        "variant": "secondary",
+        "label": "0733 211 325",
+        "href": "tel:+40733211325",
+        "icon": "tabler:phone",
+        "class": "js-contact-button bg-white text-black border-2 border-black hover:bg-black hover:text-white"
+      },
+      {
+        "variant": "secondary",
+        "label": "Lista completă a serviciilor",
+        "href": "#servicii",
+        "icon": "tabler:list"
+      }
+    ],
+    "secondaryActions": [
+      {
+        "variant": "primary",
+        "label": "Programează-te aici",
+        "href": "https://programari.balizen.ro",
+        "target": "_blank",
+        "icon": "tabler:calendar",
+        "class": "js-programari-button"
+      }
+    ],
+    "image": {
+      "src": "~/assets/images/balizen_148_horizontal.jpg",
+      "alt": "Interior Bali Zen"
+    }
+  },
+  "about": {
+    "id": "despre-noi",
+    "tagline": "Cine suntem?",
+    "title": "Bun venit la Bali Zen!",
+    "intro": "Sanctuarul tău pentru relaxare și armonie din Ploiești. Studioul nostru de masaj este dedicat oferirii unui refugiu liniștitor, departe de agitația vieții cotidiene.",
+    "bullets": [
+      {
+        "title": "Experiență autentică balineză",
+        "description": "Echipa noastră de terapeuți profesioniști din Bali combină experiența cu pasiunea pentru vindecare, oferind o gamă de tratamente concepute pentru a reduce stresul."
+      },
+      {
+        "title": "Atmosferă de relaxare",
+        "description": "Fiecare detaliu este gândit pentru confortul tău, de la atmosfera calmă la tehnicile ancestrale care îți redau energia și armonia interioară."
+      },
+      {
+        "title": "Beneficii terapeutice",
+        "description": "La Bali Zen, credem în puterea transformatoare a masajului pentru îmbunătățirea stării de bine, reducerea stresului și promovarea sănătății generale."
+      }
+    ],
+    "cta": {
+      "variant": "primary",
+      "label": "Programează-te aici",
+      "href": "https://programari.balizen.ro",
+      "target": "_blank",
+      "icon": "tabler:calendar",
+      "class": "js-programari-button"
+    },
+    "image": {
+      "src": "~/assets/images/balizen_133.jpg",
+      "alt": "Juli @ Bali Zen Masaj Studio"
+    }
+  },
+  "services": {
+    "id": "servicii",
+    "title": "Serviciile Noastre",
+    "description": "Descoperă gama noastră completă de masaje terapeutice, fiecare conceput pentru a-ți oferi relaxarea și beneficiile de care ai nevoie.",
+    "cta": {
+      "variant": "primary",
+      "label": "Programează-te online",
+      "href": "https://programari.balizen.ro",
+      "target": "_blank",
+      "icon": "tabler:calendar",
+      "class": "js-programari-button"
+    }
+  },
+  "subscriptions": [
+    {
+      "id": "abonamente",
+      "title": "Abonamentul ZEN 60'",
+      "summary": "Bucură-te de relaxare profundă timp de 3 luni, cu ședințe de 60 de minute fiecare - o îmbrățișare reconfortantă pentru corp și suflet.",
+      "highlights": [
+        "Valabilitate: 3 luni",
+        "Alege orice tip de masaj de 60 de minute (cu excepția masajului anti-celulită)",
+        "10 ședințe ZEN 60' la doar 1900 RON"
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_109.jpg",
+        "alt": "Abonament ZEN 60'"
+      }
+    },
+    {
+      "id": "abonament-zen-90",
+      "title": "Abonamentul ZEN 90'",
+      "summary": "Experimentează relaxarea supremă în ședințele de 90 de minute, pe parcursul a 3 luni.",
+      "highlights": [
+        "Valabilitate: 3 luni",
+        "Alege orice tip de masaj de 90 de minute (cu excepția masajului anti-celulită)",
+        "10 ședințe ZEN 90' la doar 2800 RON"
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_145.jpg",
+        "alt": "Abonament ZEN 90'"
+      }
+    },
+    {
+      "id": "abonament-anticelulitic",
+      "title": "Abonamentul Anti-Celulită",
+      "summary": "Combinația perfectă între masaj anticelulitic eficient și nutriție personalizată.",
+      "highlights": [
+        "Valabilitate: 2 luni",
+        "16 ședințe de masaj anti-celulită de 60 minute",
+        "Evaluare nutrițională gratuită cu nutriționist partener",
+        "Rezultate vizibile la un preț special de 3200 RON"
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_4.jpg",
+        "alt": "Abonament Anti-Celulită"
+      }
+    }
+  ],
+  "subscriptionAction": {
+    "variant": "primary",
+    "label": "Comandă aici",
+    "href": "https://programari.balizen.ro",
+    "target": "_blank",
+    "icon": "tabler:calendar",
+    "class": "js-programari-button"
+  },
+  "giftCard": {
+    "id": "gift-card",
+    "title": "Dăruiește Relaxare Autentică",
+    "description": [
+      "Alege un voucher pentru o experiență unică de masaj și transformă orice ocazie într-un moment de bine.",
+      "Oferă celor dragi un moment de pură relaxare cu un Gift Card Bali Zen. Fie că este vorba despre o aniversare, o surpriză specială sau un gest de apreciere, acest cadou aduce liniște, echilibru și răsfăț autentic balinez."
+    ],
+    "features": [
+      {
+        "icon": "tabler:certificate",
+        "title": "Disponibil în format fizic",
+        "description": "Card elegant, personalizat pentru ocazia ta specială."
+      },
+      {
+        "icon": "tabler:calendar",
+        "title": "Valabilitate: 3 luni",
+        "description": "Timp suficient pentru a programa experiența perfectă."
+      },
+      {
+        "icon": "tabler:gift",
+        "title": "Personalizabil pentru orice ocazie",
+        "description": "Aniversări, zile speciale sau gesturi de apreciere."
+      }
+    ],
+    "cta": {
+      "variant": "primary",
+      "label": "Comandă Card Cadou",
+      "href": "https://wa.me/40733211325",
+      "target": "_blank",
+      "icon": "tabler:brand-whatsapp",
+      "class": "js-contact-button"
+    },
+    "image": {
+      "src": "~/assets/images/gift_card.png",
+      "alt": "Gift Card Bali Zen"
+    }
+  },
+  "callToAction": {
+    "id": "programare",
+    "title": "Programează-ți Experiența de Relaxare",
+    "subtitle": "Pentru programări rapide și informații suplimentare, ne puteți contacta telefonic sau pe WhatsApp. Echipa noastră vă ajută să alegeți experiența de relaxare perfectă!",
+    "cta": {
+      "variant": "primary",
+      "label": "Rezervă o ședință",
+      "href": "https://programari.balizen.ro",
+      "target": "_blank",
+      "icon": "tabler:calendar",
+      "class": "js-programari-button"
+    }
+  },
+  "location": {
+    "id": "locatie",
+    "title": "Cum ne găsiți?",
+    "details": [
+      {
+        "icon": "tabler:clock",
+        "title": "Program de lucru",
+        "description": "Luni - Duminică: 10:00 - 21:00"
+      },
+      {
+        "icon": "tabler:map-pin",
+        "title": "Adresa salonului",
+        "description": "Strada Cantacuzino nr 190, Ploiești",
+        "href": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
+      },
+      {
+        "icon": "tabler:phone",
+        "title": "Contact",
+        "description": "0733 211 325",
+        "href": "tel:+40733211325"
+      },
+      {
+        "icon": "tabler:mail",
+        "title": "Email",
+        "description": "contact@balizen.ro",
+        "href": "mailto:contact@balizen.ro"
+      }
+    ]
+  }
+}

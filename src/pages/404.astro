@@ -1,24 +1,21 @@
 ---
-import Layout from '~/layouts/Layout.astro';
-import { getHomePermalink } from '~/utils/permalinks';
-
-const title = `Error 404`;
+import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<Layout metadata={{ title }}>
-  <section class="flex items-center h-full p-16">
-    <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
-      <div class="max-w-md text-center">
-        <h2 class="mb-8 font-bold text-9xl">
-          <span class="sr-only">Error</span>
-          <span class="text-primary">404</span>
-        </h2>
-        <p class="text-3xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-        <p class="mt-4 mb-8 text-lg text-muted dark:text-slate-400">
-          But dont worry, you can find plenty of other things on our homepage.
-        </p>
-        <a rel="noopener noreferrer" href={getHomePermalink()} class="btn ml-4">Back to homepage</a>
-      </div>
+<MainLayout title="Pagina nu a fost găsită">
+  <section class="flex min-h-[60vh] items-center bg-slate-50">
+    <div class="mx-auto flex max-w-xl flex-col items-center gap-6 px-4 text-center sm:px-6">
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary">Eroare</p>
+      <h1 class="font-heading text-6xl font-bold text-slate-900 sm:text-7xl">404</h1>
+      <p class="text-lg text-slate-600">
+        Ne pare rău, pagina pe care o cauți nu mai există sau a fost mutată. Revino la pagina principală și continuă explorarea.
+      </p>
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
+      >
+        Înapoi la prima pagină
+      </a>
     </div>
   </section>
-</Layout>
+</MainLayout>

@@ -1,0 +1,146 @@
+---
+import '~/assets/styles/tailwind.css';
+
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import ThemeStyles from '../components/layout/ThemeStyles.astro';
+import Analytics from '../components/common/Analytics.astro';
+import BookingConsentModal from '../components/common/BookingConsentModal.astro';
+import { siteConfig } from '../utils/content';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title = `${siteConfig.brand.name} · ${siteConfig.brand.tagline}`,
+  description = siteConfig.brand.description,
+  image,
+  noIndex = false,
+} = Astro.props;
+
+const bookingModalId = 'booking-consent-modal';
+const bookingPolicies = [
+  { label: 'Termeni și condiții de utilizare', href: '/terms-policy' },
+  { label: 'Politica de rambursare', href: '/return-policy' },
+  { label: 'Politica de anulare', href: '/cancellation-policy' },
+];
+const bookingDescription =
+  'Pentru a continua cu programarea online, confirmă că ai citit și ești de acord cu politicile Bali Zen referitoare la programări, plăți și anulări.';
+---
+
+<!DOCTYPE html>
+<html lang="ro" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {image && <meta property="og:image" content={image} />}
+    <ThemeStyles />
+    <Analytics />
+  </head>
+  <body class="flex min-h-screen flex-col bg-white text-slate-900 antialiased">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary"
+    >
+      Sari la conținut
+    </a>
+    <Header />
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <BookingConsentModal
+      id={bookingModalId}
+      title="Programări online – confirmare necesară"
+      description={bookingDescription}
+      policies={bookingPolicies}
+      confirmLabel="Confirm și continuă programarea"
+      cancelLabel="Revin mai târziu"
+    />
+    <script is:inline define:vars={{ bookingUrl: siteConfig.contact.bookingUrl, modalId: bookingModalId }}>
+      (() => {
+        const attachHandlers = (root = document) => {
+          const programButtons = root.querySelectorAll('.js-programari-button');
+
+          programButtons.forEach((button) => {
+            if (button.dataset.bookingBound === 'true') {
+              return;
+            }
+
+            button.dataset.bookingBound = 'true';
+
+            button.addEventListener('click', (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+
+              if (window.facebookPixelLoaded && typeof window.fbq === 'function') {
+                window.fbq('track', 'ViewContent', {
+                  content_name: 'Programare',
+                  content_category: 'Programare',
+                  content_ids: ['programare'],
+                });
+              }
+
+              const openModal = window[`showModal_${modalId}`];
+              if (typeof openModal === 'function') {
+                openModal();
+              } else {
+                window.open(bookingUrl, '_blank', 'noopener,noreferrer');
+              }
+            });
+          });
+
+          const bindTracking = (selector, callback) => {
+            root.querySelectorAll(selector).forEach((element) => {
+              if (element.dataset.trackingBound === 'true') {
+                return;
+              }
+
+              element.dataset.trackingBound = 'true';
+              element.addEventListener('click', () => {
+                if (window.facebookPixelLoaded && typeof window.fbq === 'function') {
+                  callback();
+                }
+              });
+            });
+          };
+
+          bindTracking('.js-contact-button', () => window.fbq('track', 'Contact'));
+          bindTracking('.js-location-button', () => window.fbq('track', 'FindLocation'));
+        };
+
+        const initialize = () => attachHandlers(document);
+
+        if (window.__balizenBookingScriptInitialized) {
+          initialize();
+          return;
+        }
+
+        window.__balizenBookingScriptInitialized = true;
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initialize, { once: true });
+        } else {
+          initialize();
+        }
+
+        document.addEventListener('astro:after-swap', () => attachHandlers(document));
+
+        document.addEventListener('modalConfirm', (event) => {
+          if (event.detail?.modalId === modalId) {
+            window.open(bookingUrl, '_blank', 'noopener,noreferrer');
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

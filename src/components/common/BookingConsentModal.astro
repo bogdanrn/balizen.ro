@@ -1,0 +1,152 @@
+---
+export interface PolicyLink {
+  label: string;
+  href: string;
+}
+
+export interface Props {
+  id: string;
+  title: string;
+  description: string;
+  policies: PolicyLink[];
+  confirmLabel: string;
+  cancelLabel?: string;
+}
+
+const {
+  id,
+  title,
+  description,
+  policies,
+  confirmLabel,
+  cancelLabel = 'Anulează',
+} = Astro.props;
+---
+
+<div
+  id={id}
+  class="fixed inset-0 z-[120] hidden items-center justify-center bg-slate-900/70 px-4 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby={`${id}-title`}
+>
+  <div class="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl">
+    <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
+      <h2 id={`${id}-title`} class="font-heading text-lg font-semibold text-slate-900">
+        {title}
+      </h2>
+      <button
+        type="button"
+        class="rounded-full p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+        data-modal-close
+        aria-label="Închide dialogul"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="space-y-4 px-6 py-6 text-sm text-slate-600">
+      <p>{description}</p>
+      <ul class="space-y-2">
+        {policies.map((policy) => (
+          <li class="flex items-start gap-3">
+            <span class="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">•</span>
+            <a
+              href={policy.href}
+              target="_blank"
+              rel="noopener"
+              class="underline-offset-2 transition hover:text-primary hover:underline"
+            >
+              {policy.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="border-t border-slate-200 pt-4 text-xs text-slate-500">
+        Prin confirmare declarați că ați citit și acceptat politicile Bali Zen referitoare la programări, anulări și rambursări.
+      </p>
+    </div>
+
+    <div class="flex items-center justify-end gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4">
+      <button
+        type="button"
+        class="inline-flex items-center rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100"
+        data-modal-cancel
+      >
+        {cancelLabel}
+      </button>
+      <button
+        type="button"
+        class="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
+        data-modal-confirm
+      >
+        {confirmLabel}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ id }}>
+  const initializeModal = () => {
+    const modal = document.getElementById(id);
+    if (!modal || modal.dataset.initialized) {
+      return;
+    }
+
+    modal.dataset.initialized = 'true';
+    const closeButtons = modal.querySelectorAll('[data-modal-close], [data-modal-cancel]');
+    const confirmButton = modal.querySelector('[data-modal-confirm]');
+
+    const show = () => {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    };
+
+    const hide = () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    };
+
+    closeButtons.forEach((button) => {
+      button.addEventListener('click', hide);
+    });
+
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        hide();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('flex')) {
+        hide();
+      }
+    });
+
+    if (confirmButton) {
+      confirmButton.addEventListener('click', () => {
+        hide();
+        const customEvent = new CustomEvent('modalConfirm', {
+          detail: { modalId: id },
+        });
+        document.dispatchEvent(customEvent);
+      });
+    }
+
+    window[`showModal_${id}`] = show;
+    window[`hideModal_${id}`] = hide;
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeModal, { once: true });
+  } else {
+    initializeModal();
+  }
+
+  document.addEventListener('astro:after-swap', initializeModal);
+</script>

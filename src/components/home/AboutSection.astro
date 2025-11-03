@@ -1,0 +1,59 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Image from '../common/Image.astro';
+import type { AboutSection } from '../../types';
+
+const { about } = Astro.props as { about: AboutSection };
+---
+
+<section id={about.id} class="bg-white">
+  <div class="mx-auto grid max-w-screen-xl gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
+    <div class="space-y-8">
+      <p class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+        {about.tagline}
+      </p>
+      <h2 class="font-heading text-3xl font-bold text-slate-900 sm:text-4xl">
+        {about.title}
+      </h2>
+      <p class="text-base leading-relaxed text-slate-600">{about.intro}</p>
+
+      <ul class="space-y-6">
+        {about.bullets.map((item) => (
+          <li class="flex items-start gap-4">
+            <span class="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <Icon name="tabler:star" class="h-4 w-4" />
+            </span>
+            <div>
+              <h3 class="font-semibold text-slate-900">{item.title}</h3>
+              <p class="mt-1 text-sm text-slate-600">{item.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div>
+        <a
+          href={about.cta.href}
+          class={`inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:opacity-90 ${about.cta.class ?? ''}`}
+          target={about.cta.target}
+          rel="noopener"
+        >
+          <Icon name={about.cta.icon ?? 'tabler:calendar'} class="h-5 w-5" />
+          <span>{about.cta.label}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="relative overflow-hidden rounded-3xl shadow-xl shadow-slate-200">
+      <Image
+        src={about.image.src}
+        alt={about.image.alt}
+        class="h-full w-full object-cover"
+        layout="responsive"
+        sizes="(min-width: 1024px) 40vw, 100vw"
+      />
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent" />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,428 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { Icon } from 'astro-icon/components';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Hero3 from '~/components/widgets/Hero3.astro';
+import Note from '~/components/widgets/Note.astro';
+import Features from '~/components/widgets/Features.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+import Features4 from '~/components/widgets/Features4.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Content from '~/components/widgets/Content.astro';
+import Content2 from '~/components/widgets/Content2.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import ReviewSection from '~/components/widgets/ReviewSection.astro';
+import Button from '~/components/ui/Button.astro';
+import { serviciileNoastre, recenzii } from '~/homeData.ts';
+import CtaProgramare from '~/components/widgets/CtaProgramare.astro';
+const metadata = {
+  title: 'Bali Zen - Masaj Autentic Balinez',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero3
+    actions={[
+
+      {
+        variant: 'secondary',
+        text: 'WhatsApp',
+        classes: {
+          button: 'bg-[#25D366] text-white border-[#25D366] border-2 hover:bg-white hover:text-[#25D366] js-contact-button',
+        },
+        href: 'https://wa.me/40733211325',
+        target: '_blank',
+        icon: 'tabler:brand-whatsapp',
+      },
+      {
+        variant: 'secondary',
+        classes: {
+          button: 'bg-white text-black border-2 border-black hover:bg-black hover:text-white js-contact-button',
+        },
+        text: '0733 211 325',
+        href: 'tel:+40733211325',
+        icon: 'tabler:phone',
+      },
+      {
+        variant: 'secondary',
+        text: 'Lista completă a serviciilor',
+        href: '#servicii',
+        icon: 'tabler:list',
+      },
+      // {
+      //   variant: 'primary',
+      //   text: 'Programează-te aici',
+      //   target: '_blank',
+      //   href: 'https://programari.balizen.ro',
+      //   icon: 'tabler:calendar'
+      // },
+    ]}
+    actions2={[
+      {
+        variant: 'primary',
+        text: 'Programează-te aici',
+        target: '_blank',
+        href: 'https://programari.balizen.ro',
+        icon: 'tabler:calendar',
+        classes: {
+          button: 'js-programari-button',
+        },
+      },
+    ]}
+    image={{
+      src: '~/assets/images/balizen_148_horizontal.jpg',
+      alt: 'Perete texturat',
+    }}
+
+
+   
+  >
+    <Fragment slot="title">
+      Mai aproape de Bali<br>Mai aproape de Zen
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <div class="text-2xl text-secondary mb-6 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter space-y-1">
+        <p><span class="font-semibold">Călătoria ta spre armonie și vitalitate</span> începe aici, la Bali Zen - Ploiești.</p>
+        <p>Descoperă puterea vindecătoare a masajului autentic balinez într-un spațiu dedicat relaxării și regenerării tale complete.</p>
+
+      </div>
+      </Fragment>
+  </Hero3>  
+
+
+  <Content  
+    tagline="Cine suntem?"
+    isReversed
+    showFullImage={true}
+    callToAction={
+      {
+        variant: 'primary',
+        text: 'Programează-te aici',
+        target: '_blank',
+        class: 'js-programari-button',
+        href: 'https://programari.balizen.ro',
+        icon: 'tabler:calendar'
+      }
+    }
+    items={[
+      {
+        title: 'Experiență autentică balineză',
+        description:
+          'Echipa noastră de terapeuți profesioniști din Bali combină experiența cu pasiunea pentru vindecare, oferind o gamă de tratamente concepute pentru a reduce stresul.',
+      },
+      {
+        title: 'Atmosferă de relaxare',
+        description:
+          'Fiecare detaliu este gândit pentru confortul tău, de la atmosfera calmă la tehnicile ancestrale care îți redau energia și armonia interioară.',
+      },
+      {
+        title: 'Beneficii terapeutice',
+        description:
+          'La Bali Zen, credem în puterea transformatoare a masajului pentru îmbunătățirea stării de bine, reducerea stresului și promovarea sănătății generale.',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/balizen_133.jpg',
+      alt: 'Juli @ Bali Zen Masaj Studio',
+    }}
+  >
+    <Fragment slot="content">
+            <div class="space-y-2">
+
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Bun venit la Bali Zen!</h3>
+      <p class="text-justify">Sanctuarul tău pentru relaxare și armonie din Ploiești. Studioul nostru de masaj este dedicat oferirii unui refugiu liniștitor, departe de agitația vieții cotidiene.</p>
+    </div>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+
+  
+
+  <!-- Features Widget *************** -->
+<!-- subtitle="Descoperă gama noastră completă de masaje terapeutice, fiecare conceput pentru a-ți oferi relaxarea și beneficiile de care ai nevoie." -->
+  <Features4
+    id="servicii"
+    title="Serviciile Noastre"
+    categorizedItems={serviciileNoastre}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+    <Fragment slot="footer">
+      <CtaProgramare />
+    </Fragment>
+  </Features4>
+  <!-- Abonamente Content Widget -->
+  <Content
+    id="abonamente"
+    tagline="Abonamente"
+    title="Prețuri Abonamente"
+    isReversed
+   
+    callToAction={
+      {
+        variant: 'primary',
+        text: 'Comandă aici',
+        href: 'https://programari.balizen.ro',
+        target: '_blank',
+        icon: 'tabler:calendar',
+        class: 'js-programari-button',
+      }
+    }
+     
+    items={[
+      {
+        title: 'Valabilitate: 3 luni',
+        description: 'Alege orice tip de masaj de 60 minute (cu excepția masajului anti-celulită)',
+      },
+      {
+        title: 'Economisești timp și bani',
+        description: 'Programare prioritară și preț special',
+      }
+      ,
+       {
+        title: '10 ședințe ZEN 60\' la doar 1900 RON',
+        }
+    ]},
+    image={{
+      // src: '~/assets/images/balizen_109.jpg',
+      src: '~/assets/images/balizen_109.jpg',
+      alt: 'Abonament Bali Zen',
+    }}
+  >
+    <Fragment slot="content">
+      <div class="space-y-2">
+          <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Abonamentul ZEN 60'</h3>
+          <p class="text-justify">
+          Bucură-te de relaxare profundă timp de 3 luni, cu ședințe de 60 de minute fiecare - o îmbrățișare 
+          reconfortantă pentru corpul și sufletul tău!
+        </p>
+        <p class="text-justify">  Alege orice tip de masaj de relaxare și lasă-te pe mâinile magice ale terapeuților noștri autentici din Bali! </p>
+    </div>    
+  </Fragment>
+  </Content>
+
+  <Content
+    callToAction={
+      [
+        { 
+        variant: 'primary',
+        text: 'Comandă aici',
+        href: 'https://programari.balizen.ro',
+        target: '_blank',
+        icon: 'tabler:calendar',
+        class: 'js-programari-button',
+      }
+    ]
+    }
+    items={[
+  
+      {
+        title: 'Valabilitate: 3 luni',
+        description: 'Alege orice tip de masaj de 90 minute (cu excepția masajului anti-celulită)',
+      },
+      {
+        title: 'Relaxare supremă',
+        description: 'Experiență completă de masaj',
+      },
+      {
+        title: '10 ședințe ZEN 90\' la doar 2800 RON'
+      },
+    ]}
+    image={{
+      src: '~/assets/images/balizen_145.jpg',
+      alt: 'Abonament Premium Bali Zen',
+    }}
+  >
+    <Fragment slot="content">
+      <div class="space-y-2">
+        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Abonamentul ZEN 90'</h3>
+        <p class="text-justify">Un masaj scurt e grozav pentru o pauză rapidă, dar dacă vrei să atingi nivelul "zen", un masaj mai lung e ca un 
+        mini-concediu. Hai să experimentezi relaxarea supremă în ședințele de 90 de minute, pe parcursul a 3 luni.</p>
+        </p>  
+      </div>
+    </Fragment>
+  </Content>
+
+
+  <Content
+    callToAction={
+      [
+        { 
+        variant: 'primary',
+        text: 'Comandă aici',
+        href: 'https://programari.balizen.ro',
+        target: '_blank',
+        icon: 'tabler:calendar',
+        class: 'js-programari-button',
+      }
+    ]
+    }
+    isReversed={true}
+    items={[
+      {
+        title: 'Valabilitate: 2 luni',
+        description: '16 sedințe de masaj anti-celulită de 60 minute',
+      },
+      {
+        title: 'Evaluare nutrițională gratuită',
+        description: 'Evaluare nutrițională cu nutriționistul nostru partener, unde îți vei afla grăsimea corporală, nivelul real de hidratare, vârsta metabolică (cât de "tânăr" e corpul tău), grăsimea viscerală (din jurul organelor), masa musculară & câte proteine trebuie să consumi zilnic.',
+      },
+        
+      {
+        title: 'Și mai ales... rezultate! La un preț special de 3200 RON',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/balizen_4.jpg',
+      alt: 'Abonament Premium Bali Zen',
+    }}
+  >
+    <Fragment slot="content">
+      <div class="space-y-2">
+        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Abonamentul ANTI–CELULITĂ</h3>
+        <p class="text-justify">La Bali Zen am creat Abonamentul Anti-Celulită, combinația perfectă între masaj anticelulitic EFICIENT și nutriție personalizată! În ce constă?</p>
+        </p>  
+      </div>
+    </Fragment>
+  </Content>
+
+
+
+
+  <!-- Gift Card Content Widget -->
+  <Content2
+    id="gift-card"
+    tagline="Gift Card"
+    showFullImage
+    callToAction={{
+      variant: 'primary',
+      text: 'Comandă Card Cadou',
+      href: 'https://wa.me/40733211325',
+      target: '_blank',
+      icon: 'tabler:brand-whatsapp',
+      class: 'js-contact-button',
+    }}
+    items={[
+      {
+        icon: 'tabler:certificate',
+        title: 'Disponibil în format fizic',
+        description: 'Card elegant, personalizat pentru ocazia ta specială',
+      },
+      {
+        icon: 'tabler:calendar',
+        title: 'Valabilitate: 3 luni',
+        description: 'Timp suficient pentru a programa experiența perfectă',
+      },
+      {
+        icon: 'tabler:gift',
+        title: 'Personalizabil pentru orice ocazie',
+        description: 'Aniversări, zile speciale sau gesturi de apreciere',
+      },
+    ]}
+    image={{
+      src: '~/assets/images/gift_card.png',
+      alt: 'Gift Card Bali Zen',
+      class: 'w-full h-full object-contain',
+    }}
+  >
+    <Fragment slot="content">
+      <div class="space-y-2">
+        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Dăruiește Relaxare Autentică</h3>
+        <p class="text-justify">
+          Alege un voucher pentru o experiență unică de masaj și transformă orice ocazie într-un moment de bine.
+        </p>
+        <p class="text-justify">
+        Oferă celor dragi un moment de pură relaxare cu un Gift Card Bali Zen. Fie că este vorba despre o aniversare, 
+        o surpriză specială sau pur și simplu un gest de apreciere, acest cadou va aduce liniște, echilibru și răsfăț 
+        autentic balinez.          
+        </p> 
+      </div>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content2>
+
+     
+  <ReviewSection 
+      title="Ce Spun Clienții Noștri"
+      reviews={recenzii}
+      googleMapsUrl="https://maps.app.goo.gl/8aRmwitJxixrtPnk8"
+      isDark={false}
+      classes={{
+        container: "custom-class"
+      }}
+    > 
+  </ReviewSection>
+    
+
+  <!-- CallToAction Widget pentru programări -->
+  <CallToAction
+    id="programare"
+    title="Programează-ți Experiența de Relaxare"
+    subtitle="Pentru programări rapide și informații suplimentare, ne puteți contacta telefonic sau pe WhatsApp. Echipa noastră vă stă la dispoziție pentru a vă ajuta să alegeți experiența de relaxare perfectă!"
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-white"></div>
+    </Fragment>
+    <Fragment slot="footer">  
+        <CtaProgramare />
+    </Fragment>
+  </CallToAction>
+
+
+
+
+  <!-- Location Section -->
+  <Features2
+    id="locatie"
+    title="Cum ne găsiți?"
+    columns={2}
+    items={[
+      {
+        title: 'Program de lucru',
+        description: 'Luni - Duminică: 10:00 - 21:00',
+        icon: 'tabler:clock',
+      },
+      {
+        title: 'Adresa salonului',
+        description: 'Strada Cantacuzino nr 190 , Ploiești',
+        icon: 'tabler:map-pin',
+        href: 'https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7',
+      },
+      {
+        title: 'Contact',
+        description: '0733 211 325',
+        icon: 'tabler:phone',
+      },
+      {
+        title: 'Email',
+        description: 'contact@balizen.ro',
+        icon: 'tabler:mail',
+      },
+    ]}
+  >
+      <Fragment slot="bg">
+        <div class="absolute inset-0 bg-white dark:bg-transparent"></div>
+      </Fragment>
+     
+
+  </Features2>
+
+</Layout>

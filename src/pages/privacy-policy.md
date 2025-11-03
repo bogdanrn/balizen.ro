@@ -3,7 +3,6 @@ title: 'Politică de Prelucrare a Datelor Personale'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 
-
 **Ultima actualizare:** 28/10/2025
 
 ## Dispoziții Generale

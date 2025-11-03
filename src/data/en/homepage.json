@@ -1,0 +1,227 @@
+{
+  "hero": {
+    "title": "Closer to Bali\nCloser to Zen",
+    "subtitle": [
+      "Your journey to harmony and vitality begins here, at Bali Zen - Ploiești.",
+      "Discover the healing power of authentic Balinese massage in a space dedicated to your complete relaxation and regeneration."
+    ],
+    "heroText": "Bali Zen - Authentic Balinese Massage",
+    "primaryActions": [
+      {
+        "variant": "primary",
+        "label": "Book here",
+        "href": "https://programari.balizen.ro",
+        "target": "_blank",
+        "icon": "tabler:calendar",
+        "class": "js-programari-button bg-primary text-white border-0 shadow-lg shadow-primary/30 hover:opacity-90 hover:shadow-lg hover:bg-primary"
+      },
+      {
+        "variant": "secondary",
+        "label": "WhatsApp",
+        "href": "https://wa.me/40733211325",
+        "target": "_blank",
+        "icon": "tabler:brand-whatsapp",
+        "class": "js-contact-button bg-[#25D366] text-white border-[#25D366] border-2 hover:bg-white hover:text-[#25D366]"
+      },
+      {
+        "variant": "secondary",
+        "label": "Complete services list",
+        "class": "bg-[#33291F] text-white hover:bg-white hover:text-[#33291F] hover:border-[#33291F] border-2 border-transparent",
+        "href": "#servicii",
+        "icon": "tabler:list"
+      }
+    ],
+    "secondaryActions": [
+      {
+        "variant": "secondary",
+        "label": "+40 733 211 325",
+        "href": "tel:+40733211325",
+        "icon": "tabler:phone",
+        "class": "js-contact-button bg-white text-black border-2 border-white hover:bg-white hover:text-black hover:border-black"
+      },
+      {
+        "variant": "secondary",
+        "label": "+40 725 882 924",
+        "href": "tel:+40725882924",
+        "icon": "tabler:phone",
+        "class": "js-contact-button bg-white text-black border-2 border-white hover:bg-white hover:text-black hover:border-black"
+      }
+    ],
+    "image": {
+      "src": "~/assets/images/balizen_148_horizontal.jpg",
+      "alt": "Bali Zen Interior"
+    }
+  },
+  "about": {
+    "id": "despre-noi",
+    "tagline": "Who are we?",
+    "title": "Welcome to Bali Zen!",
+    "intro": "Your sanctuary for relaxation and harmony in Ploiești. Our massage studio is dedicated to offering a peaceful refuge, away from the hustle and bustle of everyday life.",
+    "bullets": [
+      {
+        "title": "Authentic Balinese experience",
+        "description": "Our team of professional therapists from Bali combines experience with passion for healing, offering a range of treatments designed to reduce stress."
+      },
+      {
+        "title": "Relaxation atmosphere",
+        "description": "Every detail is designed for your comfort, from the calm atmosphere to the ancestral techniques that restore your energy and inner harmony."
+      },
+      {
+        "title": "Therapeutic benefits",
+        "description": "At Bali Zen, we believe in the transformative power of massage to improve well-being, reduce stress, and promote overall health."
+      }
+    ],
+    "cta": {
+      "variant": "primary",
+      "label": "Book here",
+      "href": "https://programari.balizen.ro",
+      "target": "_blank",
+      "icon": "tabler:calendar",
+      "class": "js-programari-button"
+    },
+    "image": {
+      "src": "~/assets/images/balizen_133.jpg",
+      "alt": "Juli @ Bali Zen Massage Studio"
+    }
+  },
+  "services": {
+    "id": "servicii",
+    "title": "Our Services",
+    "description": "Discover our complete range of therapeutic massages, each designed to provide you with the relaxation and benefits you need.",
+    "cta": {
+      "variant": "primary",
+      "label": "Book online",
+      "href": "https://programari.balizen.ro",
+      "target": "_blank",
+      "icon": "tabler:calendar",
+      "class": "js-programari-button"
+    }
+  },
+  "subscriptions": [
+    {
+      "id": "abonamente",
+      "title": "ZEN 60' Subscription",
+      "summary": "Enjoy deep relaxation for 3 months, with 60-minute sessions each - a comforting embrace for body and soul.",
+      "highlights": [
+        "Validity: 3 months",
+        "Choose any type of 60-minute massage (except anti-cellulite massage)",
+        "10 ZEN 60' sessions for only 1900 RON"
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_109.jpg",
+        "alt": "ZEN 60' Subscription"
+      }
+    },
+    {
+      "id": "abonament-zen-90",
+      "title": "ZEN 90' Subscription",
+      "summary": "Experience supreme relaxation in 90-minute sessions over 3 months.",
+      "highlights": [
+        "Validity: 3 months",
+        "Choose any type of 90-minute massage (except anti-cellulite massage)",
+        "10 ZEN 90' sessions for only 2800 RON"
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_145.jpg",
+        "alt": "ZEN 90' Subscription"
+      }
+    },
+    {
+      "id": "abonament-anticelulitic",
+      "title": "Anti-Cellulite Subscription",
+      "summary": "The perfect combination of effective anti-cellulite massage and personalized nutrition.",
+      "highlights": [
+        "Validity: 2 months",
+        "16 anti-cellulite massage sessions of 60 minutes",
+        "Free nutritional assessment with partner nutritionist",
+        "Visible results at a special price of 3200 RON"
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_4.jpg",
+        "alt": "Anti-Cellulite Subscription"
+      }
+    }
+  ],
+  "subscriptionAction": {
+    "variant": "primary",
+    "label": "Order here",
+    "href": "https://programari.balizen.ro",
+    "target": "_blank",
+    "icon": "tabler:calendar",
+    "class": "js-programari-button"
+  },
+  "giftCard": {
+    "id": "gift-card",
+    "title": "Give Authentic Relaxation",
+    "description": [
+      "Choose a voucher for a unique massage experience and turn any occasion into a moment of well-being.",
+      "Give your loved ones a moment of pure relaxation with a Bali Zen Gift Card. Whether it's an anniversary, a special surprise, or a gesture of appreciation, this gift brings peace, balance, and authentic Balinese indulgence."
+    ],
+    "features": [
+      {
+        "icon": "tabler:certificate",
+        "title": "Available in physical format",
+        "description": "Elegant card, personalized for your special occasion."
+      },
+      {
+        "icon": "tabler:calendar",
+        "title": "Validity: 3 months",
+        "description": "Enough time to schedule the perfect experience."
+      },
+      {
+        "icon": "tabler:gift",
+        "title": "Customizable for any occasion",
+        "description": "Anniversaries, special days, or gestures of appreciation."
+      }
+    ],
+    "cta": {
+      "variant": "primary",
+      "label": "Order Gift Card",
+      "href": "https://wa.me/40733211325",
+      "target": "_blank",
+      "icon": "tabler:brand-whatsapp",
+      "class": "js-contact-button"
+    },
+    "image": {
+      "src": "~/assets/images/gift_card.png",
+      "alt": "Bali Zen Gift Card"
+    }
+  },
+  "callToAction": {
+    "id": "programare",
+    "title": "Book Your Relaxation Experience",
+    "subtitle": "For quick bookings and additional information, you can contact us by phone or WhatsApp. Our team helps you choose the perfect relaxation experience!",
+    "cta": {
+      "variant": "primary",
+      "label": "Book a session",
+      "href": "https://programari.balizen.ro",
+      "target": "_blank",
+      "icon": "tabler:calendar",
+      "class": "js-programari-button"
+    }
+  },
+  "location": {
+    "id": "locatie",
+    "title": "How to find us?",
+    "locations": [
+      {
+        "name": "Str. Gh Gr Cantacuzino 190 1B, Ploiești",
+        "address": "Strada Gheorghe Grigore Cantacuzino nr 190, Ploiești",
+        "phone": "+40 733 211 325",
+        "phoneHref": "tel:+40733211325",
+        "schedule": "Monday - Sunday: 10:00 - 21:00",
+        "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
+      },
+      {
+        "name": "Hotel Central (Wellness), Ploiești",
+        "address": "Hotel Central (Wellness), Ploiești",
+        "phone": "+40 725 882 924",
+        "phoneHref": "tel:+40725882924",
+        "schedule": "Tuesday - Sunday: 12:00 - 22:00",
+        "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
+      }
+    ],
+    "email": "contact@balizen.ro",
+    "emailHref": "mailto:contact@balizen.ro"
+  }
+}

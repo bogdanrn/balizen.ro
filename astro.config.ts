@@ -25,6 +25,14 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
   output: 'static',
+  trailingSlash: 'ignore',
+  i18n: {
+    defaultLocale: 'ro',
+    locales: ['ro', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
 
   integrations: [
     tailwind({
@@ -93,6 +101,7 @@ export default defineConfig({
 
       language: {
         default: 'ro',
+        autoDetect: 'document',
         translations: {
           ro: {
             consentModal: {
@@ -126,6 +135,40 @@ export default defineConfig({
                   title: 'Mai multe informații',
                   description:
                     'Pentru întrebări legate de politica noastră de cookie-uri și alegerile dumneavoastră, vă rugăm să ne contactați.',
+                },
+              ],
+            },
+          },
+          en: {
+            consentModal: {
+              title: 'This page uses cookies',
+              description:
+                'We use cookies to improve your experience on the site and to analyze traffic. You can choose what types of cookies you accept.',
+              acceptAllBtn: 'Accept all',
+              acceptNecessaryBtn: 'Necessary only',
+              showPreferencesBtn: 'Customize',
+            },
+            preferencesModal: {
+              title: 'Cookie preferences',
+              acceptAllBtn: 'Accept all',
+              acceptNecessaryBtn: 'Necessary only',
+              savePreferencesBtn: 'Save preferences',
+              closeIconLabel: 'Close',
+              sections: [
+                {
+                  title: 'Necessary cookies',
+                  description:
+                    'These cookies are essential for the proper functioning of the site and cannot be disabled.',
+                  linkedCategory: 'necessary',
+                },
+                {
+                  title: 'Analytics cookies',
+                  description: 'They help us understand how our site is used so we can improve it. Data is anonymous.',
+                  linkedCategory: 'analytics',
+                },
+                {
+                  title: 'More information',
+                  description: 'For questions related to our cookie policy and your choices, please contact us.',
                 },
               ],
             },

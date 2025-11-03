@@ -1,15 +1,15 @@
 ---
-import AboutSection from '../components/home/AboutSection.astro';
-import CallToActionSection from '../components/home/CallToActionSection.astro';
-import GiftCardSection from '../components/home/GiftCardSection.astro';
-import HeroSection from '../components/home/HeroSection.astro';
-import LocationSection from '../components/home/LocationSection.astro';
-import ReviewsSection from '../components/home/ReviewsSection.astro';
-import ServicesSection from '../components/home/ServicesSection.astro';
-import SubscriptionsSection from '../components/home/SubscriptionsSection.astro';
-import MainLayout from '../layouts/MainLayout.astro';
-import { getLangFromUrl } from '../i18n/utils';
-import { getSortedServiceCategories, getHomepageConfig, getSiteConfig, getReviews } from '../utils/content';
+import AboutSection from '../../components/home/AboutSection.astro';
+import CallToActionSection from '../../components/home/CallToActionSection.astro';
+import GiftCardSection from '../../components/home/GiftCardSection.astro';
+import HeroSection from '../../components/home/HeroSection.astro';
+import LocationSection from '../../components/home/LocationSection.astro';
+import ReviewsSection from '../../components/home/ReviewsSection.astro';
+import ServicesSection from '../../components/home/ServicesSection.astro';
+import SubscriptionsSection from '../../components/home/SubscriptionsSection.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getLangFromUrl } from '../../i18n/utils';
+import { getSortedServiceCategories, getHomepageConfig, getSiteConfig, getReviews } from '../../utils/content';
 
 const lang = getLangFromUrl(Astro.url);
 const siteConfig = getSiteConfig(lang);

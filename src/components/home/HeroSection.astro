@@ -71,11 +71,12 @@ const titleLines = hero.title.split('\n');
           <div class="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start">
             {hero.secondaryActions.map((action) => {
               const isPhone = action.href?.startsWith('tel:');
-              const locationLabel = action.href === 'tel:+40733211325' 
-                ? 'Gh. Gr. Cantacuzino' 
-                : action.href === 'tel:+40725882924' 
-                ? 'Hotel Central Wellness' 
-                : null;
+              const locationLabel =
+                action.href === 'tel:+40733211325'
+                  ? 'Gh. Gr. Cantacuzino'
+                  : action.href === 'tel:+40725882924'
+                    ? 'Hotel Central Wellness'
+                    : null;
 
               if (isPhone && locationLabel) {
                 return (
@@ -92,7 +93,9 @@ const titleLines = hero.title.split('\n');
                       {action.icon && <Icon name={action.icon} class="h-5 w-5" />}
                       <span>{action.label}</span>
                     </a>
-                    <span class="text-[10px] font-semibold uppercase tracking-wide text-slate-600">{locationLabel}</span>
+                    <span class="text-[10px] font-semibold uppercase tracking-wide text-slate-600">
+                      {locationLabel}
+                    </span>
                   </div>
                 );
               }

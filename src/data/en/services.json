@@ -1,0 +1,349 @@
+{
+  "Full Body Massages": [
+    {
+      "order": 10,
+      "title": "Mom To Be",
+      "description": "Through gentle techniques and correct positioning, we alleviate common pregnancy discomforts such as back pain and swelling. This ensures comfort and safety for both mother and baby, promoting relaxation and overall well-being.",
+      "pricing": [
+        {
+          "price": "200",
+          "duration": 60
+        },
+        {
+          "price": "300",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_126.jpg",
+        "alt": "Prenatal Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 9,
+      "title": "Herbal Thai",
+      "description": "A delicate massage that combines relaxing techniques with essential oils, specially selected to calm the mind and revitalize the body. Aroma Therapy reduces stress, improves mood, and offers a unique sensory experience.",
+      "pricing": [
+        {
+          "price": "320",
+          "duration": 60
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_28.jpg",
+        "alt": "Herbal Thai Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 8,
+      "title": "Aroma Therapy",
+      "description": "A delicate massage that combines relaxing techniques with essential oils, specially selected to calm the mind and revitalize the body. Aroma Therapy reduces stress, improves mood, and offers a unique sensory experience.",
+      "pricing": [
+        {
+          "price": "200",
+          "duration": 60
+        },
+        {
+          "price": "300",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_83.jpg",
+        "alt": "Aroma Therapy Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 7,
+      "title": "LOMI LOMI",
+      "description": "Long, fluid movements are used for deep relaxation. The holistic technique releases tension, improves circulation, and restores inner balance.",
+      "pricing": [
+        {
+          "price": "200",
+          "duration": 60
+        },
+        {
+          "price": "300",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_117.jpg",
+        "alt": "Lomi Lomi Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 6,
+      "title": "Thai",
+      "pricing": [
+        {
+          "price": "200",
+          "duration": 60
+        }
+      ],
+      "description": "A combination of assisted stretches, rhythmic pressure, and gentle twists to improve flexibility, release muscle tension, and restore energy flow, leaving you balanced and revitalized.",
+      "image": {
+        "src": "~/assets/images/balizen_113.jpg",
+        "alt": "Thai Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 5,
+      "title": "Deep Tissue",
+      "pricing": [
+        {
+          "price": "200",
+          "duration": 60
+        },
+        {
+          "price": "300",
+          "duration": 90
+        }
+      ],
+      "description": "Firm pressure and slow movements, professionally applied to reach deep layers of muscles and connective tissues, effectively relieving chronic tension and muscle pain.",
+      "image": {
+        "src": "~/assets/images/balizen_118.jpg",
+        "alt": "Deep Tissue Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 4,
+      "title": "Anti-Cellulite",
+      "description": "Energetic movements and kneading techniques performed with carefully selected bamboo sticks that stimulate blood circulation and improve skin tone for a smoother and firmer appearance.",
+      "pricing": [
+        {
+          "price": "200",
+          "duration": 60
+        },
+        {
+          "price": "300",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_4.jpg",
+        "alt": "Anti-Cellulite Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 3,
+      "title": "Hot Stone",
+      "description": "Hot stones are placed on key points of the body to remove muscle tension, reduce stress, and promote a deep state of relaxation.",
+      "pricing": [
+        {
+          "price": "200",
+          "duration": 60
+        },
+        {
+          "price": "300",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_16.jpg",
+        "alt": "Hot Stone Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 2,
+      "title": "Authentic Balinese",
+      "description": "Traditional Balinese technique that combines deep pressure and fluid movements for complete relaxation and release of muscle tension.",
+      "pricing": [
+        {
+          "price": "200",
+          "duration": 60
+        },
+        {
+          "price": "300",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_82.jpg",
+        "alt": "Authentic Balinese Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 1,
+      "title": "Bali Zen Signature",
+      "pricing": [
+        {
+          "price": "300",
+          "duration": 90
+        }
+      ],
+      "description": "We combine a variety of Asian techniques that help you completely relax your body, also improving conditions such as muscle pain or chronic fatigue. The experience includes reflexology, facial and scalp massage ensuring perfect well-being.",
+      "image": {
+        "src": "~/assets/images/balizen_37.jpg",
+        "alt": "Bali Zen Signature Massage"
+      }
+    },
+    {
+      "order": 11,
+      "title": "Lymphatic Drainage Massage",
+      "pricing": [
+        {
+          "price": "300",
+          "duration": 90
+        }
+      ],
+      "description": "Lymphatic drainage massage is a delicate therapy that stimulates lymph circulation, helping to eliminate toxins and reduce water retention. It is ideal for detoxification, combating cellulite, and supporting immunity.",
+      "image": {
+        "src": "~/assets/images/balizen_140.jpg",
+        "alt": "Lymphatic Drainage Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 12,
+      "title": "4 Hands Massage",
+      "pricing": [
+        {
+          "price": "400",
+          "duration": 60
+        },
+        {
+          "price": "600",
+          "duration": 90
+        }
+      ],
+      "description": "The 4 hands massage is a deeply relaxing experience, performed by two therapists working perfectly synchronized on the entire body. This technique intensely stimulates circulation and releases physical and mental tension in a short time.",
+      "image": {
+        "src": "~/assets/images/4_maini_1.jpg",
+        "alt": "4 Hands Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 13,
+      "title": "Tandem Massage (2 people)",
+      "pricing": [
+        {
+          "price": "400",
+          "duration": 60
+        },
+        {
+          "price": "600",
+          "duration": 90
+        }
+      ],
+      "description": "The tandem massage for 2 people takes place simultaneously, in the same room, offering a synchronized relaxation experience alongside a loved one. It is the perfect choice for couples or friends who want to reconnect and enjoy pampering moments together.",
+      "image": {
+        "src": "~/assets/images/cuplu_1.jpg",
+        "alt": "Tandem Massage (2 people) at Bali Zen"
+      }
+    },
+    {
+      "order": 14,
+      "title": "Candle Massage",
+      "pricing": [
+        {
+          "price": "240",
+          "duration": 60
+        },
+        {
+          "price": "340",
+          "duration": 90
+        }
+      ],
+      "description": "Perfect for cool days, this relaxation massage uses a special wax made from essential oils, which, once melted, transforms into a warm and velvety oil. The fine scents and gentle touch restore body balance and a deep sense of comfort.",
+      "image": {
+        "src": "~/assets/images/candle-massage.jpg",
+        "alt": "Candle Massage at Bali Zen"
+      },
+      "isNew": true
+    },
+    {
+      "order": 15,
+      "title": "Bali Zen Winter",
+      "pricing": [
+        {
+          "price": "320",
+          "duration": 90
+        }
+      ],
+      "description": "The ritual begins with a foot scrub, followed by a Balinese massage with warm cinnamon and clove oils that stimulate circulation, tone the skin, and deeply relax. Their festive aroma brings the holiday spirit to the skin, and the experience ends with a cervical, facial, and scalp massage for balance and complete well-being.",
+      "image": {
+        "src": "~/assets/images/winter-massage.jpg",
+        "alt": "Balizen Winter Massage at Bali Zen"
+      },
+      "isNew": true
+    }
+  ],
+  "Local Massages": [
+    {
+      "order": 101,
+      "title": "Back & Shoulders",
+      "pricing": [
+        {
+          "price": "110",
+          "duration": 30
+        },
+        {
+          "price": "200",
+          "duration": 60
+        }
+      ],
+      "description": "We combine kneading and applied pressure techniques to release tension in the back and shoulders. Back pain will be alleviated and you will feel revitalized.",
+      "image": {
+        "src": "~/assets/images/limfatic_1.jpg",
+        "alt": "Back & Shoulders Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 102,
+      "title": "Head & Shoulders",
+      "pricing": [
+        {
+          "price": "110",
+          "duration": 30
+        },
+        {
+          "price": "200",
+          "duration": 60
+        }
+      ],
+      "description": "A perfect way to release tension, reduce headaches, and promote relaxation in the neck, shoulders, and scalp area through light kneading and pressure techniques.",
+      "image": {
+        "src": "~/assets/images/balizen_7.jpg",
+        "alt": "Head & Shoulders Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 103,
+      "title": "Head & Face",
+      "pricing": [
+        {
+          "price": "110",
+          "duration": 30
+        },
+        {
+          "price": "200",
+          "duration": 60
+        }
+      ],
+      "description": "Through gentle, circular movements and pressure application, we alleviate tension, reduce headaches, and stimulate circulation, leaving the scalp and facial muscles relaxed and revitalized for a radiant appearance.",
+      "image": {
+        "src": "~/assets/images/balizen_106.jpg",
+        "alt": "Head & Face Massage at Bali Zen"
+      }
+    },
+    {
+      "order": 104,
+      "title": "Foot Massage",
+      "pricing": [
+        {
+          "price": "110",
+          "duration": 30
+        },
+        {
+          "price": "200",
+          "duration": 60
+        }
+      ],
+      "description": "We apply firm but gentle enough pressure on key points of the feet, which helps optimize energy flow and promotes blood circulation. Additionally, the experience includes a foot scrub.",
+      "image": {
+        "src": "~/assets/images/balizen_39.jpg",
+        "alt": "Foot Massage at Bali Zen"
+      }
+    }
+  ]
+}

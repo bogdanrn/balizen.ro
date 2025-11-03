@@ -248,7 +248,8 @@
       "image": {
         "src": "~/assets/images/candle-massage.jpg",
         "alt": "Candle Massage la Bali Zen"
-      }
+      },
+      "isNew": true
     },
     {
       "order": 15,
@@ -263,7 +264,8 @@
       "image": {
         "src": "~/assets/images/winter-massage.jpg",
         "alt": "Balizen Winter Massage la Bali Zen"
-      }
+      },
+      "isNew": true
     }
   ],
   "Masaje locale": [

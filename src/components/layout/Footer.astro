@@ -1,44 +1,71 @@
 ---
 import { Icon } from 'astro-icon/components';
+import LanguageSwitcher from '../common/LanguageSwitcher.astro';
 
-import { siteConfig } from '../../utils/content';
+import { getLangFromUrl } from '../../i18n/utils';
+import { getSiteConfig } from '../../utils/content';
 import { cn } from '../../utils/cn';
 
-const {  contact, footer } = siteConfig;
+const lang = getLangFromUrl(Astro.url);
+const siteConfig = getSiteConfig(lang);
+const { contact, footer } = siteConfig;
 const currentYear = new Date().getFullYear();
 const dynamicFootnote = footer.footnote.replace(/\d{4}/g, String(currentYear));
 const footerLocations = footer.locations || [];
+
+const translations = {
+  ro: {
+    locationContact: 'Locație & Contact',
+    address: 'Adresă',
+    schedule: 'Program',
+    contact: 'Contact',
+    readReviews: 'Citește recenziile noastre pe Google',
+    cookieSettings: 'Setări cookie-uri',
+  },
+  en: {
+    locationContact: 'Location & Contact',
+    address: 'Address',
+    schedule: 'Schedule',
+    contact: 'Contact',
+    readReviews: 'Read our reviews on Google',
+    cookieSettings: 'Cookie settings',
+  },
+};
+
+const t = translations[lang];
 ---
 
 <footer class="border-t border-slate-200 bg-slate-50">
   <div class="mx-auto grid max-w-screen-xl gap-12 px-4 py-12 sm:px-6 lg:grid-cols-5 lg:px-8">
     <div class="lg:col-span-2">
-      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Locație & Contact</h3>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">{t.locationContact}</h3>
       <div class="mt-4 space-y-8">
-        {footerLocations.map((loc) => (
-          <dl class="space-y-3 text-sm text-slate-600">
-            <div>
-              <dt class="font-semibold uppercase tracking-wide text-slate-500">Adresă</dt>
-              <dd>
-                <a href={loc.mapsUrl} target="_blank" rel="noopener" class="hover:text-primary">
-                  {loc.address}
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt class="font-semibold uppercase tracking-wide text-slate-500">Program</dt>
-              <dd>{loc.schedule}</dd>
-            </div>
-            <div>
-              <dt class="font-semibold uppercase tracking-wide text-slate-500">Contact</dt>
-              <dd>
-                <a class="hover:text-primary" href={loc.phoneHref}>
-                  {loc.phone}
-                </a>
-              </dd>
-            </div>
-          </dl>
-        ))}
+        {
+          footerLocations.map((loc) => (
+            <dl class="space-y-3 text-sm text-slate-600">
+              <div>
+                <dt class="font-semibold uppercase tracking-wide text-slate-500">{t.address}</dt>
+                <dd>
+                  <a href={loc.mapsUrl} target="_blank" rel="noopener" class="hover:text-primary">
+                    {loc.address}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt class="font-semibold uppercase tracking-wide text-slate-500">{t.schedule}</dt>
+                <dd>{loc.schedule}</dd>
+              </div>
+              <div>
+                <dt class="font-semibold uppercase tracking-wide text-slate-500">{t.contact}</dt>
+                <dd>
+                  <a class="hover:text-primary" href={loc.phoneHref}>
+                    {loc.phone}
+                  </a>
+                </dd>
+              </div>
+            </dl>
+          ))
+        }
       </div>
     </div>
 
@@ -116,7 +143,7 @@ const footerLocations = footer.locations || [];
 
   <div class="border-t border-slate-200 bg-slate-50">
     <div
-      class="mx-auto flex max-w-screen-xl flex-col gap-4 px-4 py-6 text-center text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8"
+      class="mx-auto flex max-w-screen-xl flex-col items-center gap-4 px-4 py-6 text-center text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8"
     >
       <p>{dynamicFootnote}</p>
       <div class="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
@@ -126,11 +153,14 @@ const footerLocations = footer.locations || [];
           target="_blank"
           rel="noopener"
         >
-          Citește recenziile noastre pe Google
+          {t.readReviews}
         </a>
         <button type="button" class="text-primary underline-offset-2 hover:underline" data-cc="show-preferencesModal">
-          Setări cookie-uri
+          {t.cookieSettings}
         </button>
+      </div>
+      <div class="flex justify-center">
+        <LanguageSwitcher />
       </div>
     </div>
   </div>

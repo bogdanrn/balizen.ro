@@ -1,7 +1,11 @@
 ---
 import MainLayout from './MainLayout.astro';
 
-import { siteConfig } from '../utils/content';
+import { getSiteConfig } from '../utils/content';
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const siteConfig = getSiteConfig(lang);
 
 const { frontmatter } = Astro.props;
 const title = frontmatter?.title ?? siteConfig.brand.name;

@@ -1,0 +1,21 @@
+---
+import { languages, type Lang } from '../../i18n/ui';
+import { getLangFromUrl, getAlternateLocalePaths } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const alternatePaths = getAlternateLocalePaths(Astro.url.pathname, lang);
+
+// Get the alternate language (the one that's NOT current)
+const alternateLang = Object.keys(languages).find((l) => l !== lang) as Lang;
+const alternateLangData = languages[alternateLang];
+const alternatePath = alternatePaths[alternateLang];
+---
+
+<a
+  href={alternatePath}
+  class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+  aria-label={`Switch to ${alternateLangData.name}`}
+>
+  <span class="text-lg">{alternateLangData.flag}</span>
+  <span>{alternateLangData.name}</span>
+</a>

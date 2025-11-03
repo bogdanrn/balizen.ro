@@ -4,17 +4,22 @@ import { Icon } from 'astro-icon/components';
 import Image from '../common/Image.astro';
 import type { ServiceItem, ServicesSection as ServicesSectionType } from '../../types';
 import { cn } from '../../utils/cn';
+import { getLangFromUrl } from '../../i18n/utils';
+import { getTranslations } from '../../i18n/translations';
 
 const { content, categories } = Astro.props as {
   content: ServicesSectionType;
   categories: Array<{ name: string; services: ServiceItem[] }>;
 };
+
+const lang = getLangFromUrl(Astro.url);
+const t = getTranslations(lang);
 ---
 
 <section id={content.id} class="bg-slate-50">
   <div class="mx-auto max-w-screen-xl px-4 py-24 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
-      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary">Servicii</p>
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary">{t.services.tagline}</p>
       <h2 class="mt-4 font-heading text-3xl font-bold text-slate-900 sm:text-4xl">
         {content.title}
       </h2>
@@ -71,14 +76,23 @@ const { content, categories } = Astro.props as {
                   <div class="flex flex-1 flex-col gap-2">
                     <header class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
                       <div class="text-left">
-                        <h4 class="font-heading text-xl font-semibold text-slate-900">{service.title}</h4>
+                        <div class="flex items-center gap-2">
+                          <h4 class="font-heading text-xl font-semibold text-slate-900">{service.title}</h4>
+                          {service.isNew && (
+                            <span class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary">
+                              {t.labels.new}
+                            </span>
+                          )}
+                        </div>
                       </div>
 
                       {service.pricing?.length ? (
                         <div class="text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:text-right">
-                          <div>{service.pricing.map(({ duration }) => `${duration} min`).join(' · ')}</div>
+                          <div>
+                            {service.pricing.map(({ duration }) => `${duration} ${t.units.minutes}`).join(' · ')}
+                          </div>
                           <div class="text-primary">
-                            {service.pricing.map(({ price }) => `${price} RON`).join(' · ')}
+                            {service.pricing.map(({ price }) => `${price} ${t.units.currency}`).join(' · ')}
                           </div>
                         </div>
                       ) : null}
@@ -105,7 +119,7 @@ const { content, categories } = Astro.props as {
           rel="noopener"
         >
           <Icon name="tabler:brand-whatsapp" class="h-5 w-5" />
-          <span>WhatsApp</span>
+          <span>{t.buttons.whatsapp}</span>
         </a>
         <a
           href="https://programari.balizen.ro"
@@ -114,7 +128,7 @@ const { content, categories } = Astro.props as {
           rel="noopener"
         >
           <Icon name="tabler:calendar" class="h-5 w-5" />
-          <span>Programează-te aici</span>
+          <span>{t.buttons.bookHere}</span>
         </a>
       </div>
       <div class="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
@@ -140,7 +154,5 @@ const { content, categories } = Astro.props as {
         </div>
       </div>
     </div>
-
-
   </div>
 </section>

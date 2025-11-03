@@ -8,16 +8,7 @@ const { block } = Astro.props as { block: SimpleCallToAction };
 ---
 
 <section id={block.id} class="relative overflow-hidden bg-primary text-white">
-  <div class="absolute inset-0 opacity-20">
-    <svg class="h-full w-full" viewBox="0 0 400 400" fill="none">
-      <defs>
-        <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="2" fill="white"></circle>
-        </pattern>
-      </defs>
-      <rect width="400" height="400" fill="url(#dots)"></rect>
-    </svg>
-  </div>
+  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, white 2px, transparent 2px); background-size: 24px 24px; background-position: 0 0;"></div>
 
   <div class="relative mx-auto flex max-w-screen-xl flex-col items-center gap-8 px-4 py-20 text-center sm:px-6 lg:px-8">
     <Icon name="tabler:calendar" class="h-12 w-12 text-white" />

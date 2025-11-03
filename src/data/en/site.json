@@ -1,10 +1,10 @@
 {
   "brand": {
     "name": "Bali Zen",
-    "tagline": "Masaj Autentic Balinez",
+    "tagline": "Authentic Balinese Massage",
     "legalName": "Bali Zen SRL",
-    "description": "Studio de masaj autentic balinez în Ploiești, orientat spre relaxare profundă și armonie interioară.",
-    "copyright": "© Bali Zen SRL 2024. Toate drepturile rezervate."
+    "description": "Authentic Balinese massage studio in Ploiești, focused on deep relaxation and inner harmony.",
+    "copyright": "© Bali Zen SRL 2024. All rights reserved."
   },
   "contact": {
     "phone": "+40 733 211 325",
@@ -12,7 +12,7 @@
     "whatsapp": "https://wa.me/40733211325",
     "email": "contact@balizen.ro",
     "address": "Strada Gheorghe Grigore Cantacuzino nr 190, Ploiești",
-    "schedule": "Luni - Duminică: 10:00 - 21:00",
+    "schedule": "Monday - Sunday: 10:00 - 21:00",
     "bookingUrl": "https://programari.balizen.ro",
     "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7",
     "googleReviewsUrl": "https://maps.app.goo.gl/8aRmwitJxixrtPnk8"
@@ -21,14 +21,14 @@
     "fullWidth": true,
     "position": "center",
     "links": [
-      { "label": "Servicii", "href": "/#servicii" },
-      { "label": "Card Cadou", "href": "/#gift-card" },
-      { "label": "Abonamente", "href": "/#abonamente" },
+      { "label": "Services", "href": "/#servicii" },
+      { "label": "Gift Card", "href": "/#gift-card" },
+      { "label": "Subscriptions", "href": "/#abonamente" },
       { "label": "Contact", "href": "/#programare" },
-      { "label": "Locație & Program", "href": "/#locatie", "class": "js-location-button" }
+      { "label": "Location & Schedule", "href": "/#locatie", "class": "js-location-button" }
     ],
     "primaryAction": {
-      "label": "Programează-te",
+      "label": "Book Now",
       "href": "https://programari.balizen.ro",
       "class": "js-programari-button",
       "icon": "tabler:calendar"
@@ -41,7 +41,7 @@
         "address": "Strada Gheorghe Grigore Cantacuzino nr 190, Ploiești",
         "phone": "+40 733 211 325",
         "phoneHref": "tel:+40733211325",
-        "schedule": "Luni - Duminică: 10:00 - 21:00",
+        "schedule": "Monday - Sunday: 10:00 - 21:00",
         "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
       },
       {
@@ -49,7 +49,7 @@
         "address": "Hotel Central (Wellness), Ploiești",
         "phone": "+40 725 882 924",
         "phoneHref": "tel:+40725882924",
-        "schedule": "Marți - Duminică: 12:00 - 22:00",
+        "schedule": "Tuesday - Sunday: 12:00 - 22:00",
         "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
       }
     ],
@@ -57,18 +57,18 @@
       {
         "title": "Legal",
         "links": [
-          { "text": "Termeni și condiții", "href": "/terms-policy" },
-          { "text": "Politica de confidențialitate", "href": "/privacy-policy" },
-          { "text": "Politica de returnare", "href": "/return-policy" },
-          { "text": "Politica de anulare", "href": "/cancellation-policy" }
+          { "text": "Terms and Conditions", "href": "/terms-policy" },
+          { "text": "Privacy Policy", "href": "/privacy-policy" },
+          { "text": "Return Policy", "href": "/return-policy" },
+          { "text": "Cancellation Policy", "href": "/cancellation-policy" }
         ]
       },
       {
         "title": "Contact",
         "links": [
-          { "text": "Programări online", "href": "https://programari.balizen.ro/", "class": "js-programari-button" },
+          { "text": "Online Booking", "href": "https://programari.balizen.ro/", "class": "js-programari-button" },
           { "text": "Email: contact@balizen.ro", "href": "mailto:contact@balizen.ro", "class": "js-contact-button" },
-          { "text": "Telefon: +40 733 211 325", "href": "tel:+40733211325", "class": "js-contact-button" },
+          { "text": "Phone: +40 733 211 325", "href": "tel:+40733211325", "class": "js-contact-button" },
           { "text": "WhatsApp: +40 733 211 325", "href": "https://wa.me/40733211325", "class": "js-contact-button" }
         ]
       }
@@ -80,7 +80,7 @@
         "rel": "nofollow",
         "image": {
           "src": "/images/anpc-sal.png",
-          "alt": "Soluționarea Alternativă a Litigiilor",
+          "alt": "Alternative Dispute Resolution",
           "width": 250
         }
       },
@@ -90,7 +90,7 @@
         "rel": "nofollow",
         "image": {
           "src": "/images/anpc-sol.png",
-          "alt": "Soluționarea Online a Litigiilor",
+          "alt": "Online Dispute Resolution",
           "width": 250
         }
       }
@@ -100,6 +100,6 @@
       { "label": "Facebook", "icon": "tabler:brand-facebook", "href": "https://www.facebook.com/balizen.ro" },
       { "label": "WhatsApp", "icon": "tabler:brand-whatsapp", "href": "https://wa.me/40733211325" }
     ],
-    "footnote": "© Bali Zen SRL 2024. Toate drepturile rezervate."
+    "footnote": "© Bali Zen SRL 2024. All rights reserved."
   }
 }

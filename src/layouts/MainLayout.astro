@@ -6,7 +6,8 @@ import Footer from '../components/layout/Footer.astro';
 import ThemeStyles from '../components/layout/ThemeStyles.astro';
 import Analytics from '../components/common/Analytics.astro';
 import BookingConsentModal from '../components/common/BookingConsentModal.astro';
-import { siteConfig } from '../utils/content';
+import { getLangFromUrl } from '../i18n/utils';
+import { getSiteConfig } from '../utils/content';
 
 interface Props {
   title?: string;
@@ -14,6 +15,9 @@ interface Props {
   image?: string;
   noIndex?: boolean;
 }
+
+const lang = getLangFromUrl(Astro.url);
+const siteConfig = getSiteConfig(lang);
 
 const {
   title = `${siteConfig.brand.name} · ${siteConfig.brand.tagline}`,
@@ -23,18 +27,47 @@ const {
 } = Astro.props;
 
 const bookingModalId = 'booking-consent-modal';
-const bookingPolicies = [
-  { label: 'Politica de confidențialitate', href: '/privacy-policy' },
-  { label: 'Termeni și condiții de utilizare', href: '/terms-policy' },
-  { label: 'Politica de rambursare', href: '/return-policy' },
-  { label: 'Politica de anulare', href: '/cancellation-policy' },
-];
-const bookingDescription =
-  'Pentru a continua cu programarea online, confirmă că ai citit și ești de acord cu politicile Bali Zen referitoare la programări, plăți și anulări.';
+
+const bookingPolicies = {
+  ro: [
+    { label: 'Politica de confidențialitate', href: '/privacy-policy' },
+    { label: 'Termeni și condiții de utilizare', href: '/terms-policy' },
+    { label: 'Politica de rambursare', href: '/return-policy' },
+    { label: 'Politica de anulare', href: '/cancellation-policy' },
+  ],
+  en: [
+    { label: 'Privacy Policy', href: '/en/privacy-policy' },
+    { label: 'Terms and Conditions', href: '/en/terms-policy' },
+    { label: 'Return Policy', href: '/en/return-policy' },
+    { label: 'Cancellation Policy', href: '/en/cancellation-policy' },
+  ],
+};
+
+const bookingTranslations = {
+  ro: {
+    title: 'Programări online – confirmare necesară',
+    description:
+      'Pentru a continua cu programarea online, confirmă că ai citit și ești de acord cu politicile Bali Zen referitoare la programări, plăți și anulări.',
+    confirmLabel: 'Confirm și continuă programarea',
+    cancelLabel: 'Revin mai târziu',
+    skipToContent: 'Sari la conținut',
+  },
+  en: {
+    title: 'Online Booking – Confirmation Required',
+    description:
+      'To continue with online booking, please confirm that you have read and agree to Bali Zen policies regarding bookings, payments, and cancellations.',
+    confirmLabel: 'Confirm and continue booking',
+    cancelLabel: 'Return later',
+    skipToContent: 'Skip to content',
+  },
+};
+
+const t = bookingTranslations[lang];
+const policies = bookingPolicies[lang];
 ---
 
 <!doctype html>
-<html lang="ro" class="h-full">
+<html lang={lang} class="h-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,15 +77,70 @@ const bookingDescription =
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {image && <meta property="og:image" content={image} />}
+    <script is:inline define:vars={{ currentLang: lang }}>
+      // Set language BEFORE cookie consent initializes - must be first
+      (function() {
+        if (typeof window !== 'undefined' && document.documentElement) {
+          // Set HTML lang attribute immediately
+          document.documentElement.setAttribute('lang', currentLang);
+          
+          // Store language for cookie consent
+          window.__cookieConsentLang = currentLang;
+          
+          // Intercept cookie consent initialization if possible
+          const originalAddEventListener = window.addEventListener;
+          window.addEventListener = function(type, listener, options) {
+            if (type === 'DOMContentLoaded' || type === 'load') {
+              // Ensure lang is set before any initialization
+              setTimeout(() => {
+                if (document.documentElement) {
+                  document.documentElement.setAttribute('lang', currentLang);
+                }
+              }, 0);
+            }
+            return originalAddEventListener.call(this, type, listener, options);
+          };
+        }
+      })();
+    </script>
     <ThemeStyles />
     <Analytics />
+    <script is:inline define:vars={{ currentLang: lang }}>
+      // Set cookie consent language after initialization
+      if (typeof window !== 'undefined') {
+        const setLanguage = () => {
+          // Ensure HTML lang is correct
+          if (document.documentElement) {
+            document.documentElement.setAttribute('lang', currentLang);
+          }
+          
+          // Try to set via cookie consent API
+          if (window.CC && typeof window.CC.setLanguage === 'function') {
+            try {
+              window.CC.setLanguage(currentLang);
+            } catch (e) {
+              // Silent fail
+            }
+          }
+        };
+        
+        // Multiple attempts at different intervals
+        [0, 50, 100, 200, 500, 1000, 2000].forEach((delay) => {
+          setTimeout(setLanguage, delay);
+        });
+        
+        // Listen for cookie consent events
+        window.addEventListener('cc:onInit', setLanguage, { once: true });
+        window.addEventListener('cc:onReady', setLanguage, { once: true });
+      }
+    </script>
   </head>
   <body class="flex min-h-screen flex-col bg-white text-slate-900 antialiased">
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary"
     >
-      Sari la conținut
+      {t.skipToContent}
     </a>
     <Header />
     <main id="main-content" class="flex-1">
@@ -61,11 +149,11 @@ const bookingDescription =
     <Footer />
     <BookingConsentModal
       id={bookingModalId}
-      title="Programări online – confirmare necesară"
-      description={bookingDescription}
-      policies={bookingPolicies}
-      confirmLabel="Confirm și continuă programarea"
-      cancelLabel="Revin mai târziu"
+      title={t.title}
+      description={t.description}
+      policies={policies}
+      confirmLabel={t.confirmLabel}
+      cancelLabel={t.cancelLabel}
     />
     <script is:inline define:vars={{ bookingUrl: siteConfig.contact.bookingUrl, modalId: bookingModalId }}>
       (() => {

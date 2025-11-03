@@ -17,7 +17,7 @@ metadata:
   openGraph:
     site_name: Bali Zen | Ploiesti
     images:
-      - url: '~/assets/images/balizen_50.jpg'
+      - url: '/images/balizen_50.jpg'
         width: 1200
         height: 628
     type: website

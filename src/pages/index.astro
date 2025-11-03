@@ -10,6 +10,7 @@ import SubscriptionsSection from '../components/home/SubscriptionsSection.astro'
 import MainLayout from '../layouts/MainLayout.astro';
 import { getLangFromUrl } from '../i18n/utils';
 import { getSortedServiceCategories, getHomepageConfig, getSiteConfig, getReviews } from '../utils/content';
+import { METADATA } from 'astrowind:config';
 
 const lang = getLangFromUrl(Astro.url);
 const siteConfig = getSiteConfig(lang);
@@ -20,9 +21,13 @@ const serviceCategories = getSortedServiceCategories(lang);
 const { hero, about, services, subscriptions, subscriptionAction, giftCard, callToAction, location } = homepageConfig;
 const pageTitle = `${siteConfig.brand.name} · ${siteConfig.brand.tagline}`;
 const pageDescription = hero.subtitle[0] ?? siteConfig.brand.description;
+
+// Get OG image URL directly from config (served from public folder)
+const ogImagePath = METADATA?.openGraph?.images?.[0]?.url;
+const ogImageUrl = ogImagePath && Astro.site ? new URL(ogImagePath, Astro.site).href : null;
 ---
 
-<MainLayout title={pageTitle} description={pageDescription}>
+<MainLayout title={pageTitle} description={pageDescription} image={ogImageUrl}>
   <HeroSection hero={hero} />
   <AboutSection about={about} />
   <ServicesSection content={services} categories={serviceCategories} />

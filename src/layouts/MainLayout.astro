@@ -8,6 +8,7 @@ import Analytics from '../components/common/Analytics.astro';
 import BookingConsentModal from '../components/common/BookingConsentModal.astro';
 import { getLangFromUrl } from '../i18n/utils';
 import { getSiteConfig } from '../utils/content';
+import { METADATA } from 'astrowind:config';
 
 interface Props {
   title?: string;
@@ -76,7 +77,28 @@ const policies = bookingPolicies[lang];
     <meta name="generator" content={Astro.generator} />
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {image && <meta property="og:image" content={image} />}
+    
+    {/* Open Graph / Facebook */}
+    <meta property="og:type" content={METADATA?.openGraph?.type || 'website'} />
+    <meta property="og:url" content={Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={METADATA?.openGraph?.site_name || siteConfig.brand.name} />
+    {image && (
+      <>
+        <meta property="og:image" content={image} />
+        {METADATA?.openGraph?.images?.[0]?.width && (
+          <meta property="og:image:width" content={String(METADATA.openGraph.images[0].width)} />
+        )}
+        {METADATA?.openGraph?.images?.[0]?.height && (
+          <meta property="og:image:height" content={String(METADATA.openGraph.images[0].height)} />
+        )}
+      </>
+    )}
+    
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    {image && <meta name="twitter:image" content={image} />}
     <script is:inline define:vars={{ currentLang: lang }}>
       // Set language BEFORE cookie consent initializes - must be first
       (function() {

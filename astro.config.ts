@@ -191,6 +191,15 @@ export default defineConfig({
   },
 
   vite: {
+    server: {
+      allowedHosts: ['balizen.ro', 'www.balizen.ro', 'localhost', '127.0.0.1', 'llm.bogdan-radu.com'],
+      host: '0.0.0.0',
+      port: 1234,
+      hmr: {
+        clientPort: 443,
+        host: 'localhost',
+      },
+    },
     resolve: {
       alias: {
         '~': path.resolve(__dirname, './src'),

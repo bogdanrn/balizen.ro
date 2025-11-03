@@ -69,20 +69,49 @@ const titleLines = hero.title.split('\n');
       {
         hero.secondaryActions && hero.secondaryActions.length > 0 && (
           <div class="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start">
-            {hero.secondaryActions.map((action) => (
-              <a
-                href={action.href}
-                class={cn(
-                  'inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-primary/30 transition hover:shadow-lg sm:w-auto',
-                  action.class
-                )}
-                target={action.target}
-                rel="noopener"
-              >
-                {action.icon && <Icon name={action.icon} class="h-5 w-5" />}
-                <span>{action.label}</span>
-              </a>
-            ))}
+            {hero.secondaryActions.map((action) => {
+              const isPhone = action.href?.startsWith('tel:');
+              const locationLabel = action.href === 'tel:+40733211325' 
+                ? 'Gh. Gr. Cantacuzino' 
+                : action.href === 'tel:+40725882924' 
+                ? 'Hotel Central Wellness' 
+                : null;
+
+              if (isPhone && locationLabel) {
+                return (
+                  <div class="flex flex-col items-center gap-1">
+                    <a
+                      href={action.href}
+                      class={cn(
+                        'inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-3 text-sm font-semibold uppercase tracking-wide transition sm:w-auto',
+                        action.class
+                      )}
+                      target={action.target}
+                      rel="noopener"
+                    >
+                      {action.icon && <Icon name={action.icon} class="h-5 w-5" />}
+                      <span>{action.label}</span>
+                    </a>
+                    <span class="text-[10px] font-semibold uppercase tracking-wide text-slate-600">{locationLabel}</span>
+                  </div>
+                );
+              }
+
+              return (
+                <a
+                  href={action.href}
+                  class={cn(
+                    'inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-primary/30 transition hover:shadow-lg sm:w-auto',
+                    action.class
+                  )}
+                  target={action.target}
+                  rel="noopener"
+                >
+                  {action.icon && <Icon name={action.icon} class="h-5 w-5" />}
+                  <span>{action.label}</span>
+                </a>
+              );
+            })}
           </div>
         )
       }

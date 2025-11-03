@@ -4,43 +4,45 @@ import { Icon } from 'astro-icon/components';
 import { siteConfig } from '../../utils/content';
 import { cn } from '../../utils/cn';
 
-const { brand, contact, footer } = siteConfig;
+const {  contact, footer } = siteConfig;
 const currentYear = new Date().getFullYear();
 const dynamicFootnote = footer.footnote.replace(/\d{4}/g, String(currentYear));
+const footerLocations = footer.locations || [];
 ---
 
 <footer class="border-t border-slate-200 bg-slate-50">
   <div class="mx-auto grid max-w-screen-xl gap-12 px-4 py-12 sm:px-6 lg:grid-cols-5 lg:px-8">
     <div class="lg:col-span-2">
-      <h2 class="font-heading text-xl font-semibold text-slate-900">{brand.name}</h2>
-      <p class="mt-3 max-w-sm text-sm text-slate-600">{brand.description}</p>
-      <dl class="mt-6 space-y-3 text-sm text-slate-600">
-        <div>
-          <dt class="font-semibold uppercase tracking-wide text-slate-500">Adresă</dt>
-          <dd>
-            <a href={contact.mapsUrl} target="_blank" rel="noopener" class="hover:text-primary">
-              {contact.address}
-            </a>
-          </dd>
-        </div>
-        <div>
-          <dt class="font-semibold uppercase tracking-wide text-slate-500">Program</dt>
-          <dd>{contact.schedule}</dd>
-        </div>
-        <div>
-          <dt class="font-semibold uppercase tracking-wide text-slate-500">Contact</dt>
-          <dd>
-            <a class="hover:text-primary" href={`tel:${contact.phone.replace(/\\s+/g, '')}`}>
-              {contact.phoneDisplay}
-            </a>
-            {' · '}
-            <a class="hover:text-primary" href={`mailto:${contact.email}`}>{contact.email}</a>
-          </dd>
-        </div>
-      </dl>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Locație & Contact</h3>
+      <div class="mt-4 space-y-8">
+        {footerLocations.map((loc) => (
+          <dl class="space-y-3 text-sm text-slate-600">
+            <div>
+              <dt class="font-semibold uppercase tracking-wide text-slate-500">Adresă</dt>
+              <dd>
+                <a href={loc.mapsUrl} target="_blank" rel="noopener" class="hover:text-primary">
+                  {loc.address}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-semibold uppercase tracking-wide text-slate-500">Program</dt>
+              <dd>{loc.schedule}</dd>
+            </div>
+            <div>
+              <dt class="font-semibold uppercase tracking-wide text-slate-500">Contact</dt>
+              <dd>
+                <a class="hover:text-primary" href={loc.phoneHref}>
+                  {loc.phone}
+                </a>
+              </dd>
+            </div>
+          </dl>
+        ))}
+      </div>
     </div>
 
-    <div class="grid gap-8 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-3">
+    <div class="grid gap-8 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-2">
       {
         footer.columns.map((column) => (
           <div>

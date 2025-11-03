@@ -8,19 +8,20 @@
     "heroText": "Bali Zen - Masaj Autentic Balinez",
     "primaryActions": [
       {
+        "variant": "primary",
+        "label": "Programează-te aici",
+        "href": "https://programari.balizen.ro",
+        "target": "_blank",
+        "icon": "tabler:calendar",
+        "class": "js-programari-button bg-primary text-white border-0 shadow-lg shadow-primary/30 hover:opacity-90 hover:shadow-lg hover:bg-primary"
+      },
+      {
         "variant": "secondary",
         "label": "WhatsApp",
         "href": "https://wa.me/40733211325",
         "target": "_blank",
         "icon": "tabler:brand-whatsapp",
         "class": "js-contact-button bg-[#25D366] text-white border-[#25D366] border-2 hover:bg-white hover:text-[#25D366]"
-      },
-      {
-        "variant": "secondary",
-        "label": "0733 211 325",
-        "href": "tel:+40733211325",
-        "icon": "tabler:phone",
-        "class": "js-contact-button bg-white text-black border-2 border-white hover:bg-white hover:text-black hover:border-black"
       },
       {
         "variant": "secondary",
@@ -32,12 +33,18 @@
     ],
     "secondaryActions": [
       {
-        "variant": "primary",
-        "label": "Programează-te aici",
-        "href": "https://programari.balizen.ro",
-        "target": "_blank",
-        "icon": "tabler:calendar",
-        "class": "js-programari-button hover:opacity-90"
+        "variant": "secondary",
+        "label": "+40 733 211 325",
+        "href": "tel:+40733211325",
+        "icon": "tabler:phone",
+        "class": "js-contact-button bg-white text-black border-2 border-white hover:bg-white hover:text-black hover:border-black"
+      },
+      {
+        "variant": "secondary",
+        "label": "+40 725 882 924",
+        "href": "tel:+40725882924",
+        "icon": "tabler:phone",
+        "class": "js-contact-button bg-white text-black border-2 border-white hover:bg-white hover:text-black hover:border-black"
       }
     ],
     "image": {
@@ -196,30 +203,25 @@
   "location": {
     "id": "locatie",
     "title": "Cum ne găsiți?",
-    "details": [
+    "locations": [
       {
-        "icon": "tabler:clock",
-        "title": "Program de lucru",
-        "description": "Luni - Duminică: 10:00 - 21:00"
+        "name": "Str. Gh Gr Cantacuzino 190 1B, Ploiești",
+        "address": "Strada Gheorghe Grigore Cantacuzino nr 190, Ploiești",
+        "phone": "+40 733 211 325",
+        "phoneHref": "tel:+40733211325",
+        "schedule": "Luni - Duminică: 10:00 - 21:00",
+        "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
       },
       {
-        "icon": "tabler:map-pin",
-        "title": "Adresa salonului",
-        "description": "Strada Cantacuzino nr 190, Ploiești",
-        "href": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
-      },
-      {
-        "icon": "tabler:phone",
-        "title": "Contact",
-        "description": "0733 211 325",
-        "href": "tel:+40733211325"
-      },
-      {
-        "icon": "tabler:mail",
-        "title": "Email",
-        "description": "contact@balizen.ro",
-        "href": "mailto:contact@balizen.ro"
+        "name": "Hotel Central (Wellness), Ploiești",
+        "address": "Hotel Central (Wellness), Ploiești",
+        "phone": "+40 725 882 924",
+        "phoneHref": "tel:+40725882924",
+        "schedule": "Marți - Duminică: 12:00 - 22:00",
+        "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
       }
-    ]
+    ],
+    "email": "contact@balizen.ro",
+    "emailHref": "mailto:contact@balizen.ro"
   }
 }

@@ -77,6 +77,7 @@ export interface HeaderConfig {
 }
 
 export interface FooterConfig {
+  locations?: LocationInfo[];
   columns: FooterColumn[];
   secondaryLinks: SecondaryFooterLink[];
   socialLinks: SocialLink[];
@@ -158,10 +159,22 @@ export interface LocationDetail {
   href?: string;
 }
 
+export interface LocationInfo {
+  name: string;
+  address: string;
+  phone: string;
+  phoneHref: string;
+  schedule: string;
+  mapsUrl: string;
+}
+
 export interface LocationSection {
   id: string;
   title: string;
-  details: LocationDetail[];
+  locations?: LocationInfo[];
+  email?: string;
+  emailHref?: string;
+  details?: LocationDetail[];
 }
 
 export interface HomepageConfig {

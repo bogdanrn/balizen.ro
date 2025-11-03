@@ -96,32 +96,49 @@ const { content, categories } = Astro.props as {
       }
     </div>
 
-    <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
-      <a
-        href="https://wa.me/40733211325"
-        class="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-[#25D366] bg-[#25D366] px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-white hover:text-[#25D366] sm:w-auto js-contact-button"
-        target="_blank"
-        rel="noopener"
-      >
-        <Icon name="tabler:brand-whatsapp" class="h-5 w-5" />
-        <span>WhatsApp</span>
-      </a>
-      <a
-        href="tel:+40733211325"
-        class="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-white bg-white px-6 py-3 text-sm font-semibold uppercase tracking-wide text-black transition hover:border-black hover:bg-white hover:text-black sm:w-auto js-contact-button"
-      >
-        <Icon name="tabler:phone" class="h-5 w-5" />
-        <span>0733 211 325</span>
-      </a>
-      <a
-        href="https://programari.balizen.ro"
-        class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-primary/30 transition hover:opacity-90 sm:w-auto js-programari-button"
-        target="_blank"
-        rel="noopener"
-      >
-        <Icon name="tabler:calendar" class="h-5 w-5" />
-        <span>Programează-te aici</span>
-      </a>
+    <div class="mt-10 flex flex-col items-center gap-4">
+      <div class="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
+        <a
+          href="https://wa.me/40733211325"
+          class="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-[#25D366] bg-[#25D366] px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-white hover:text-[#25D366] sm:w-auto js-contact-button"
+          target="_blank"
+          rel="noopener"
+        >
+          <Icon name="tabler:brand-whatsapp" class="h-5 w-5" />
+          <span>WhatsApp</span>
+        </a>
+        <a
+          href="https://programari.balizen.ro"
+          class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-primary/30 transition hover:opacity-90 sm:w-auto js-programari-button"
+          target="_blank"
+          rel="noopener"
+        >
+          <Icon name="tabler:calendar" class="h-5 w-5" />
+          <span>Programează-te aici</span>
+        </a>
+      </div>
+      <div class="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
+        <div class="flex flex-col items-center gap-1">
+          <a
+            href="tel:+40733211325"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-white bg-white px-6 py-3 text-sm font-semibold uppercase tracking-wide text-black transition hover:border-black hover:bg-white hover:text-black sm:w-auto js-contact-button"
+          >
+            <Icon name="tabler:phone" class="h-5 w-5" />
+            <span>+40 733 211 325</span>
+          </a>
+          <span class="text-[10px] font-semibold uppercase tracking-wide text-slate-600">Gh. Gr. Cantacuzino</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <a
+            href="tel:+40725882924"
+            class="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-white bg-white px-6 py-3 text-sm font-semibold uppercase tracking-wide text-black transition hover:border-black hover:bg-white hover:text-black sm:w-auto js-contact-button"
+          >
+            <Icon name="tabler:phone" class="h-5 w-5" />
+            <span>+40 725 882 924</span>
+          </a>
+          <span class="text-[10px] font-semibold uppercase tracking-wide text-slate-600">Hotel Central Wellness</span>
+        </div>
+      </div>
     </div>
 
 

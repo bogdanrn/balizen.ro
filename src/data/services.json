@@ -230,6 +230,40 @@
         "src": "~/assets/images/cuplu_1.jpg",
         "alt": "Masaj în tandem (2 persoane) la Bali Zen"
       }
+    },
+    {
+      "order": 14,
+      "title": "Candle Massage",
+      "pricing": [
+        {
+          "price": "240",
+          "duration": 60
+        },
+        {
+          "price": "340",
+          "duration": 90
+        }
+      ],
+      "description": "Perfect pentru zilele răcoroase, acest masaj de relaxare folosește o ceară specială din uleiuri esențiale, care, odată topită, se transformă într-un ulei cald și catifelat. Mirosurile fine și atingerea blândă redau echilibrul corpului și o senzație profundă de confort.",
+      "image": {
+        "src": "~/assets/images/candle-massage.jpg",
+        "alt": "Candle Massage la Bali Zen"
+      }
+    },
+    {
+      "order": 15,
+      "title": "Bali Zen Winter",
+      "pricing": [
+        {
+          "price": "320",
+          "duration": 90
+        }
+      ],
+      "description": "Ritualul începe cu un scrub pentru picioare, urmat de un masaj balinez cu uleiuri calde de scorțișoară și cuișoare, ce stimulează circulația, tonifică pielea și relaxează profund. Aroma lor festivă aduce spiritul sărbătorilor pe piele, iar experiența se încheie cu un masaj cervical, facial și capilar, pentru echilibru și o stare de bine deplină.",
+      "image": {
+        "src": "~/assets/images/winter-massage.jpg",
+        "alt": "Balizen Winter Massage la Bali Zen"
+      }
     }
   ],
   "Masaje locale": [

@@ -36,6 +36,24 @@
     }
   },
   "footer": {
+    "locations": [
+      {
+        "name": "Str. Gh Gr Cantacuzino 190 1B, Ploiești",
+        "address": "Strada Gheorghe Grigore Cantacuzino nr 190, Ploiești",
+        "phone": "+40 733 211 325",
+        "phoneHref": "tel:+40733211325",
+        "schedule": "Luni - Duminică: 10:00 - 21:00",
+        "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
+      },
+      {
+        "name": "Hotel Central (Wellness), Ploiești",
+        "address": "Hotel Central (Wellness), Ploiești",
+        "phone": "+40 725 882 924",
+        "phoneHref": "tel:+40725882924",
+        "schedule": "Marți - Duminică: 12:00 - 22:00",
+        "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
+      }
+    ],
     "columns": [
       {
         "title": "Legal",
@@ -51,19 +69,8 @@
         "links": [
           { "text": "Programări online", "href": "https://programari.balizen.ro/", "class": "js-programari-button" },
           { "text": "Email: contact@balizen.ro", "href": "mailto:contact@balizen.ro", "class": "js-contact-button" },
-          { "text": "Telefon: 0733-211-325", "href": "tel:+40733211325", "class": "js-contact-button" },
-          { "text": "WhatsApp: 0733-211-325", "href": "https://wa.me/40733211325", "class": "js-contact-button" }
-        ]
-      },
-      {
-        "title": "Locație",
-        "links": [
-          { "text": "Program: Luni-Duminică 10:00 - 21:00" },
-          {
-            "text": "Strada Gheorghe Grigore Cantacuzino nr 190, Ploiești",
-            "href": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7",
-            "class": "js-location-button"
-          }
+          { "text": "Telefon: +40 733 211 325", "href": "tel:+40733211325", "class": "js-contact-button" },
+          { "text": "WhatsApp: +40 733 211 325", "href": "https://wa.me/40733211325", "class": "js-contact-button" }
         ]
       }
     ],

@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 
 import Image from '../common/Image.astro';
 import type { GiftCardSection } from '../../types';
+import { cn } from '../../utils/cn';
 
 const { giftCard } = Astro.props as { giftCard: GiftCardSection };
 ---
@@ -43,7 +44,10 @@ const { giftCard } = Astro.props as { giftCard: GiftCardSection };
       <div>
         <a
           href={giftCard.cta.href}
-          class={`inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/40 transition hover:brightness-110 ${giftCard.cta.class ?? ''}`}
+          class={cn(
+            'inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/40 transition hover:brightness-110',
+            giftCard.cta.class
+          )}
           target={giftCard.cta.target}
           rel="noopener"
         >

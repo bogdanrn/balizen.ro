@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 
 import type { SimpleCallToAction } from '../../types';
+import { cn } from '../../utils/cn';
 
 const { block } = Astro.props as { block: SimpleCallToAction };
 ---
@@ -24,7 +25,10 @@ const { block } = Astro.props as { block: SimpleCallToAction };
     <p class="max-w-2xl text-base text-white/90">{block.subtitle}</p>
     <a
       href={block.cta.href}
-      class={`inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary shadow-lg shadow-slate-800/30 transition hover:opacity-90 ${block.cta.class ?? ''}`}
+      class={cn(
+        'inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary shadow-lg shadow-slate-800/30 transition hover:opacity-90',
+        block.cta.class
+      )}
       target={block.cta.target}
       rel="noopener"
     >

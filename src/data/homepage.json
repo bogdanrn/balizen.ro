@@ -20,11 +20,12 @@
         "label": "0733 211 325",
         "href": "tel:+40733211325",
         "icon": "tabler:phone",
-        "class": "js-contact-button bg-white text-black border-2 border-black hover:bg-black hover:text-white"
+        "class": "js-contact-button bg-white text-black border-2 border-white hover:bg-white hover:text-black hover:border-black"
       },
       {
         "variant": "secondary",
         "label": "Lista completă a serviciilor",
+        "class": "bg-[#33291F] text-white hover:bg-white hover:text-[#33291F] hover:border-[#33291F] border-2 border-transparent",
         "href": "#servicii",
         "icon": "tabler:list"
       }
@@ -36,7 +37,7 @@
         "href": "https://programari.balizen.ro",
         "target": "_blank",
         "icon": "tabler:calendar",
-        "class": "js-programari-button"
+        "class": "js-programari-button hover:opacity-90"
       }
     ],
     "image": {

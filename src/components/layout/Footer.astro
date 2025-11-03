@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 
 import { siteConfig } from '../../utils/content';
+import { cn } from '../../utils/cn';
 
 const { brand, contact, footer } = siteConfig;
 const currentYear = new Date().getFullYear();
@@ -50,7 +51,7 @@ const dynamicFootnote = footer.footnote.replace(/\d{4}/g, String(currentYear));
                   {link.href ? (
                     <a
                       href={link.href}
-                      class={`transition hover:text-primary ${link.class ?? ''}`}
+                      class={cn('transition hover:text-primary', link.class)}
                       target={link.target}
                       rel={link.rel}
                     >

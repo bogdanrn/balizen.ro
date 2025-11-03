@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import { siteConfig } from '../../utils/content';
+import { cn } from '../../utils/cn';
 
 const { header } = siteConfig;
 const navLinks = header.links ?? [];
@@ -37,7 +38,7 @@ const containerClasses = [
         navLinks.map((link) => (
           <a
             href={link.href}
-            class={`transition-colors hover:text-primary ${link.class ?? ''}`}
+            class={cn('transition-colors hover:text-primary', link.class)}
             target={link.target}
             rel={link.rel}
           >
@@ -50,7 +51,10 @@ const containerClasses = [
         primaryAction && (
           <a
             href={primaryAction.href}
-            class={`rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 ${primaryAction.class ?? ''}`}
+            class={cn(
+              'rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90',
+              primaryAction.class
+            )}
             target={primaryAction.target}
             rel="noopener"
           >
@@ -67,7 +71,10 @@ const containerClasses = [
         navLinks.map((link) => (
           <a
             href={link.href}
-            class={`flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3 transition hover:bg-slate-100 ${link.class ?? ''}`}
+            class={cn(
+              'flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3 transition hover:bg-slate-100',
+              link.class
+            )}
             target={link.target}
             rel={link.rel}
           >
@@ -83,7 +90,10 @@ const containerClasses = [
         primaryAction && (
           <a
             href={primaryAction.href}
-            class={`mt-4 flex items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 ${primaryAction.class ?? ''}`}
+            class={cn(
+              'mt-4 flex items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90',
+              primaryAction.class
+            )}
             target={primaryAction.target}
             rel="noopener"
           >

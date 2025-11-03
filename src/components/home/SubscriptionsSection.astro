@@ -27,10 +27,10 @@ const { subscriptions, action } = Astro.props as {
 
           return (
             <article
-              class="grid gap-10 rounded-3xl border border-slate-200 bg-slate-50/60 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg lg:grid-cols-[0.6fr_0.4fr]"
+              class="group grid gap-6 rounded-3xl border border-slate-200 bg-slate-50/60 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg lg:gap-10 lg:grid-cols-[0.6fr_0.4fr]"
               id={subscription.id}
             >
-              <div class="space-y-6 self-center">
+              <div class="space-y-6 self-center order-2 lg:order-none">
                 <div class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-primary">
                   <span>Abonament</span>
                 </div>
@@ -65,13 +65,15 @@ const { subscriptions, action } = Astro.props as {
                 </div>
               </div>
 
-              <Image
-                src={subscription.image.src}
-                alt={subscription.image.alt}
-                class={`h-full w-full rounded-3xl object-cover shadow-md shadow-slate-200 ${isReversed ? 'lg:order-first' : ''}`}
-                layout="responsive"
-                sizes="(min-width: 1024px) 35vw, 90vw"
-              />
+              <div class={`relative h-64 w-full overflow-hidden rounded-3xl lg:h-96 ${isReversed ? 'lg:order-first' : ''}`}>
+                <Image
+                  src={subscription.image.src}
+                  alt={subscription.image.alt}
+                  class="absolute inset-0 h-full w-full object-cover object-center shadow-md shadow-slate-200 transition-transform duration-500 group-hover:scale-110"
+                  layout="cover"
+                  objectPosition="center"
+                />
+              </div>
             </article>
           );
         })

@@ -38,7 +38,7 @@ const containerClasses = [
         navLinks.map((link) => (
           <a
             href={link.href}
-            class={cn('transition-colors hover:text-primary', link.class)}
+            class={cn('transition-colors hover:text-primary whitespace-nowrap', link.class)}
             target={link.target}
             rel={link.rel}
           >
@@ -52,7 +52,7 @@ const containerClasses = [
           <a
             href={primaryAction.href}
             class={cn(
-              'rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90',
+              'whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90',
               primaryAction.class
             )}
             target={primaryAction.target}
@@ -72,7 +72,7 @@ const containerClasses = [
           <a
             href={link.href}
             class={cn(
-              'flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3 transition hover:bg-slate-100',
+              'flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3 transition hover:bg-slate-100 whitespace-nowrap',
               link.class
             )}
             target={link.target}
@@ -91,7 +91,7 @@ const containerClasses = [
           <a
             href={primaryAction.href}
             class={cn(
-              'mt-4 flex items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90',
+              'mt-4 flex items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 whitespace-nowrap',
               primaryAction.class
             )}
             target={primaryAction.target}

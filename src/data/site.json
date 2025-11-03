@@ -58,7 +58,7 @@
         "title": "Legal",
         "links": [
           { "text": "Termeni și condiții", "href": "/terms-policy" },
-          { "text": "Politica de confidențialitate", "href": "/privacy-policy" },
+          { "text": "Politica de confidențialitate (GDPR)", "href": "/privacy-policy" },
           { "text": "Politica de returnare", "href": "/return-policy" },
           { "text": "Politica de anulare", "href": "/cancellation-policy" }
         ]

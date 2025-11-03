@@ -5,7 +5,7 @@
       "Călătoria ta spre armonie și vitalitate începe aici, la Bali Zen - Ploiești.",
       "Descoperă puterea vindecătoare a masajului autentic balinez într-un spațiu dedicat relaxării și regenerării tale complete."
     ],
-    "heroText": "Bali Zen - Masaj Autentic Balinez",
+    "heroText": "Masaj Autentic Balinez",
     "primaryActions": [
       {
         "variant": "primary",
@@ -160,8 +160,8 @@
     "features": [
       {
         "icon": "tabler:certificate",
-        "title": "Disponibil în format fizic",
-        "description": "Card elegant, personalizat pentru ocazia ta specială."
+        "title": "Disponibil în format fizic și electronic",
+        "description": "Card elegant, personalizat pentru ocazia ta specială. Cardul electronic este livrat prin whatsapp."
       },
       {
         "icon": "tabler:calendar",

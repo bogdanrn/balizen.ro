@@ -5,7 +5,7 @@
       "Your journey to harmony and vitality begins here, at Bali Zen - Ploiești.",
       "Discover the healing power of authentic Balinese massage in a space dedicated to your complete relaxation and regeneration."
     ],
-    "heroText": "Bali Zen - Authentic Balinese Massage",
+    "heroText": "Authentic Balinese Massage",
     "primaryActions": [
       {
         "variant": "primary",
@@ -63,7 +63,7 @@
         "description": "Our team of professional therapists from Bali combines experience with passion for healing, offering a range of treatments designed to reduce stress."
       },
       {
-        "title": "Relaxation atmosphere",
+        "title": "Relaxed atmosphere",
         "description": "Every detail is designed for your comfort, from the calm atmosphere to the ancestral techniques that restore your energy and inner harmony."
       },
       {
@@ -160,8 +160,8 @@
     "features": [
       {
         "icon": "tabler:certificate",
-        "title": "Available in physical format",
-        "description": "Elegant card, personalized for your special occasion."
+        "title": "Available in physical and electronic format",
+        "description": "Elegant card, personalized for your special occasion. The electronic card is delivered via WhatsApp."
       },
       {
         "icon": "tabler:calendar",

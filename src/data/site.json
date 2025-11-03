@@ -59,7 +59,11 @@
         "title": "Locație",
         "links": [
           { "text": "Program: Luni-Duminică 10:00 - 21:00" },
-          { "text": "Strada Gheorghe Grigore Cantacuzino nr 190, Ploiești", "href": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7", "class": "js-location-button" }
+          {
+            "text": "Strada Gheorghe Grigore Cantacuzino nr 190, Ploiești",
+            "href": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7",
+            "class": "js-location-button"
+          }
         ]
       }
     ],

@@ -2,7 +2,7 @@
 import Logo from './Logo.astro';
 import { siteConfig } from '../../utils/content';
 
-const { brand, header } = siteConfig;
+const { header } = siteConfig;
 const navLinks = header.links ?? [];
 const primaryAction = header.primaryAction;
 
@@ -23,9 +23,9 @@ const containerClasses = [
       data-nav-toggle
     >
       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="3" y1="6" x2="21" y2="6" />
-        <line x1="3" y1="12" x2="21" y2="12" />
-        <line x1="3" y1="18" x2="21" y2="18" />
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
       </svg>
     </button>
 
@@ -33,60 +33,64 @@ const containerClasses = [
       class="hidden flex-1 items-center justify-end gap-10 text-sm font-medium uppercase tracking-wide text-slate-700 lg:flex"
       data-nav-menu
     >
-      {navLinks.map((link) => (
-        <a
-          href={link.href}
-          class={`transition-colors hover:text-primary ${link.class ?? ''}`}
-          target={link.target}
-          rel={link.rel}
-        >
-          {link.label}
-        </a>
-      ))}
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`transition-colors hover:text-primary ${link.class ?? ''}`}
+            target={link.target}
+            rel={link.rel}
+          >
+            {link.label}
+          </a>
+        ))
+      }
 
-      {primaryAction && (
-        <a
-          href={primaryAction.href}
-          class={`rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 ${primaryAction.class ?? ''}`}
-          target={primaryAction.target}
-          rel="noopener"
-        >
-          {primaryAction.label}
-        </a>
-      )}
+      {
+        primaryAction && (
+          <a
+            href={primaryAction.href}
+            class={`rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 ${primaryAction.class ?? ''}`}
+            target={primaryAction.target}
+            rel="noopener"
+          >
+            {primaryAction.label}
+          </a>
+        )
+      }
     </nav>
   </div>
 
-  <div
-    class="border-t border-slate-200 bg-white px-4 py-4 shadow-sm lg:hidden"
-    hidden
-    data-nav-drawer
-  >
+  <div class="border-t border-slate-200 bg-white px-4 py-4 shadow-sm lg:hidden" hidden data-nav-drawer>
     <nav class="space-y-3 text-sm font-medium uppercase tracking-wide text-slate-700">
-      {navLinks.map((link) => (
-        <a
-          href={link.href}
-          class={`flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3 transition hover:bg-slate-100 ${link.class ?? ''}`}
-          target={link.target}
-          rel={link.rel}
-        >
-          <span>{link.label}</span>
-          <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </a>
-      ))}
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3 transition hover:bg-slate-100 ${link.class ?? ''}`}
+            target={link.target}
+            rel={link.rel}
+          >
+            <span>{link.label}</span>
+            <svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        ))
+      }
 
-      {primaryAction && (
-        <a
-          href={primaryAction.href}
-          class={`mt-4 flex items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 ${primaryAction.class ?? ''}`}
-          target={primaryAction.target}
-          rel="noopener"
-        >
-          {primaryAction.label}
-        </a>
-      )}
+      {
+        primaryAction && (
+          <a
+            href={primaryAction.href}
+            class={`mt-4 flex items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90 ${primaryAction.class ?? ''}`}
+            target={primaryAction.target}
+            rel="noopener"
+          >
+            {primaryAction.label}
+          </a>
+        )
+      }
     </nav>
   </div>
 </header>

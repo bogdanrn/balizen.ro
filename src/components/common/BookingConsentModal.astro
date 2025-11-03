@@ -13,14 +13,7 @@ export interface Props {
   cancelLabel?: string;
 }
 
-const {
-  id,
-  title,
-  description,
-  policies,
-  confirmLabel,
-  cancelLabel = 'Anulează',
-} = Astro.props;
+const { id, title, description, policies, confirmLabel, cancelLabel = 'Anulează' } = Astro.props;
 ---
 
 <div
@@ -42,8 +35,8 @@ const {
         aria-label="Închide dialogul"
       >
         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
     </div>
@@ -51,22 +44,27 @@ const {
     <div class="space-y-4 px-6 py-6 text-sm text-slate-600">
       <p>{description}</p>
       <ul class="space-y-2">
-        {policies.map((policy) => (
-          <li class="flex items-start gap-3">
-            <span class="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">•</span>
-            <a
-              href={policy.href}
-              target="_blank"
-              rel="noopener"
-              class="underline-offset-2 transition hover:text-primary hover:underline"
-            >
-              {policy.label}
-            </a>
-          </li>
-        ))}
+        {
+          policies.map((policy) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">
+                •
+              </span>
+              <a
+                href={policy.href}
+                target="_blank"
+                rel="noopener"
+                class="underline-offset-2 transition hover:text-primary hover:underline"
+              >
+                {policy.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
       <p class="border-t border-slate-200 pt-4 text-xs text-slate-500">
-        Prin confirmare declarați că ați citit și acceptat politicile Bali Zen referitoare la programări, anulări și rambursări.
+        Prin confirmare declarați că ați citit și acceptat politicile Bali Zen referitoare la programări, anulări și
+        rambursări.
       </p>
     </div>
 
@@ -89,7 +87,7 @@ const {
   </div>
 </div>
 
-<script define:vars={{ id }}>
+<script is:inline define:vars={{ id }}>
   const initializeModal = () => {
     const modal = document.getElementById(id);
     if (!modal || modal.dataset.initialized) {

@@ -9,35 +9,35 @@ const { giftCard } = Astro.props as { giftCard: GiftCardSection };
 
 <section id={giftCard.id} class="relative overflow-hidden bg-[#33291F] text-white">
   <div class="absolute inset-0">
-    <div class="absolute inset-0 bg-gradient-to-br from-primary/40 via-[#33291F] to-[#33291F]" />
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/40 via-[#33291F] to-[#33291F]"></div>
   </div>
 
-  <div class="relative mx-auto flex max-w-screen-xl flex-col gap-12 px-4 py-24 sm:px-6 lg:flex-row lg:items-center lg:px-8">
+  <div
+    class="relative mx-auto flex max-w-screen-xl flex-col gap-12 px-4 py-24 sm:px-6 lg:flex-row lg:items-center lg:px-8"
+  >
     <div class="max-w-xl space-y-8">
-      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary/80">
-        Gift Card
-      </p>
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary/80">Gift Card</p>
       <h2 class="font-heading text-3xl font-bold leading-tight sm:text-4xl">
         {giftCard.title}
       </h2>
       <div class="space-y-4 text-base leading-relaxed text-white/85">
-        {giftCard.description.map((paragraph) => (
-          <p>{paragraph}</p>
-        ))}
+        {giftCard.description.map((paragraph) => <p>{paragraph}</p>)}
       </div>
 
       <ul class="space-y-4">
-        {giftCard.features.map((feature) => (
-          <li class="flex items-start gap-4 rounded-2xl bg-white/10 p-4">
-            <span class="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
-              <Icon name={feature.icon} class="h-5 w-5" />
-            </span>
-            <div>
-              <h3 class="font-semibold text-white">{feature.title}</h3>
-              <p class="text-sm text-white/75">{feature.description}</p>
-            </div>
-          </li>
-        ))}
+        {
+          giftCard.features.map((feature) => (
+            <li class="flex items-start gap-4 rounded-2xl bg-white/10 p-4">
+              <span class="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
+                <Icon name={feature.icon} class="h-5 w-5" />
+              </span>
+              <div>
+                <h3 class="font-semibold text-white">{feature.title}</h3>
+                <p class="text-sm text-white/75">{feature.description}</p>
+              </div>
+            </li>
+          ))
+        }
       </ul>
 
       <div>

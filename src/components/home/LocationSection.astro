@@ -14,9 +14,7 @@ const mapEmbedSrc = `https://www.google.com/maps?q=${mapQuery}&hl=ro&z=16&output
 <section id={location.id} class="bg-white">
   <div class="mx-auto max-w-screen-xl px-4 py-24 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
-      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary">
-        Locație
-      </p>
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary">Locație</p>
       <h2 class="mt-4 font-heading text-3xl font-bold text-slate-900 sm:text-4xl">
         {location.title}
       </h2>
@@ -28,23 +26,27 @@ const mapEmbedSrc = `https://www.google.com/maps?q=${mapQuery}&hl=ro&z=16&output
     <div class="mt-16 grid gap-10 lg:grid-cols-2">
       <div class="space-y-8">
         <ul class="space-y-4 text-sm text-slate-600">
-          {location.details.map((detail) => (
-            <li class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <span class="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Icon name={detail.icon} class="h-5 w-5" />
-              </span>
-              <div>
-                <h3 class="font-semibold text-slate-900">{detail.title}</h3>
-                <p class="mt-1 text-slate-600">
-                  {detail.href ? (
-                    <a href={detail.href} class="hover:text-primary" target="_blank" rel="noopener">
-                      {detail.description}
-                    </a>
-                  ):detail.description}
-                </p>
-              </div>
-            </li>
-          ))}
+          {
+            location.details.map((detail) => (
+              <li class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <span class="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <Icon name={detail.icon} class="h-5 w-5" />
+                </span>
+                <div>
+                  <h3 class="font-semibold text-slate-900">{detail.title}</h3>
+                  <p class="mt-1 text-slate-600">
+                    {detail.href ? (
+                      <a href={detail.href} class="hover:text-primary" target="_blank" rel="noopener">
+                        {detail.description}
+                      </a>
+                    ) : (
+                      detail.description
+                    )}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
         </ul>
         <div class="flex flex-wrap gap-4">
           <a
@@ -75,8 +77,7 @@ const mapEmbedSrc = `https://www.google.com/maps?q=${mapQuery}&hl=ro&z=16&output
           allowfullscreen
           referrerpolicy="no-referrer-when-downgrade"
           title="Harta Bali Zen"
-          class="h-full w-full border-0"
-        ></iframe>
+          class="h-full w-full border-0"></iframe>
       </div>
     </div>
   </div>

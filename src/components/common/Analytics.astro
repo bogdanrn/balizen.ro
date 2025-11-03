@@ -3,7 +3,7 @@ import { ANALYTICS } from 'astrowind:config';
 ---
 
 {ANALYTICS?.enabled && (
-  <script define:vars={{ ANALYTICS }} is:inline>
+  <script is:inline define:vars={{ ANALYTICS }}>
     if (typeof window !== 'undefined' && !window.__balizenAnalyticsInitialized) {
       window.__balizenAnalyticsInitialized = true;
 
@@ -18,6 +18,7 @@ import { ANALYTICS } from 'astrowind:config';
       window.gtag =
         window.gtag ||
         function gtag() {
+          // eslint-disable-next-line prefer-rest-params
           window.dataLayer.push(arguments);
         };
 
@@ -72,9 +73,10 @@ import { ANALYTICS } from 'astrowind:config';
           return;
         }
 
-        !(function (f, b, e, v, n, t, s) {
+        (function (f, b, e, v, n, t, s) {
           if (f.fbq) return;
           n = f.fbq = function () {
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions, prefer-spread, prefer-rest-params
             n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
           };
           if (!f._fbq) f._fbq = n;

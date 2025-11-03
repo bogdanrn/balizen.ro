@@ -3,13 +3,7 @@ import rawReviews from '../data/reviews.json';
 import rawServices from '../data/services.json';
 import rawSite from '../data/site.json';
 
-import type {
-  HomepageConfig,
-  Review,
-  ServiceItem,
-  ServicesCatalog,
-  SiteConfig,
-} from '../types';
+import type { HomepageConfig, Review, ServiceItem, ServicesCatalog, SiteConfig } from '../types';
 
 export const siteConfig = rawSite as SiteConfig;
 export const homepageConfig = rawHomepage as HomepageConfig;

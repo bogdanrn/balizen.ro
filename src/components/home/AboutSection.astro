@@ -8,7 +8,9 @@ const { about } = Astro.props as { about: AboutSection };
 ---
 
 <section id={about.id} class="bg-white">
-  <div class="mx-auto grid max-w-screen-xl gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
+  <div
+    class="mx-auto grid max-w-screen-xl gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8"
+  >
     <div class="space-y-8">
       <p class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
         {about.tagline}
@@ -19,17 +21,19 @@ const { about } = Astro.props as { about: AboutSection };
       <p class="text-base leading-relaxed text-slate-600">{about.intro}</p>
 
       <ul class="space-y-6">
-        {about.bullets.map((item) => (
-          <li class="flex items-start gap-4">
-            <span class="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Icon name="tabler:star" class="h-4 w-4" />
-            </span>
-            <div>
-              <h3 class="font-semibold text-slate-900">{item.title}</h3>
-              <p class="mt-1 text-sm text-slate-600">{item.description}</p>
-            </div>
-          </li>
-        ))}
+        {
+          about.bullets.map((item) => (
+            <li class="flex items-start gap-4">
+              <span class="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Icon name="tabler:star" class="h-4 w-4" />
+              </span>
+              <div>
+                <h3 class="font-semibold text-slate-900">{item.title}</h3>
+                <p class="mt-1 text-sm text-slate-600">{item.description}</p>
+              </div>
+            </li>
+          ))
+        }
       </ul>
 
       <div>
@@ -53,7 +57,10 @@ const { about } = Astro.props as { about: AboutSection };
         layout="responsive"
         sizes="(min-width: 1024px) 40vw, 100vw"
       />
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent" />
+      <div
+        class="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent"
+      >
+      </div>
     </div>
   </div>
 </section>

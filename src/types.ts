@@ -180,7 +180,7 @@ export interface PricingInfo {
   duration: number;
 }
 
-export interface ServiceImage extends ImageAsset {}
+export type ServiceImage = ImageAsset;
 
 export interface ServiceItem {
   order: number;

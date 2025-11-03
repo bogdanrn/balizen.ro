@@ -23,58 +23,62 @@ const titleLines = hero.title.split('\n');
     <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white to-transparent"></div>
   </div>
 
-  <div class="relative mx-auto flex min-h-[90vh] max-w-screen-xl flex-col justify-center gap-12 px-4 pb-20 pt-32 sm:px-6 lg:px-8">
+  <div
+    class="relative mx-auto flex min-h-[90vh] max-w-screen-xl flex-col justify-center gap-12 px-4 pb-20 pt-32 sm:px-6 lg:px-8"
+  >
     <div class="max-w-4xl text-center lg:text-left">
-      {hero.heroText && (
-        <p class="text-xs font-semibold uppercase tracking-[0.6em] text-primary/80">
-          {hero.heroText}
-        </p>
-      )}
-      <h1 class="mt-6 font-heading text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-[3.5rem] lg:leading-[1.05] text-[#33291F]">
-        {titleLines.map((line, index) => (
-          <>
-            {line}
-            {index < titleLines.length - 1 && <br />}
-          </>
-        ))}
+      {hero.heroText && <p class="text-xs font-semibold uppercase tracking-[0.6em] text-primary/80">{hero.heroText}</p>}
+      <h1
+        class="mt-6 font-heading text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-[3.5rem] lg:leading-[1.05] text-[#33291F]"
+      >
+        {
+          titleLines.map((line, index) => (
+            <>
+              {line}
+              {index < titleLines.length - 1 && <br />}
+            </>
+          ))
+        }
       </h1>
       <div class="mt-8 space-y-4 text-lg leading-relaxed text-[#33291F] sm:text-xl">
-        {hero.subtitle.map((paragraph, index) => (
-          <p key={`hero-subtitle-${index}`}>{paragraph}</p>
-        ))}
+        {hero.subtitle.map((paragraph) => <p>{paragraph}</p>)}
       </div>
 
-      <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center lg:items-center lg:justify-start">
-        {hero.primaryActions.map((action, index) => (
-          <a
-            key={`hero-primary-${index}`}
-            href={action.href}
-            class={`inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#33291F]/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide transition hover:bg-[#33291F] hover:text-white sm:w-auto ${action.class ?? ''}`}
-            target={action.target}
-            rel="noopener"
-          >
-            {action.icon && <Icon name={action.icon} class="h-5 w-5" />}
-            <span>{action.label}</span>
-          </a>
-        ))}
-      </div>
-
-      {hero.secondaryActions && hero.secondaryActions.length > 0 && (
-        <div class="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start">
-          {hero.secondaryActions.map((action, index) => (
+      <div
+        class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center lg:items-center lg:justify-start"
+      >
+        {
+          hero.primaryActions.map((action) => (
             <a
-              key={`hero-secondary-${index}`}
               href={action.href}
-              class={`inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-primary/30 transition hover:shadow-lg sm:w-auto ${action.class ?? ''}`}
+              class={`inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#33291F]/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide transition hover:bg-[#33291F] hover:text-white sm:w-auto ${action.class ?? ''}`}
               target={action.target}
               rel="noopener"
             >
               {action.icon && <Icon name={action.icon} class="h-5 w-5" />}
               <span>{action.label}</span>
             </a>
-          ))}
-        </div>
-      )}
+          ))
+        }
+      </div>
+
+      {
+        hero.secondaryActions && hero.secondaryActions.length > 0 && (
+          <div class="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start">
+            {hero.secondaryActions.map((action) => (
+              <a
+                href={action.href}
+                class={`inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-primary/30 transition hover:shadow-lg sm:w-auto ${action.class ?? ''}`}
+                target={action.target}
+                rel="noopener"
+              >
+                {action.icon && <Icon name={action.icon} class="h-5 w-5" />}
+                <span>{action.label}</span>
+              </a>
+            ))}
+          </div>
+        )
+      }
     </div>
   </div>
 </section>

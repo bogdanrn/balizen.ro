@@ -11,9 +11,7 @@ const { content, categories } = Astro.props as {
 <section id={content.id} class="bg-slate-50">
   <div class="mx-auto max-w-screen-xl px-4 py-24 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
-      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary">
-        Servicii
-      </p>
+      <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary">Servicii</p>
       <h2 class="mt-4 font-heading text-3xl font-bold text-slate-900 sm:text-4xl">
         {content.title}
       </h2>
@@ -31,71 +29,65 @@ const { content, categories } = Astro.props as {
     </div>
 
     <div class="mt-16 space-y-16">
-      {categories.map(({ name, services }) => (
-        <section class="space-y-8" key={`category-${name}`}>
-          <div class="text-center">
-            <h3 class="font-heading text-2xl font-semibold uppercase tracking-[0.4em] text-primary sm:text-3xl">
-              {name}
-            </h3>
-            <div class="mt-3 h-1 w-16 bg-primary/70 mx-auto rounded-full" />
-          </div>
+      {
+        categories.map(({ name, services }) => (
+          <section class="space-y-8">
+            <div class="text-center">
+              <h3 class="font-heading text-2xl font-semibold uppercase tracking-[0.4em] text-primary sm:text-3xl">
+                {name}
+              </h3>
+              <div class="mt-3 h-1 w-16 bg-primary/70 mx-auto rounded-full" />
+            </div>
 
-          <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
-            {services.map((service) => (
-              <article
-                class="group flex gap-4 rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-sm transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg"
-                key={`${name}-${service.title}`}
-              >
-                {service.image ? (
-                  <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-primary/30 shadow-md shadow-primary/20">
-                    <Image
-                      src={service.image.src}
-                      alt={service.image.alt ?? service.title}
-                      width={64}
-                      height={64}
-                      layout="fixed"
-                      objectPosition="center"
-                      class="h-full w-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <span class="font-heading text-lg font-semibold">
-                      {service.order.toString().padStart(2, '0')}
-                    </span>
-                  </div>
-                )}
-
-                <div class="flex flex-1 flex-col gap-2">
-                  <header class="flex items-start justify-between gap-3">
-                    <div>
-                      <h4 class="font-heading text-xl font-semibold text-slate-900">
-                        {service.title}
-                      </h4>
+            <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
+              {services.map((service) => (
+                <article class="group flex gap-4 rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-sm transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg">
+                  {service.image ? (
+                    <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-primary/30 shadow-md shadow-primary/20">
+                      <Image
+                        src={service.image.src}
+                        alt={service.image.alt ?? service.title}
+                        width={64}
+                        height={64}
+                        layout="fixed"
+                        objectPosition="center"
+                        class="h-full w-full object-cover"
+                      />
                     </div>
-
-                    {service.pricing?.length ? (
-                      <div class="text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        <div>{service.pricing.map(({ duration }) => `${duration} min`).join(' · ')}</div>
-                        <div class="text-primary">
-                          {service.pricing.map(({ price }) => `${price} RON`).join(' · ')}
-                        </div>
-                      </div>
-                    ) : null}
-                  </header>
-
-                  {service.description && (
-                    <p class="text-sm leading-relaxed text-slate-600">{service.description}</p>
+                  ) : (
+                    <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <span class="font-heading text-lg font-semibold">
+                        {service.order.toString().padStart(2, '0')}
+                      </span>
+                    </div>
                   )}
 
-                  <div class="mt-2 h-[1px] w-full bg-gradient-to-r from-primary/20 via-transparent to-transparent" />
+                  <div class="flex flex-1 flex-col gap-2">
+                    <header class="flex items-start justify-between gap-3">
+                      <div>
+                        <h4 class="font-heading text-xl font-semibold text-slate-900">{service.title}</h4>
+                      </div>
 
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      ))}
+                      {service.pricing?.length ? (
+                        <div class="text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
+                          <div>{service.pricing.map(({ duration }) => `${duration} min`).join(' · ')}</div>
+                          <div class="text-primary">
+                            {service.pricing.map(({ price }) => `${price} RON`).join(' · ')}
+                          </div>
+                        </div>
+                      ) : null}
+                    </header>
+
+                    {service.description && <p class="text-sm leading-relaxed text-slate-600">{service.description}</p>}
+
+                    <div class="mt-2 h-[1px] w-full bg-gradient-to-r from-primary/20 via-transparent to-transparent" />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))
+      }
     </div>
   </div>
 </section>

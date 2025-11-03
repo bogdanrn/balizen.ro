@@ -1,6 +1,16 @@
 import merge from 'lodash.merge';
 
-import type { MetaData } from '~/types';
+export interface MetaData {
+  title: string;
+  description: string;
+  robots: {
+    index: boolean;
+    follow: boolean;
+  };
+  openGraph: {
+    type: string;
+  };
+}
 
 export type Config = {
   site?: SiteConfig;

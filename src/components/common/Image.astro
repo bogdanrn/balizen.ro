@@ -47,8 +47,10 @@ if (
 }
 ---
 
-{optimized ? (
-  <img src={optimized.src} crossorigin="anonymous" referrerpolicy="no-referrer" {...optimized.attributes} />
-) : (
-  <Fragment />
-)}
+{
+  optimized ? (
+    <img src={optimized.src} crossorigin="anonymous" referrerpolicy="no-referrer" {...optimized.attributes} />
+  ) : (
+    <Fragment />
+  )
+}

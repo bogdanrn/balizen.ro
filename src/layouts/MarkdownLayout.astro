@@ -14,11 +14,11 @@ const description = frontmatter?.description ?? siteConfig.brand.description;
       <header class="space-y-2 text-center">
         <p class="text-sm font-semibold uppercase tracking-[0.35em] text-primary">Document</p>
         <h1 class="font-heading text-3xl font-bold text-slate-900">{title}</h1>
-        {frontmatter?.description && (
-          <p class="text-sm text-slate-600">{frontmatter.description}</p>
-        )}
+        {frontmatter?.description && <p class="text-sm text-slate-600">{frontmatter.description}</p>}
       </header>
-      <article class="prose prose-slate max-w-none prose-headings:font-heading prose-a:text-primary prose-strong:text-slate-900">
+      <article
+        class="prose prose-slate max-w-none prose-headings:font-heading prose-a:text-primary prose-strong:text-slate-900"
+      >
         <slot />
       </article>
     </div>

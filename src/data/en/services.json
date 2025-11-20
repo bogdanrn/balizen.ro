@@ -266,6 +266,22 @@
         "alt": "Balizen Winter Massage at Bali Zen"
       },
       "isNew": true
+    },
+    {
+      "order": 16,
+      "title": "Bali Zen Harmony",
+      "description": "This type of massage harmoniously combines Lomi Lomi for deep relaxation and improved circulation, Thai for flexibility, mobility and tension release, and hot stones for deep tension relief and total comfort. The result is a complete massage that rebalances the body, calms the mind and restores natural energy.",
+      "pricing": [
+        {
+          "price": "340",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_71.jpg",
+        "alt": "Bali Zen Harmony Massage at Bali Zen"
+      },
+      "isNew": true
     }
   ],
   "Local Massages": [

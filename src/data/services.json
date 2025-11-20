@@ -1,6 +1,22 @@
 {
   "Masaje Full Body": [
     {
+      "order": 16,
+      "title": "Bali Zen Harmony",
+      "description": "Acest tip de masaj combină armonios Lomi Lomi pentru relaxare profundă și circulație îmbunătățită, Thai pentru flexibilitate, mobilitate și eliberarea tensiunii, și pietre calde pentru detensionare profundă și confort total. Rezultatul este un masaj complet care reechilibrează corpul, calmează mintea și redă energia naturală.",
+      "pricing": [
+        {
+          "price": "340",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_71.jpg",
+        "alt": "Bali Zen Harmony Massage la Bali Zen"
+      },
+      "isNew": true
+    },
+    {
       "order": 10,
       "title": "Mom To Be",
       "description": "Prin tehnici blânde și poziționare corectă, ameliorăm disconforturile comune din sarcină, precum durerile de spate și umflăturile. Aceasta asigură confortul și siguranța mamei și bebelușului, promovând relaxarea și starea generală de bine.",

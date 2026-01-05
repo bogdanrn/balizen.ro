@@ -282,6 +282,22 @@
         "alt": "Bali Zen Harmony Massage at Bali Zen"
       },
       "isNew": true
+    },
+    {
+      "order": 17,
+      "title": "Bali Zen Slim Combo",
+      "pricing": [
+        {
+          "price": "330",
+          "duration": 90
+        }
+      ],
+      "description": "Combined with intensive anti-cellulite techniques and deep lymphatic drainage, this massage activates circulation, flushes out toxins, and sculpts your silhouette for visible results and a feeling of lightness and firmness.",
+      "image": {
+        "src": "~/assets/images/balizen_43_flipped.jpg",
+        "alt": "Bali Zen Slim Combo at Bali Zen"
+      },
+      "isNew": true
     }
   ],
   "Local Massages": [

@@ -18,7 +18,7 @@ const homepageConfig = getHomepageConfig(lang);
 const reviews = getReviews(lang);
 
 const serviceCategories = getSortedServiceCategories(lang);
-const { hero, about, services, subscriptions, subscriptionAction, giftCard, callToAction, location } = homepageConfig;
+const { hero, about, services, subscriptions, subscriptionAction, giftCard, social, callToAction, location } = homepageConfig;
 const pageTitle = `${siteConfig.brand.name} · ${siteConfig.brand.tagline}`;
 const pageDescription = hero.subtitle[0] ?? siteConfig.brand.description;
 
@@ -35,5 +35,6 @@ const ogImageUrl = ogImagePath && Astro.site ? new URL(ogImagePath, Astro.site).
   <GiftCardSection giftCard={giftCard} />
   <ReviewsSection reviews={reviews} />
   <CallToActionSection block={callToAction} />
-  <LocationSection location={location} />
+  <LocationSection location={location} social={social} />
+
 </MainLayout>

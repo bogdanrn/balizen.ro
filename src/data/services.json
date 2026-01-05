@@ -282,6 +282,22 @@
         "alt": "Balizen Winter Massage la Bali Zen"
       },
       "isNew": true
+    },
+    {
+      "order": 17,
+      "title": "Bali Zen Slim Combo",
+      "pricing": [
+        {
+          "price": "330",
+          "duration": 90
+        }
+      ],
+      "description": "Combinat cu tehnici intense anticelulitice și drenaj limfatic profund, acest masaj activează circulația, elimină toxinele și modelează silueta pentru rezultate vizibile și o senzație de ușurare și fermitate.",
+      "image": {
+        "src": "~/assets/images/balizen_43_flipped.jpg",
+        "alt": "Bali Zen Slim Combo la Bali Zen"
+      },
+      "isNew": true
     }
   ],
   "Masaje locale": [

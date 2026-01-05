@@ -187,6 +187,31 @@
       "alt": "Gift Card Bali Zen"
     }
   },
+  "social": {
+    "id": "social-media",
+    "title": "Suntem aproape și online",
+    "subtitle": "Urmărește Bali Zen pe rețelele sociale pentru oferte, noutăți și imagini din studio.",
+    "links": [
+      {
+        "label": "Instagram",
+        "handle": "@balizen.ro",
+        "href": "https://www.instagram.com/balizen.ro",
+        "icon": "tabler:brand-instagram"
+      },
+      {
+        "label": "Facebook",
+        "handle": "balizen.ro",
+        "href": "https://www.facebook.com/balizen.ro",
+        "icon": "tabler:brand-facebook"
+      },
+      {
+        "label": "TikTok",
+        "handle": "@balizen.ro",
+        "href": "https://tiktok.com/@balizen.ro",
+        "icon": "tabler:brand-tiktok"
+      }
+    ]
+  },
   "callToAction": {
     "id": "programare",
     "title": "Programează-ți Experiența de Relaxare",

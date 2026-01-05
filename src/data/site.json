@@ -98,7 +98,8 @@
     "socialLinks": [
       { "label": "Instagram", "icon": "tabler:brand-instagram", "href": "https://www.instagram.com/balizen.ro" },
       { "label": "Facebook", "icon": "tabler:brand-facebook", "href": "https://www.facebook.com/balizen.ro" },
-      { "label": "WhatsApp", "icon": "tabler:brand-whatsapp", "href": "https://wa.me/40733211325" }
+      { "label": "WhatsApp", "icon": "tabler:brand-whatsapp", "href": "https://wa.me/40733211325" },
+      { "label": "TikTok", "icon": "tabler:brand-tiktok", "href": "https://tiktok.com/@balizen.ro" }
     ],
     "footnote": "© Bali Zen SRL 2024. Toate drepturile rezervate."
   }

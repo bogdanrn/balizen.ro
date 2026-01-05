@@ -49,6 +49,11 @@ export interface SocialLink {
   href: string;
 }
 
+export interface SocialChannel extends SocialLink {
+  handle?: string;
+  description?: string;
+}
+
 export interface BrandInfo {
   name: string;
   tagline: string;
@@ -145,6 +150,13 @@ export interface GiftCardSection {
   image: ImageAsset;
 }
 
+export interface SocialSectionBlock {
+  id: string;
+  title: string;
+  subtitle: string;
+  links: SocialChannel[];
+}
+
 export interface SimpleCallToAction {
   id: string;
   title: string;
@@ -184,6 +196,7 @@ export interface HomepageConfig {
   subscriptions: SubscriptionHighlight[];
   subscriptionAction: Action;
   giftCard: GiftCardSection;
+  social: SocialSectionBlock;
   callToAction: SimpleCallToAction;
   location: LocationSection;
 }

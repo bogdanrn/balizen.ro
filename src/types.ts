@@ -177,6 +177,7 @@ export interface LocationInfo {
   phone: string;
   phoneHref: string;
   schedule: string;
+  mapsEmbedUrl?: string;
   mapsUrl: string;
 }
 

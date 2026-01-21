@@ -235,7 +235,8 @@
         "phone": "+40 733 211 325",
         "phoneHref": "tel:+40733211325",
         "schedule": "Luni - Duminică: 10:00 - 21:00",
-        "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
+        "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2824.273798870138!2d26.001454877066003!3d44.938101671070456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b249c88ab26205%3A0xebf926085c6a22a6!2sBali%20Zen!5e0!3m2!1sen!2ses!4v1769007142835!5m2!1sen!2ses",
+        "mapsUrl": "https://maps.app.goo.gl/DHWFQse2t2aW2FqV9"
       },
       {
         "name": "Hotel Central (Wellness), Ploiești",
@@ -243,7 +244,8 @@
         "phone": "+40 725 882 924",
         "phoneHref": "tel:+40725882924",
         "schedule": "Marți - Duminică: 12:00 - 22:00",
-        "mapsUrl": "https://maps.app.goo.gl/NsgdQnXkUFqTB8vQ9"
+        "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2824.1464521731696!2d26.02025397706616!3d44.94069067107028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b24918a7d4241b%3A0xf6915ec314a5061d!2sBali%20Zen%20-%20Hotel%20Central!5e0!3m2!1sen!2ses!4v1769007008981!5m2!1sen!2ses",
+        "mapsUrl": "https://maps.app.goo.gl/EGoESanaZi91CGUn6"
       }
     ],
     "email": "contact@balizen.ro",

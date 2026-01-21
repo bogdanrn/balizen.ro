@@ -14,7 +14,7 @@
     "address": "Strada Gheorghe Grigore Cantacuzino nr 190, Ploiești",
     "schedule": "Monday - Sunday: 10:00 - 21:00",
     "bookingUrl": "https://programari.balizen.ro",
-    "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7",
+    "mapsUrl": "https://maps.app.goo.gl/DHWFQse2t2aW2FqV9",
     "googleReviewsUrl": "https://maps.app.goo.gl/8aRmwitJxixrtPnk8"
   },
   "header": {
@@ -42,7 +42,7 @@
         "phone": "+40 733 211 325",
         "phoneHref": "tel:+40733211325",
         "schedule": "Monday - Sunday: 10:00 - 21:00",
-        "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
+        "mapsUrl": "https://maps.app.goo.gl/DHWFQse2t2aW2FqV9"
       },
       {
         "name": "Hotel Central (Wellness), Ploiești",
@@ -50,7 +50,7 @@
         "phone": "+40 725 882 924",
         "phoneHref": "tel:+40725882924",
         "schedule": "Tuesday - Sunday: 12:00 - 22:00",
-        "mapsUrl": "https://maps.app.goo.gl/mLPy3SwVjH5j6E5t7"
+        "mapsUrl": "https://maps.app.goo.gl/EGoESanaZi91CGUn6"
       }
     ],
     "columns": [

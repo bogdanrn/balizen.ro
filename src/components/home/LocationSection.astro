@@ -51,7 +51,8 @@ const t = getTranslations(lang);
         location.locations &&
           location.locations.map((loc) => {
             const mapQuery = encodeURIComponent(`${loc.address}`);
-            const mapEmbedSrc = `https://www.google.com/maps?q=${mapQuery}&hl=${lang}&z=16&output=embed`;
+            const fallbackEmbedSrc = `https://www.google.com/maps?q=${mapQuery}&hl=${lang}&z=16&output=embed`;
+            const mapEmbedSrc = loc.mapsEmbedUrl || fallbackEmbedSrc;
 
             return (
               <div class="grid gap-10 lg:grid-cols-2">

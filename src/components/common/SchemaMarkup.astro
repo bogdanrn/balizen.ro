@@ -91,11 +91,7 @@ const localBusinessSchema = {
       itemOffered: {
         '@type': 'Service',
         name: service.title,
-        description: service.description,
-        provider: {
-          '@type': 'HealthAndBeautyBusiness',
-          name: siteConfig.brand.name
-        }
+        description: service.description
       },
       price: service.pricing[0].price,
       priceCurrency: 'RON',
@@ -187,9 +183,6 @@ const serviceSchema = {
       '@id': `${siteUrl}/#service-${service.title.toLowerCase().replace(/\s+/g, '-')}`,
       name: service.title,
       description: service.description,
-      provider: {
-        '@id': `${siteUrl}/#business`
-      },
       areaServed: {
         '@type': 'City',
         name: 'Ploiești'

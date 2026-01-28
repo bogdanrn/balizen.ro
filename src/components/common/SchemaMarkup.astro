@@ -1,0 +1,312 @@
+---
+import { getLangFromUrl } from '~/i18n/utils';
+import { getSiteConfig, getServicesCatalog, getReviews } from '~/utils/content';
+
+const lang = getLangFromUrl(Astro.url);
+const siteConfig = getSiteConfig(lang);
+const services = getServicesCatalog(lang);
+const reviews = getReviews();
+
+const siteUrl = 'https://balizen.ro';
+const logoUrl = `${siteUrl}/images/logo.png`;
+
+// Calculate aggregate rating
+const totalRating = reviews.reduce((sum, r) => sum + r.rating, 0);
+const avgRating = (totalRating / reviews.length).toFixed(1);
+
+// Flatten services for schema
+const allServices = Object.values(services).flat();
+
+// Opening hours specification for main location
+const mainLocationHours = [
+  { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '10:00', closes: '21:00' }
+];
+
+// LocalBusiness Schema (main location)
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HealthAndBeautyBusiness',
+  '@id': `${siteUrl}/#business`,
+  name: siteConfig.brand.name,
+  alternateName: 'Bali Zen Massage Studio',
+  legalName: siteConfig.brand.legalName,
+  description: siteConfig.brand.description,
+  url: siteUrl,
+  logo: logoUrl,
+  image: [
+    `${siteUrl}/images/balizen_50.jpg`,
+    `${siteUrl}/images/balizen_1.jpg`
+  ],
+  telephone: siteConfig.contact.phone,
+  email: siteConfig.contact.email,
+  priceRange: '$$',
+  currenciesAccepted: 'RON',
+  paymentAccepted: 'Cash, Card',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Strada Gheorghe Grigore Cantacuzino nr 190, 1B',
+    addressLocality: 'Ploiești',
+    addressRegion: 'Prahova',
+    postalCode: '100000',
+    addressCountry: 'RO'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 44.9364,
+    longitude: 26.0325
+  },
+  openingHoursSpecification: mainLocationHours,
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: avgRating,
+    reviewCount: reviews.length,
+    bestRating: 5,
+    worstRating: 1
+  },
+  review: reviews.slice(0, 5).map(r => ({
+    '@type': 'Review',
+    author: {
+      '@type': 'Person',
+      name: r.author
+    },
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: r.rating,
+      bestRating: 5,
+      worstRating: 1
+    },
+    reviewBody: r.text,
+    datePublished: r.date
+  })),
+  sameAs: [
+    'https://www.instagram.com/balizen.ro',
+    'https://www.facebook.com/balizen.ro',
+    'https://tiktok.com/@balizen.ro'
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: lang === 'ro' ? 'Servicii de Masaj' : 'Massage Services',
+    itemListElement: allServices.slice(0, 10).map((service, index) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: service.title,
+        description: service.description,
+        provider: {
+          '@type': 'HealthAndBeautyBusiness',
+          name: siteConfig.brand.name
+        }
+      },
+      price: service.pricing[0].price,
+      priceCurrency: 'RON',
+      availability: 'https://schema.org/InStock',
+      url: `${siteUrl}/#servicii`,
+      position: index + 1
+    }))
+  },
+  areaServed: {
+    '@type': 'City',
+    name: 'Ploiești',
+    containedInPlace: {
+      '@type': 'AdministrativeArea',
+      name: 'Prahova'
+    }
+  },
+  knowsLanguage: ['ro', 'en'],
+  slogan: siteConfig.brand.tagline
+};
+
+// Organization Schema (for brand identity)
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
+  name: siteConfig.brand.name,
+  legalName: siteConfig.brand.legalName,
+  url: siteUrl,
+  logo: {
+    '@type': 'ImageObject',
+    url: logoUrl,
+    width: 512,
+    height: 512
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: siteConfig.contact.phone,
+    contactType: 'customer service',
+    availableLanguage: ['Romanian', 'English'],
+    areaServed: 'RO'
+  },
+  sameAs: [
+    'https://www.instagram.com/balizen.ro',
+    'https://www.facebook.com/balizen.ro',
+    'https://tiktok.com/@balizen.ro'
+  ]
+};
+
+// WebSite Schema (for search box)
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
+  url: siteUrl,
+  name: siteConfig.brand.name,
+  description: siteConfig.brand.description,
+  publisher: {
+    '@id': `${siteUrl}/#organization`
+  },
+  inLanguage: lang === 'ro' ? 'ro-RO' : 'en-US',
+  potentialAction: {
+    '@type': 'ReserveAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: siteConfig.contact.bookingUrl,
+      actionPlatform: [
+        'http://schema.org/DesktopWebPlatform',
+        'http://schema.org/MobileWebPlatform'
+      ]
+    },
+    result: {
+      '@type': 'Reservation',
+      name: lang === 'ro' ? 'Programare masaj' : 'Massage booking'
+    }
+  }
+};
+
+// Service Schema (detailed services)
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  '@id': `${siteUrl}/#services`,
+  name: lang === 'ro' ? 'Servicii de Masaj Bali Zen' : 'Bali Zen Massage Services',
+  itemListElement: allServices.map((service, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Service',
+      '@id': `${siteUrl}/#service-${service.title.toLowerCase().replace(/\s+/g, '-')}`,
+      name: service.title,
+      description: service.description,
+      provider: {
+        '@id': `${siteUrl}/#business`
+      },
+      areaServed: {
+        '@type': 'City',
+        name: 'Ploiești'
+      },
+      offers: service.pricing.map(p => ({
+        '@type': 'Offer',
+        price: p.price,
+        priceCurrency: 'RON',
+        eligibleDuration: {
+          '@type': 'QuantitativeValue',
+          value: p.duration,
+          unitCode: 'MIN'
+        },
+        availability: 'https://schema.org/InStock'
+      }))
+    }
+  }))
+};
+
+// BreadcrumbList Schema
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Acasă',
+      item: siteUrl
+    }
+  ]
+};
+
+// FAQ Schema (common questions about massage)
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: lang === 'ro' ? [
+    {
+      '@type': 'Question',
+      name: 'Care este programul de funcționare Bali Zen?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Locația principală (Str. Gh Gr Cantacuzino 190 1B) este deschisă Luni - Duminică: 10:00 - 21:00. Locația Hotel Central (Wellness) este deschisă Marți - Duminică: 12:00 - 22:00.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Cum pot face o programare pentru masaj?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Puteți face o programare online pe programari.balizen.ro, prin telefon la 0733-211-325, prin WhatsApp sau prin email la contact@balizen.ro.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Ce tipuri de masaj oferă Bali Zen?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Oferim o gamă variată de masaje: Autentic Balinez, Bali Zen Signature, LOMI LOMI, Thai, Deep Tissue, Hot Stone, Aroma Therapy, Anticelulitic, masaj prenatal (Mom To Be), și masaje locale pentru spate, umeri, cap și picioare.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Cât costă un masaj la Bali Zen?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Prețurile variază în funcție de tipul și durata masajului. Masajele locale încep de la 110 RON (30 min), iar masajele full body de la 200 RON (60 min). Consultați lista noastră completă de servicii pentru detalii.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Bali Zen oferă carduri cadou?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Da, oferim carduri cadou pentru orice tip de masaj sau valoare. Cardurile cadou sunt perfecte pentru a oferi o experiență de relaxare celor dragi.'
+      }
+    }
+  ] : [
+    {
+      '@type': 'Question',
+      name: 'What are Bali Zen opening hours?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Main location (Str. Gh Gr Cantacuzino 190 1B) is open Monday - Sunday: 10:00 - 21:00. Hotel Central (Wellness) location is open Tuesday - Sunday: 12:00 - 22:00.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'How can I book a massage?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'You can book online at programari.balizen.ro, by phone at +40 733 211 325, via WhatsApp, or by email at contact@balizen.ro.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'What types of massage does Bali Zen offer?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'We offer a wide range of massages: Authentic Balinese, Bali Zen Signature, LOMI LOMI, Thai, Deep Tissue, Hot Stone, Aroma Therapy, Anti-cellulite, prenatal massage (Mom To Be), and local massages for back, shoulders, head, and feet.'
+      }
+    }
+  ]
+};
+
+// Combine all schemas
+const schemas = [
+  localBusinessSchema,
+  organizationSchema,
+  websiteSchema,
+  serviceSchema,
+  breadcrumbSchema,
+  faqSchema
+];
+---
+
+{schemas.map(schema => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}

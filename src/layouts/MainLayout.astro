@@ -6,6 +6,7 @@ import Footer from '../components/layout/Footer.astro';
 import ThemeStyles from '../components/layout/ThemeStyles.astro';
 import Analytics from '../components/common/Analytics.astro';
 import BookingConsentModal from '../components/common/BookingConsentModal.astro';
+import SchemaMarkup from '../components/common/SchemaMarkup.astro';
 import { getLangFromUrl } from '../i18n/utils';
 import { getSiteConfig } from '../utils/content';
 import { METADATA } from 'astrowind:config';
@@ -131,6 +132,7 @@ const policies = bookingPolicies[lang];
     </script>
     <ThemeStyles />
     <Analytics />
+    <SchemaMarkup />
     <script is:inline define:vars={{ currentLang: lang }}>
       // Set cookie consent language after initialization
       if (typeof window !== 'undefined') {

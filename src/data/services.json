@@ -13,8 +13,7 @@
       "image": {
         "src": "~/assets/images/balizen_71.jpg",
         "alt": "Bali Zen Harmony Massage la Bali Zen"
-      },
-      "isNew": true
+      }
     },
     {
       "order": 10,
@@ -89,6 +88,22 @@
       }
     },
     {
+      "order": 7.1,
+      "title": "LOMI LOMI cu Ventuze",
+      "description": "Lomi Lomi cu Ventuze îmbină mișcările fluide și profunde ale masajului Lomi Lomi cu terapia cu ventuze (cupping), care creează vacuum pe piele pentru a stimula circulația, a detensiona musculatura și a susține eliminarea toxinelor. Această combinație este aleasă pentru relaxare profundă, eliberarea tensiunilor și reducerea stresului, presiunea fiind adaptată constant nivelului de confort. După ședință pot apărea urme circulare roșii pe piele, temporare și inofensive.",
+      "pricing": [
+        {
+          "price": "330",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_ventuze.jpg",
+        "alt": "Lomi Lomi cu Ventuze la Bali Zen"
+      },
+      "isNew": true
+    },
+    {
       "order": 6,
       "title": "Thai",
       "pricing": [
@@ -121,6 +136,22 @@
         "src": "~/assets/images/balizen_118.jpg",
         "alt": "Deep Tissue Massage la Bali Zen"
       }
+    },
+    {
+      "order": 5.1,
+      "title": "Deep Tissue cu Ventuze",
+      "description": "Deep Tissue cu Ventuze combină masajul profund, concentrat pe straturile musculare adânci, cu terapia cu ventuze (cupping), care creează vacuum pe piele pentru a stimula circulația, a elibera tensiunile persistente și a susține eliminarea toxinelor. Este ales în special pentru rigiditate musculară, disconfort acumulat și suprasolicitare, presiunea fiind adaptată constant nivelului de confort. După ședință pot apărea urme circulare roșii pe piele, temporare și inofensive.",
+      "pricing": [
+        {
+          "price": "330",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_ventuze.jpg",
+        "alt": "Deep Tissue cu Ventuze la Bali Zen"
+      },
+      "isNew": true
     },
     {
       "order": 4,
@@ -178,6 +209,22 @@
         "src": "~/assets/images/balizen_82.jpg",
         "alt": "Autentic Balinez Massage la Bali Zen"
       }
+    },
+    {
+      "order": 2.1,
+      "title": "Autentic Balinez cu Ventuze",
+      "description": "Autentic Balinez cu Ventuze combină tehnicile tradiționale ale masajului balinez cu terapia cu ventuze (cupping), care aplică vacuum pe piele pentru a stimula circulația, a detensiona musculatura și a susține eliminarea toxinelor. Această combinație este aleasă pentru relaxare profundă, reducerea tensiunilor și a disconfortului acumulat, presiunea fiind ajustată constant pentru confort. După ședință pot apărea urme circulare roșii pe piele, temporare și inofensive.",
+      "pricing": [
+        {
+          "price": "330",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_ventuze.jpg",
+        "alt": "Autentic Balinez cu Ventuze la Bali Zen"
+      },
+      "isNew": true
     },
     {
       "order": 1,
@@ -264,8 +311,7 @@
       "image": {
         "src": "~/assets/images/candle-massage.jpg",
         "alt": "Candle Massage la Bali Zen"
-      },
-      "isNew": true
+      }
     },
     {
       "order": 15,
@@ -280,8 +326,7 @@
       "image": {
         "src": "~/assets/images/winter-massage.jpg",
         "alt": "Balizen Winter Massage la Bali Zen"
-      },
-      "isNew": true
+      }
     },
     {
       "order": 17,
@@ -296,8 +341,7 @@
       "image": {
         "src": "~/assets/images/balizen_43_flipped.jpg",
         "alt": "Bali Zen Slim Combo la Bali Zen"
-      },
-      "isNew": true
+      }
     }
   ],
   "Masaje locale": [
@@ -319,6 +363,22 @@
         "src": "~/assets/images/limfatic_1.jpg",
         "alt": "Back & Shoulders Massage la Bali Zen"
       }
+    },
+    {
+      "order": 101.1,
+      "title": "Back & Shoulders cu Ventuze",
+      "description": "Back & Shoulders cu Ventuze combină masajul manual cu masajul cu ventuze (cupping), o tehnică alternativă ce aplică ventuze pe piele pentru a crea vacuum (presiune negativă), stimulând circulația, detensionând mușchii și susținând eliminarea toxinelor. Este frecvent ales pentru dureri musculo-scheletice, stres și relaxare, iar intensitatea presiunii este ajustată constant pentru confort. După ședință pot apărea urme circulare roșii pe piele, temporare și complet inofensive.",
+      "pricing": [
+        {
+          "price": "150",
+          "duration": 30
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_ventuze.jpg",
+        "alt": "Back & Shoulders cu Ventuze la Bali Zen"
+      },
+      "isNew": true
     },
     {
       "order": 102,

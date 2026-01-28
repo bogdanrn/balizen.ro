@@ -14,6 +14,14 @@ const { content, categories } = Astro.props as {
 
 const lang = getLangFromUrl(Astro.url);
 const t = getTranslations(lang);
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
 ---
 
 <section id={content.id} class="bg-slate-50">
@@ -51,59 +59,82 @@ const t = getTranslations(lang);
             </div>
 
             <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
-              {services.map((service) => (
-                <article class="group flex gap-4 rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-sm transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg">
-                  {service.image ? (
-                    <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-primary/30 shadow-md shadow-primary/20">
-                      <Image
-                        src={service.image.src}
-                        alt={service.image.alt ?? service.title}
-                        width={64}
-                        height={64}
-                        layout="fixed"
-                        objectPosition="center"
-                        class="h-full w-full object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <span class="font-heading text-lg font-semibold">
-                        {service.order.toString().padStart(2, '0')}
-                      </span>
-                    </div>
-                  )}
+              {services.map((service) => {
+                const descriptionId = `service-desc-${slugify(`${name}-${service.title}-${service.order}`)}`;
 
-                  <div class="flex flex-1 flex-col gap-2">
-                    <header class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
-                      <div class="text-left">
-                        <div class="flex items-center gap-2">
-                          <h4 class="font-heading text-xl font-semibold text-slate-900">{service.title}</h4>
-                          {service.isNew && (
-                            <span class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary">
-                              {t.labels.new}
-                            </span>
-                          )}
-                        </div>
+                return (
+                  <article class="group flex gap-4 rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-sm transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg">
+                    {service.image ? (
+                      <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-primary/30 shadow-md shadow-primary/20">
+                        <Image
+                          src={service.image.src}
+                          alt={service.image.alt ?? service.title}
+                          width={64}
+                          height={64}
+                          layout="fixed"
+                          objectPosition="center"
+                          class="h-full w-full object-cover"
+                        />
                       </div>
+                    ) : (
+                      <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                        <span class="font-heading text-lg font-semibold">
+                          {service.order.toString().padStart(2, '0')}
+                        </span>
+                      </div>
+                    )}
 
-                      {service.pricing?.length ? (
-                        <div class="text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:text-right">
-                          <div>
-                            {service.pricing.map(({ duration }) => `${duration} ${t.units.minutes}`).join(' · ')}
-                          </div>
-                          <div class="text-primary">
-                            {service.pricing.map(({ price }) => `${price} ${t.units.currency}`).join(' · ')}
+                    <div class="flex flex-1 flex-col gap-2">
+                      <header class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+                        <div class="text-left">
+                          <div class="flex items-center gap-2">
+                            <h4 class="font-heading text-xl font-semibold text-slate-900">{service.title}</h4>
+                            {service.isNew && (
+                              <span class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary">
+                                {t.labels.new}
+                              </span>
+                            )}
                           </div>
                         </div>
-                      ) : null}
-                    </header>
 
-                    {service.description && <p class="text-sm leading-relaxed text-slate-600">{service.description}</p>}
+                        {service.pricing?.length ? (
+                          <div class="text-left text-xs font-semibold uppercase tracking-wide text-slate-500 sm:text-right">
+                            <div>
+                              {service.pricing.map(({ duration }) => `${duration} ${t.units.minutes}`).join(' · ')}
+                            </div>
+                            <div class="text-primary">
+                              {service.pricing.map(({ price }) => `${price} ${t.units.currency}`).join(' · ')}
+                            </div>
+                          </div>
+                        ) : null}
+                      </header>
 
-                    <div class="mt-2 h-[1px] w-full bg-gradient-to-r from-primary/20 via-transparent to-transparent" />
-                  </div>
-                </article>
-              ))}
+                      {service.description && (
+                        <div>
+                          <p
+                            id={descriptionId}
+                            class="service-description js-service-description text-sm leading-relaxed text-slate-600"
+                          >
+                            {service.description}
+                          </p>
+                          <button
+                            type="button"
+                            class="js-service-description-toggle mt-2 hidden text-xs font-semibold uppercase tracking-wide text-primary transition hover:underline"
+                            aria-expanded="false"
+                            aria-controls={descriptionId}
+                            data-label-more={t.buttons.showMore}
+                            data-label-less={t.buttons.showLess}
+                          >
+                            {t.buttons.showMore}
+                          </button>
+                        </div>
+                      )}
+
+                      <div class="mt-2 h-[1px] w-full bg-gradient-to-r from-primary/20 via-transparent to-transparent" />
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </section>
         ))
@@ -156,3 +187,99 @@ const t = getTranslations(lang);
     </div>
   </div>
 </section>
+
+<style>
+  .service-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+
+  .service-description.is-expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+</style>
+
+<script>
+  const toggleButtons = document.querySelectorAll('.js-service-description-toggle');
+
+  const measureHeight = (element, expanded) => {
+    const clone = element.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.classList.toggle('is-expanded', expanded);
+    clone.style.position = 'absolute';
+    clone.style.visibility = 'hidden';
+    clone.style.pointerEvents = 'none';
+    clone.style.height = 'auto';
+    clone.style.maxHeight = 'none';
+    clone.style.width = `${element.getBoundingClientRect().width}px`;
+    clone.style.left = '0';
+    clone.style.top = '0';
+
+    document.body.appendChild(clone);
+    const height = clone.getBoundingClientRect().height;
+    clone.remove();
+
+    return height;
+  };
+
+  const refreshServiceDescriptionToggles = () => {
+    document.querySelectorAll('.js-service-description-toggle').forEach((button) => {
+      const targetId = button.getAttribute('aria-controls');
+      if (!targetId) return;
+
+      const description = document.getElementById(targetId);
+      if (!description) return;
+
+      const labelMore = button.dataset.labelMore || 'Show more';
+      const labelLess = button.dataset.labelLess || 'Show less';
+
+      const fullHeight = measureHeight(description, true);
+      const clampedHeight = measureHeight(description, false);
+      const needsToggle = fullHeight > clampedHeight + 1;
+
+      const isExpanded = description.classList.contains('is-expanded');
+      const shouldShowToggle = needsToggle || isExpanded;
+
+      button.classList.toggle('hidden', !shouldShowToggle);
+      button.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      button.textContent = isExpanded ? labelLess : labelMore;
+    });
+  };
+
+  toggleButtons.forEach((button) => {
+    if (button.dataset.initialized === 'true') return;
+    button.dataset.initialized = 'true';
+
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('aria-controls');
+      if (!targetId) return;
+
+      const description = document.getElementById(targetId);
+      if (!description) return;
+
+      const labelMore = button.dataset.labelMore || 'Show more';
+      const labelLess = button.dataset.labelLess || 'Show less';
+
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      const nextExpanded = !isExpanded;
+
+      description.classList.toggle('is-expanded', nextExpanded);
+      button.setAttribute('aria-expanded', nextExpanded ? 'true' : 'false');
+      button.textContent = nextExpanded ? labelLess : labelMore;
+
+      refreshServiceDescriptionToggles();
+    });
+  });
+
+  refreshServiceDescriptionToggles();
+
+  let resizeRaf = 0;
+  window.addEventListener('resize', () => {
+    if (resizeRaf) cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(refreshServiceDescriptionToggles);
+  });
+</script>

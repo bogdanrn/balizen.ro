@@ -26,6 +26,8 @@ export const translations = {
     buttons: {
       bookHere: 'Programează-te aici',
       whatsapp: 'WhatsApp',
+      showMore: 'Vezi mai mult',
+      showLess: 'Vezi mai puțin',
     },
     units: {
       minutes: 'min',
@@ -61,6 +63,8 @@ export const translations = {
     buttons: {
       bookHere: 'Book here',
       whatsapp: 'WhatsApp',
+      showMore: 'Show more',
+      showLess: 'Show less',
     },
     units: {
       minutes: 'min',

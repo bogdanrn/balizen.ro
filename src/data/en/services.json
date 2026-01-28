@@ -73,6 +73,22 @@
       }
     },
     {
+      "order": 7.1,
+      "title": "LOMI LOMI with Cupping",
+      "description": "Lomi Lomi with Cupping blends the long, flowing movements of Lomi Lomi massage with cupping therapy, an alternative technique that creates vacuum on the skin to stimulate circulation, release muscle tension, and support toxin elimination. This combination is chosen for deep relaxation and stress relief, with pressure always adjusted for comfort. After the session, temporary circular red marks may appear on the skin, which are harmless and fade naturally.",
+      "pricing": [
+        {
+          "price": "330",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_ventuze.jpg",
+        "alt": "Lomi Lomi with Cupping at Bali Zen"
+      },
+      "isNew": true
+    },
+    {
       "order": 6,
       "title": "Thai",
       "pricing": [
@@ -105,6 +121,22 @@
         "src": "~/assets/images/balizen_118.jpg",
         "alt": "Deep Tissue Massage at Bali Zen"
       }
+    },
+    {
+      "order": 5.1,
+      "title": "Deep Tissue with Cupping",
+      "description": "Deep Tissue with Cupping combines deep, targeted massage techniques with cupping therapy, which creates vacuum on the skin to stimulate circulation, release deep-seated muscle tension, and support toxin elimination. It is commonly chosen for muscle stiffness, accumulated discomfort, and overuse, with pressure always adjusted for comfort. After the session, temporary circular red marks may appear on the skin, which are harmless and fade naturally.",
+      "pricing": [
+        {
+          "price": "330",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_ventuze.jpg",
+        "alt": "Deep Tissue with Cupping at Bali Zen"
+      },
+      "isNew": true
     },
     {
       "order": 4,
@@ -162,6 +194,22 @@
         "src": "~/assets/images/balizen_82.jpg",
         "alt": "Authentic Balinese Massage at Bali Zen"
       }
+    },
+    {
+      "order": 2.1,
+      "title": "Authentic Balinese with Cupping",
+      "description": "Authentic Balinese with Cupping combines traditional Balinese massage techniques with cupping therapy, which creates vacuum on the skin to stimulate circulation, release muscle tension, and support toxin elimination. This combination is chosen for deep relaxation and tension relief, with pressure always adjusted for comfort. After the session, temporary circular red marks may appear on the skin, which are harmless and fade naturally.",
+      "pricing": [
+        {
+          "price": "330",
+          "duration": 90
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_ventuze.jpg",
+        "alt": "Authentic Balinese with Cupping at Bali Zen"
+      },
+      "isNew": true
     },
     {
       "order": 1,
@@ -248,8 +296,7 @@
       "image": {
         "src": "~/assets/images/candle-massage.jpg",
         "alt": "Candle Massage at Bali Zen"
-      },
-      "isNew": true
+      }
     },
     {
       "order": 15,
@@ -264,8 +311,7 @@
       "image": {
         "src": "~/assets/images/winter-massage.jpg",
         "alt": "Balizen Winter Massage at Bali Zen"
-      },
-      "isNew": true
+      }
     },
     {
       "order": 16,
@@ -280,8 +326,7 @@
       "image": {
         "src": "~/assets/images/balizen_71.jpg",
         "alt": "Bali Zen Harmony Massage at Bali Zen"
-      },
-      "isNew": true
+      }
     },
     {
       "order": 17,
@@ -296,8 +341,7 @@
       "image": {
         "src": "~/assets/images/balizen_43_flipped.jpg",
         "alt": "Bali Zen Slim Combo at Bali Zen"
-      },
-      "isNew": true
+      }
     }
   ],
   "Local Massages": [
@@ -319,6 +363,22 @@
         "src": "~/assets/images/limfatic_1.jpg",
         "alt": "Back & Shoulders Massage at Bali Zen"
       }
+    },
+    {
+      "order": 101.1,
+      "title": "Back & Shoulders with Cupping",
+      "description": "Back & Shoulders with Cupping combines manual massage with cupping therapy, an alternative technique that applies cups to the skin to create vacuum (negative pressure), stimulating circulation, releasing muscle tension, and supporting toxin elimination. It is commonly chosen for musculoskeletal discomfort, stress, and relaxation, with pressure always adjusted for comfort. After the session, temporary circular red marks may appear on the skin, which are harmless and fade naturally.",
+      "pricing": [
+        {
+          "price": "150",
+          "duration": 30
+        }
+      ],
+      "image": {
+        "src": "~/assets/images/balizen_ventuze.jpg",
+        "alt": "Back & Shoulders with Cupping at Bali Zen"
+      },
+      "isNew": true
     },
     {
       "order": 102,

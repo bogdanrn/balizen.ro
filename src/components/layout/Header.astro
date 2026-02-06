@@ -1,14 +1,17 @@
 ---
 import Logo from './Logo.astro';
 import LanguageSwitcher from '../common/LanguageSwitcher.astro';
-import { getLangFromUrl } from '../../i18n/utils';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
 import { getSiteConfig } from '../../utils/content';
 import { cn } from '../../utils/cn';
 
 const lang = getLangFromUrl(Astro.url);
 const siteConfig = getSiteConfig(lang);
 const { header } = siteConfig;
-const navLinks = header.links ?? [];
+const navLinks = (header.links ?? []).map((link) => ({
+  ...link,
+  href: link.href?.startsWith('/') ? getLocalizedPath(link.href, lang) : link.href,
+}));
 const primaryAction = header.primaryAction;
 
 const containerClasses = [

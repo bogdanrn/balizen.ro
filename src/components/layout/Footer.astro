@@ -2,13 +2,22 @@
 import { Icon } from 'astro-icon/components';
 import LanguageSwitcher from '../common/LanguageSwitcher.astro';
 
-import { getLangFromUrl } from '../../i18n/utils';
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
 import { getSiteConfig } from '../../utils/content';
 import { cn } from '../../utils/cn';
 
 const lang = getLangFromUrl(Astro.url);
 const siteConfig = getSiteConfig(lang);
 const { contact, footer } = siteConfig;
+
+// Prefix internal links with locale
+footer.columns = footer.columns.map((column) => ({
+  ...column,
+  links: column.links.map((link) => ({
+    ...link,
+    href: link.href?.startsWith('/') ? getLocalizedPath(link.href, lang) : link.href,
+  })),
+}));
 const currentYear = new Date().getFullYear();
 const dynamicFootnote = footer.footnote.replace(/\d{4}/g, String(currentYear));
 const footerLocations = footer.locations || [];

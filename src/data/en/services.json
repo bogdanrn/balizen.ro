@@ -17,7 +17,8 @@
       "image": {
         "src": "~/assets/images/balizen_126.jpg",
         "alt": "Prenatal Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 9,
@@ -32,7 +33,8 @@
       "image": {
         "src": "~/assets/images/balizen_28.jpg",
         "alt": "Herbal Thai Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 8,
@@ -51,7 +53,8 @@
       "image": {
         "src": "~/assets/images/balizen_83.jpg",
         "alt": "Aroma Therapy Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 7,
@@ -70,7 +73,8 @@
       "image": {
         "src": "~/assets/images/balizen_117.jpg",
         "alt": "Lomi Lomi Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 7.1,
@@ -86,7 +90,7 @@
         "src": "~/assets/images/balizen_ventuze.jpg",
         "alt": "Lomi Lomi with Cupping at Bali Zen"
       },
-      "isNew": true
+      "modifiedDate": "2025-12-30"
     },
     {
       "order": 6,
@@ -101,7 +105,8 @@
       "image": {
         "src": "~/assets/images/balizen_113.jpg",
         "alt": "Thai Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 5,
@@ -120,7 +125,8 @@
       "image": {
         "src": "~/assets/images/balizen_118.jpg",
         "alt": "Deep Tissue Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 5.1,
@@ -136,7 +142,7 @@
         "src": "~/assets/images/balizen_ventuze.jpg",
         "alt": "Deep Tissue with Cupping at Bali Zen"
       },
-      "isNew": true
+      "modifiedDate": "2025-12-30"
     },
     {
       "order": 4,
@@ -155,7 +161,8 @@
       "image": {
         "src": "~/assets/images/balizen_4.jpg",
         "alt": "Anti-Cellulite Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 3,
@@ -174,7 +181,8 @@
       "image": {
         "src": "~/assets/images/balizen_16.jpg",
         "alt": "Hot Stone Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 2,
@@ -193,7 +201,8 @@
       "image": {
         "src": "~/assets/images/balizen_82.jpg",
         "alt": "Authentic Balinese Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 2.1,
@@ -209,7 +218,7 @@
         "src": "~/assets/images/balizen_ventuze.jpg",
         "alt": "Authentic Balinese with Cupping at Bali Zen"
       },
-      "isNew": true
+      "modifiedDate": "2025-12-30"
     },
     {
       "order": 1,
@@ -224,7 +233,8 @@
       "image": {
         "src": "~/assets/images/balizen_37.jpg",
         "alt": "Bali Zen Signature Massage"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 11,
@@ -239,7 +249,8 @@
       "image": {
         "src": "~/assets/images/balizen_140.jpg",
         "alt": "Lymphatic Drainage Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 12,
@@ -258,7 +269,8 @@
       "image": {
         "src": "~/assets/images/4_maini_1.jpg",
         "alt": "4 Hands Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 13,
@@ -277,7 +289,8 @@
       "image": {
         "src": "~/assets/images/cuplu_1.jpg",
         "alt": "Tandem Massage (2 people) at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 14,
@@ -296,7 +309,8 @@
       "image": {
         "src": "~/assets/images/candle-massage.jpg",
         "alt": "Candle Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 15,
@@ -311,7 +325,8 @@
       "image": {
         "src": "~/assets/images/winter-massage.jpg",
         "alt": "Balizen Winter Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 16,
@@ -326,7 +341,8 @@
       "image": {
         "src": "~/assets/images/balizen_71.jpg",
         "alt": "Bali Zen Harmony Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 17,
@@ -341,7 +357,24 @@
       "image": {
         "src": "~/assets/images/balizen_43_flipped.jpg",
         "alt": "Bali Zen Slim Combo at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
+    },
+    {
+      "order": 18,
+      "title": "Bali Zen Easter",
+      "pricing": [
+        {
+          "price": "320",
+          "duration": 90
+        }
+      ],
+      "description": "A complete relaxation ritual: full body aromatherapy massage with essential oils, followed by 30 minutes of your choice – head, face, hands, or reflexology. Pure indulgence for body and mind.",
+      "image": {
+        "src": "~/assets/images/balizen-iepure.jpg",
+        "alt": "Bali Zen Easter at Bali Zen"
+      },
+      "modifiedDate": "2026-03-30"
     }
   ],
   "Local Massages": [
@@ -362,7 +395,8 @@
       "image": {
         "src": "~/assets/images/limfatic_1.jpg",
         "alt": "Back & Shoulders Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 101.1,
@@ -378,7 +412,7 @@
         "src": "~/assets/images/balizen_ventuze.jpg",
         "alt": "Back & Shoulders with Cupping at Bali Zen"
       },
-      "isNew": true
+      "modifiedDate": "2025-12-30"
     },
     {
       "order": 102,
@@ -397,7 +431,8 @@
       "image": {
         "src": "~/assets/images/balizen_7.jpg",
         "alt": "Head & Shoulders Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 103,
@@ -416,7 +451,8 @@
       "image": {
         "src": "~/assets/images/balizen_106.jpg",
         "alt": "Head & Face Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 104,
@@ -435,7 +471,28 @@
       "image": {
         "src": "~/assets/images/balizen_39.jpg",
         "alt": "Foot Massage at Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
+    },
+    {
+      "order": 105,
+      "title": "Reflexology",
+      "pricing": [
+        {
+          "price": "110",
+          "duration": 30
+        },
+        {
+          "price": "200",
+          "duration": 60
+        }
+      ],
+      "description": "A therapeutic foot massage that stimulates reflex points, promoting deep relaxation and restoring balance in the body.",
+      "image": {
+        "src": "~/assets/images/masaj-picioare.jpg",
+        "alt": "Reflexology at Bali Zen"
+      },
+      "modifiedDate": "2026-03-30"
     }
   ]
 }

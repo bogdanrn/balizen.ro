@@ -13,7 +13,8 @@
       "image": {
         "src": "~/assets/images/balizen_71.jpg",
         "alt": "Bali Zen Harmony Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 10,
@@ -32,7 +33,8 @@
       "image": {
         "src": "~/assets/images/balizen_126.jpg",
         "alt": "Prenatal Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 9,
@@ -47,7 +49,8 @@
       "image": {
         "src": "~/assets/images/balizen_28.jpg",
         "alt": "Herbal Thai Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 8,
@@ -66,7 +69,8 @@
       "image": {
         "src": "~/assets/images/balizen_83.jpg",
         "alt": "Aroma Therapy Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 7,
@@ -85,7 +89,8 @@
       "image": {
         "src": "~/assets/images/balizen_117.jpg",
         "alt": "Lomi Lomi Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 7.1,
@@ -101,7 +106,7 @@
         "src": "~/assets/images/balizen_ventuze.jpg",
         "alt": "Lomi Lomi cu Ventuze la Bali Zen"
       },
-      "isNew": true
+      "modifiedDate": "2025-12-30"
     },
     {
       "order": 6,
@@ -116,7 +121,8 @@
       "image": {
         "src": "~/assets/images/balizen_113.jpg",
         "alt": "Thai Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 5,
@@ -135,7 +141,8 @@
       "image": {
         "src": "~/assets/images/balizen_118.jpg",
         "alt": "Deep Tissue Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 5.1,
@@ -151,7 +158,7 @@
         "src": "~/assets/images/balizen_ventuze.jpg",
         "alt": "Deep Tissue cu Ventuze la Bali Zen"
       },
-      "isNew": true
+      "modifiedDate": "2025-12-30"
     },
     {
       "order": 4,
@@ -170,7 +177,8 @@
       "image": {
         "src": "~/assets/images/balizen_4.jpg",
         "alt": "Anticelulitic Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 3,
@@ -189,7 +197,8 @@
       "image": {
         "src": "~/assets/images/balizen_16.jpg",
         "alt": "Hot Stone Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 2,
@@ -208,7 +217,8 @@
       "image": {
         "src": "~/assets/images/balizen_82.jpg",
         "alt": "Autentic Balinez Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 2.1,
@@ -224,7 +234,7 @@
         "src": "~/assets/images/balizen_ventuze.jpg",
         "alt": "Autentic Balinez cu Ventuze la Bali Zen"
       },
-      "isNew": true
+      "modifiedDate": "2025-12-30"
     },
     {
       "order": 1,
@@ -239,7 +249,8 @@
       "image": {
         "src": "~/assets/images/balizen_37.jpg",
         "alt": "Bali Zen Signature Massage"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 11,
@@ -254,7 +265,8 @@
       "image": {
         "src": "~/assets/images/balizen_140.jpg",
         "alt": "Masaj drenaj limfatic la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 12,
@@ -273,7 +285,8 @@
       "image": {
         "src": "~/assets/images/4_maini_1.jpg",
         "alt": "Masaj la 4 mâini la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 13,
@@ -292,7 +305,8 @@
       "image": {
         "src": "~/assets/images/cuplu_1.jpg",
         "alt": "Masaj în tandem (2 persoane) la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 14,
@@ -311,7 +325,8 @@
       "image": {
         "src": "~/assets/images/candle-massage.jpg",
         "alt": "Candle Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 15,
@@ -326,7 +341,8 @@
       "image": {
         "src": "~/assets/images/winter-massage.jpg",
         "alt": "Balizen Winter Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 17,
@@ -341,7 +357,24 @@
       "image": {
         "src": "~/assets/images/balizen_43_flipped.jpg",
         "alt": "Bali Zen Slim Combo la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
+    },
+    {
+      "order": 18,
+      "title": "Bali Zen Easter",
+      "pricing": [
+        {
+          "price": "320",
+          "duration": 90
+        }
+      ],
+      "description": "Un ritual complet de relaxare: masaj full body cu aromaterapie și uleiuri esențiale, urmat de 30 de minute la alegere – cap, față, mâini sau reflexoterapie. Răsfăț total pentru corp și minte.",
+      "image": {
+        "src": "~/assets/images/balizen-iepure.jpg",
+        "alt": "Bali Zen Easter la Bali Zen"
+      },
+      "modifiedDate": "2026-03-30"
     }
   ],
   "Masaje locale": [
@@ -362,7 +395,8 @@
       "image": {
         "src": "~/assets/images/limfatic_1.jpg",
         "alt": "Back & Shoulders Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 101.1,
@@ -378,7 +412,7 @@
         "src": "~/assets/images/balizen_ventuze.jpg",
         "alt": "Back & Shoulders cu Ventuze la Bali Zen"
       },
-      "isNew": true
+      "modifiedDate": "2025-12-30"
     },
     {
       "order": 102,
@@ -397,7 +431,8 @@
       "image": {
         "src": "~/assets/images/balizen_7.jpg",
         "alt": "Head & Shoulders Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 103,
@@ -416,7 +451,8 @@
       "image": {
         "src": "~/assets/images/balizen_106.jpg",
         "alt": "Head & Face Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
     },
     {
       "order": 104,
@@ -435,7 +471,28 @@
       "image": {
         "src": "~/assets/images/balizen_39.jpg",
         "alt": "Foot Massage la Bali Zen"
-      }
+      },
+      "modifiedDate": "2025-01-01"
+    },
+    {
+      "order": 105,
+      "title": "Reflexoterapie",
+      "pricing": [
+        {
+          "price": "110",
+          "duration": 30
+        },
+        {
+          "price": "200",
+          "duration": 60
+        }
+      ],
+      "description": "Masaj terapeutic al tălpilor care stimulează punctele reflexe, ajutând la relaxare profundă și echilibrarea întregului organism.",
+      "image": {
+        "src": "~/assets/images/masaj-picioare.jpg",
+        "alt": "Reflexoterapie la Bali Zen"
+      },
+      "modifiedDate": "2026-03-30"
     }
   ]
 }

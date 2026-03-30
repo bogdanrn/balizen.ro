@@ -15,6 +15,14 @@ const { content, categories } = Astro.props as {
 const lang = getLangFromUrl(Astro.url);
 const t = getTranslations(lang);
 
+const isNew = (service: ServiceItem) => {
+  if (!service.modifiedDate) return false;
+  const modified = new Date(service.modifiedDate);
+  const twoMonthsAgo = new Date();
+  twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+  return modified >= twoMonthsAgo;
+};
+
 const slugify = (value: string) =>
   value
     .toLowerCase()
@@ -63,9 +71,19 @@ const slugify = (value: string) =>
                 const descriptionId = `service-desc-${slugify(`${name}-${service.title}-${service.order}`)}`;
 
                 return (
-                  <article class="group flex gap-4 rounded-3xl border border-slate-200 bg-white/90 p-5 shadow-sm transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg">
+                  <article class={cn(
+                    "group flex gap-4 rounded-3xl border p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg",
+                    isNew(service)
+                      ? "service-new border-primary/40 bg-gradient-to-br from-primary/[0.06] via-white to-primary/[0.04] shadow-md shadow-primary/10 ring-1 hover:border-primary/70 hover:shadow-primary/20"
+                      : "border-slate-200 bg-white/90 hover:border-primary/60"
+                  )}>
                     {service.image ? (
-                      <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-primary/30 shadow-md shadow-primary/20">
+                      <div class={cn(
+                        "relative h-16 w-16 shrink-0 overflow-hidden rounded-full border shadow-md",
+                        isNew(service)
+                          ? "border-primary/50 shadow-primary/30"
+                          : "border-primary/30 shadow-primary/20"
+                      )}>
                         <Image
                           src={service.image.src}
                           alt={service.image.alt ?? service.title}
@@ -89,8 +107,8 @@ const slugify = (value: string) =>
                         <div class="text-left">
                           <div class="flex items-center gap-2">
                             <h4 class="font-heading text-xl font-semibold text-slate-900">{service.title}</h4>
-                            {service.isNew && (
-                              <span class="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-primary">
+                            {isNew(service) && (
+                              <span class="new-badge inline-flex items-center rounded-full bg-primary px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide text-white shadow-sm shadow-primary/40">
                                 {t.labels.new}
                               </span>
                             )}
@@ -196,6 +214,19 @@ const slugify = (value: string) =>
     overflow: hidden;
   }
 
+  .service-new {
+    --tw-ring-color: rgb(255 175 115 / 0.15);
+  }
+
+  .new-badge {
+    animation: new-badge-pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes new-badge-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+  }
+
   .service-description.is-expanded {
     display: block;
     -webkit-line-clamp: unset;
@@ -204,10 +235,10 @@ const slugify = (value: string) =>
 </style>
 
 <script>
-  const toggleButtons = document.querySelectorAll('.js-service-description-toggle');
+  const toggleButtons = document.querySelectorAll<HTMLButtonElement>('.js-service-description-toggle');
 
-  const measureHeight = (element, expanded) => {
-    const clone = element.cloneNode(true);
+  const measureHeight = (element: HTMLElement, expanded: boolean) => {
+    const clone = element.cloneNode(true) as HTMLElement;
     clone.removeAttribute('id');
     clone.classList.toggle('is-expanded', expanded);
     clone.style.position = 'absolute';
@@ -227,7 +258,7 @@ const slugify = (value: string) =>
   };
 
   const refreshServiceDescriptionToggles = () => {
-    document.querySelectorAll('.js-service-description-toggle').forEach((button) => {
+    document.querySelectorAll<HTMLButtonElement>('.js-service-description-toggle').forEach((button) => {
       const targetId = button.getAttribute('aria-controls');
       if (!targetId) return;
 

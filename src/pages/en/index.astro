@@ -24,7 +24,7 @@ const pageDescription = hero.subtitle[0] ?? siteConfig.brand.description;
 
 // Get OG image URL directly from config (served from public folder)
 const ogImagePath = METADATA?.openGraph?.images?.[0]?.url;
-const ogImageUrl = ogImagePath && Astro.site ? new URL(ogImagePath, Astro.site).href : null;
+const ogImageUrl = ogImagePath && Astro.site ? new URL(ogImagePath, Astro.site).href : undefined;
 ---
 
 <MainLayout title={pageTitle} description={pageDescription} image={ogImageUrl}>

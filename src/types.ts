@@ -215,7 +215,7 @@ export interface ServiceItem {
   description: string;
   pricing: PricingInfo[];
   image?: ServiceImage;
-  isNew?: boolean;
+  modifiedDate?: string;
 }
 
 export type ServicesCatalog = Record<string, ServiceItem[]>;

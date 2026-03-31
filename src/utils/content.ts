@@ -42,7 +42,12 @@ export function getSortedServiceCategories(lang: Lang = 'ro'): Array<{ name: str
   return Object.entries(catalog)
     .map(([name, services]) => ({
       name,
-      services: [...services].sort((a, b) => a.order - b.order),
+      services: [...services].sort((a, b) => {
+        const dateA = a.modifiedDate ?? '';
+        const dateB = b.modifiedDate ?? '';
+        if (dateA !== dateB) return dateB.localeCompare(dateA);
+        return a.order - b.order;
+      }),
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 }

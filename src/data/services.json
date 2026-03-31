@@ -329,22 +329,6 @@
       "modifiedDate": "2025-01-01"
     },
     {
-      "order": 15,
-      "title": "Bali Zen Winter",
-      "pricing": [
-        {
-          "price": "320",
-          "duration": 90
-        }
-      ],
-      "description": "Ritualul începe cu un scrub pentru picioare, urmat de un masaj balinez cu uleiuri calde de scorțișoară și cuișoare, ce stimulează circulația, tonifică pielea și relaxează profund. Aroma lor festivă aduce spiritul sărbătorilor pe piele, iar experiența se încheie cu un masaj cervical, facial și capilar, pentru echilibru și o stare de bine deplină.",
-      "image": {
-        "src": "~/assets/images/winter-massage.jpg",
-        "alt": "Balizen Winter Massage la Bali Zen"
-      },
-      "modifiedDate": "2025-01-01"
-    },
-    {
       "order": 17,
       "title": "Bali Zen Slim Combo",
       "pricing": [

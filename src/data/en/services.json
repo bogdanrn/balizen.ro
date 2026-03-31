@@ -313,22 +313,6 @@
       "modifiedDate": "2025-01-01"
     },
     {
-      "order": 15,
-      "title": "Bali Zen Winter",
-      "pricing": [
-        {
-          "price": "320",
-          "duration": 90
-        }
-      ],
-      "description": "The ritual begins with a foot scrub, followed by a Balinese massage with warm cinnamon and clove oils that stimulate circulation, tone the skin, and deeply relax. Their festive aroma brings the holiday spirit to the skin, and the experience ends with a cervical, facial, and scalp massage for balance and complete well-being.",
-      "image": {
-        "src": "~/assets/images/winter-massage.jpg",
-        "alt": "Balizen Winter Massage at Bali Zen"
-      },
-      "modifiedDate": "2025-01-01"
-    },
-    {
       "order": 16,
       "title": "Bali Zen Harmony",
       "description": "This type of massage harmoniously combines Lomi Lomi for deep relaxation and improved circulation, Thai for flexibility, mobility and tension release, and hot stones for deep tension relief and total comfort. The result is a complete massage that rebalances the body, calms the mind and restores natural energy.",

@@ -185,7 +185,12 @@
     "image": {
       "src": "~/assets/images/gift_card.png",
       "alt": "Bali Zen Gift Card"
-    }
+    },
+    "disclaimer": [
+      "Gift vouchers are personalized and cannot be returned, refunded, or transferred under any circumstances.",
+      "Each voucher is valid for 3 months from the purchase date.",
+      "Once the validity period expires, the voucher can no longer be used and no extensions are granted."
+    ]
   },
   "social": {
     "id": "social-media",

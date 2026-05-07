@@ -44,6 +44,19 @@ const t = getTranslations(lang);
           ))
         }
       </ul>
+
+      {
+        giftCard.disclaimer && giftCard.disclaimer.length > 0 && (
+          <ul class="space-y-2 border-t border-white/15 pt-6 text-xs leading-relaxed text-white/65">
+            {giftCard.disclaimer.map((item) => (
+              <li class="flex gap-2">
+                <span aria-hidden="true">•</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </div>
 
     <div class="flex w-full max-w-md flex-col items-center justify-center gap-6 mx-auto lg:mx-0">

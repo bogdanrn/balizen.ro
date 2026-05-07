@@ -185,7 +185,12 @@
     "image": {
       "src": "~/assets/images/gift_card.png",
       "alt": "Gift Card Bali Zen"
-    }
+    },
+    "disclaimer": [
+      "Voucherele cadou sunt personalizate și nu pot fi returnate, rambursate sau transmisibile indiferent de circumstanțe.",
+      "Fiecare voucher are o valabilitate de 3 luni de la data achiziției.",
+      "După expirarea termenului de valabilitate, voucherul nu mai poate fi utilizat și nu se acordă prelungiri."
+    ]
   },
   "social": {
     "id": "social-media",

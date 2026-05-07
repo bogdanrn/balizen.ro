@@ -148,6 +148,7 @@ export interface GiftCardSection {
   features: GiftCardFeature[];
   cta: Action;
   image: ImageAsset;
+  disclaimer?: string[];
 }
 
 export interface SocialSectionBlock {

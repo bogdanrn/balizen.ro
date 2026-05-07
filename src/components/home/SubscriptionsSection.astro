@@ -1,13 +1,15 @@
 ---
 import Image from '../common/Image.astro';
+import Disclaimer from '../common/Disclaimer.astro';
 import type { Action, SubscriptionHighlight } from '../../types';
 import { cn } from '../../utils/cn';
 import { getLangFromUrl } from '../../i18n/utils';
 import { getTranslations } from '../../i18n/translations';
 
-const { subscriptions, action } = Astro.props as {
+const { subscriptions, action, disclaimer } = Astro.props as {
   subscriptions: SubscriptionHighlight[];
   action: Action;
+  disclaimer?: string[];
 };
 
 const lang = getLangFromUrl(Astro.url);
@@ -83,5 +85,15 @@ const t = getTranslations(lang);
         })
       }
     </div>
+
+    {
+      disclaimer && disclaimer.length > 0 && (
+        <Disclaimer
+          items={disclaimer}
+          class="mx-auto mt-10 max-w-3xl text-center text-xs leading-relaxed text-slate-500"
+          linkClass="underline underline-offset-2 text-primary hover:text-primary/80"
+        />
+      )
+    }
   </div>
 </section>

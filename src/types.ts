@@ -197,6 +197,7 @@ export interface HomepageConfig {
   services: ServicesSection;
   subscriptions: SubscriptionHighlight[];
   subscriptionAction: Action;
+  subscriptionDisclaimer?: string[];
   giftCard: GiftCardSection;
   social: SocialSectionBlock;
   callToAction: SimpleCallToAction;

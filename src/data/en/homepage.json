@@ -150,6 +150,10 @@
     "icon": "tabler:calendar",
     "class": "js-programari-button"
   },
+  "subscriptionDisclaimer": [
+    "Subscriptions can be returned within 14 days, if not used.",
+    "Please review our [Return Policy](/en/return-policy) for further details."
+  ],
   "giftCard": {
     "id": "gift-card",
     "title": "Give Authentic Relaxation",
@@ -189,7 +193,8 @@
     "disclaimer": [
       "Gift vouchers are personalized and cannot be returned, refunded, or transferred under any circumstances.",
       "Each voucher is valid for 3 months from the purchase date.",
-      "Once the validity period expires, the voucher can no longer be used and no extensions are granted."
+      "Once the validity period expires, the voucher can no longer be used and no extensions are granted.",
+      "Please review our [Return Policy](/en/return-policy) for further details."
     ]
   },
   "social": {

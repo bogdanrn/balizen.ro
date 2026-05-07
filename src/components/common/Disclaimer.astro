@@ -1,0 +1,46 @@
+---
+interface Props {
+  items: string[];
+  class?: string;
+  linkClass?: string;
+}
+
+const { items, class: className, linkClass } = Astro.props;
+
+type Segment = { type: 'text'; value: string } | { type: 'link'; text: string; href: string };
+
+function parseLine(line: string): Segment[] {
+  const segments: Segment[] = [];
+  const re = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(line)) !== null) {
+    if (m.index > last) segments.push({ type: 'text', value: line.slice(last, m.index) });
+    segments.push({ type: 'link', text: m[1], href: m[2] });
+    last = re.lastIndex;
+  }
+  if (last < line.length) segments.push({ type: 'text', value: line.slice(last) });
+  return segments;
+}
+---
+
+{
+  items && items.length > 0 && (
+    <p class={className}>
+      {items.map((line, i) => (
+        <>
+          {parseLine(line).map((seg) =>
+            seg.type === 'text' ? (
+              <span>{seg.value}</span>
+            ) : (
+              <a href={seg.href} class={linkClass ?? 'underline underline-offset-2 hover:opacity-80'}>
+                {seg.text}
+              </a>
+            )
+          )}
+          {i < items.length - 1 ? ' ' : ''}
+        </>
+      ))}
+    </p>
+  )
+}

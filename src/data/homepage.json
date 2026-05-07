@@ -150,6 +150,10 @@
     "icon": "tabler:calendar",
     "class": "js-programari-button"
   },
+  "subscriptionDisclaimer": [
+    "Abonamentele pot fi returnate în termen de 14 zile, dacă nu au fost utilizate.",
+    "Vă rugăm să consultați [Politica de Returnare](/return-policy) pentru mai multe detalii."
+  ],
   "giftCard": {
     "id": "gift-card",
     "title": "Dăruiește Relaxare Autentică",
@@ -189,7 +193,8 @@
     "disclaimer": [
       "Voucherele cadou sunt personalizate și nu pot fi returnate, rambursate sau transmisibile indiferent de circumstanțe.",
       "Fiecare voucher are o valabilitate de 3 luni de la data achiziției.",
-      "După expirarea termenului de valabilitate, voucherul nu mai poate fi utilizat și nu se acordă prelungiri."
+      "După expirarea termenului de valabilitate, voucherul nu mai poate fi utilizat și nu se acordă prelungiri.",
+      "Vă rugăm să consultați [Politica de Returnare](/return-policy) pentru mai multe detalii."
     ]
   },
   "social": {

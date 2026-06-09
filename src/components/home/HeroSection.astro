@@ -72,11 +72,7 @@ const titleLines = hero.title.split('\n');
             {hero.secondaryActions.map((action) => {
               const isPhone = action.href?.startsWith('tel:');
               const locationLabel =
-                action.href === 'tel:+40733211325'
-                  ? 'Gh. Gr. Cantacuzino'
-                  : action.href === 'tel:+40725882924'
-                    ? 'Hotel Central Wellness'
-                    : null;
+                action.href === 'tel:+40733211325' ? 'Gh. Gr. Cantacuzino' : null;
 
               if (isPhone && locationLabel) {
                 return (

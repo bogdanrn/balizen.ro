@@ -346,19 +346,23 @@
     },
     {
       "order": 18,
-      "title": "Bali Zen Easter",
+      "title": "Masaj Sportiv",
       "pricing": [
         {
-          "price": "320",
+          "price": "240",
+          "duration": 60
+        },
+        {
+          "price": "340",
           "duration": 90
         }
       ],
-      "description": "Un ritual complet de relaxare: masaj full body cu aromaterapie și uleiuri esențiale, urmat de 30 de minute la alegere – cap, față, mâini sau reflexoterapie. Răsfăț total pentru corp și minte.",
+      "description": "Un tratament intensiv destinat recuperării musculare, creșterii mobilității și optimizării performanței fizice.",
       "image": {
-        "src": "~/assets/images/balizen-iepure.jpg",
-        "alt": "Bali Zen Easter la Bali Zen"
+        "src": "~/assets/images/balizen_72.jpg",
+        "alt": "Masaj Sportiv la Bali Zen"
       },
-      "modifiedDate": "2026-03-30"
+      "modifiedDate": "2026-06-09"
     }
   ],
   "Masaje locale": [

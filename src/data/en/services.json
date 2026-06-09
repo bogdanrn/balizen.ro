@@ -346,19 +346,23 @@
     },
     {
       "order": 18,
-      "title": "Bali Zen Easter",
+      "title": "Sports Massage",
       "pricing": [
         {
-          "price": "320",
+          "price": "240",
+          "duration": 60
+        },
+        {
+          "price": "340",
           "duration": 90
         }
       ],
-      "description": "A complete relaxation ritual: full body aromatherapy massage with essential oils, followed by 30 minutes of your choice – head, face, hands, or reflexology. Pure indulgence for body and mind.",
+      "description": "Designed to relieve muscle tension, enhance recovery, improve flexibility, and support peak physical performance.",
       "image": {
-        "src": "~/assets/images/balizen-iepure.jpg",
-        "alt": "Bali Zen Easter at Bali Zen"
+        "src": "~/assets/images/balizen_72.jpg",
+        "alt": "Sports Massage at Bali Zen"
       },
-      "modifiedDate": "2026-03-30"
+      "modifiedDate": "2026-06-09"
     }
   ],
   "Local Massages": [

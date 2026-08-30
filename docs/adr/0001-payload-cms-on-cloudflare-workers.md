@@ -19,3 +19,17 @@ The site's real need was a CMS: non-technical staff must edit all customer-facin
 - Facts previously computed at build time (the "New" badge window, aggregate review rating) become runtime-computed, which silently fixes them being frozen at build date.
 - Deploys run only from a local machine via a `deploy` script; there is no CI pipeline.
 - The D1 schema is owned by Payload migrations; hand-editing it will break upgrades.
+
+## Spike findings (2026-08-30, template `with-cloudflare-d1` @ payload 3.82.1 / next 16.3.3 / wrangler 4.116)
+
+Deployed to https://balizen.bogdanrn.workers.dev: homepage, /admin, /admin/create-first-user, and /api all return 200 on the free plan. Remote `payload migrate` against prod D1 works out of the box (D1 binding has `remote: true`; config uses `getPlatformProxy({ remoteBindings: isProduction })` for CLI).
+
+Template drift we had to fix, all non-obvious:
+
+1. `payload build` no longer exists in Payload 3.82: the package.json `build` script must be `next build --webpack`.
+2. Turbopack production builds break the bundle: Payload's drizzle adapter calls `createRequire(...)('drizzle-kit/api')`, Turbopack rewrites it to a hashed module (`drizzle-kit-<hash>/api`) that esbuild cannot resolve. Webpack build leaves the require intact. Do not remove `--webpack` from the build script.
+3. `drizzle-kit` must be installed as a devDependency (needed by `payload migrate:create` as well as the bundling above).
+4. `@payloadcms/next/layouts` exports `metadata`, not `generatePayloadViewport` (template's `(payload)/layout.tsx` was generated against a different version).
+5. `r2Storage` goes in `plugins`, not a top-level `storage` key.
+6. TypeScript 6 flags the template's side-effect CSS imports (TS2882): the three generated `(payload)` files carry `@ts-expect-error` comments.
+7. `_legacy/` (the old Astro site, kept as seed source) must be in tsconfig `exclude` or type-check fails.

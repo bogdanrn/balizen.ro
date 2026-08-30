@@ -94,7 +94,12 @@ export default buildConfig({
       bucket: cloudflare.env.R2,
       collections: {
         media: {
-          generateFileURL: ({ filename }) => `https://cdn.balizen.ro/${filename}`,
+          // Prod reads images from the public CDN hostname; locally (and in
+          // seed scripts) fall back to Payload's file route so dev works
+          // before the custom domain exists.
+          ...(isProduction
+            ? { generateFileURL: ({ filename }: { filename: string }) => `https://cdn.balizen.ro/${filename}` }
+            : {}),
         },
       },
     }),

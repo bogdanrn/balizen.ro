@@ -89,7 +89,11 @@ export default buildConfig({
   plugins: [
     r2Storage({
       bucket: cloudflare.env.R2,
-      collections: { media: true },
+      collections: {
+        media: {
+          generateFileURL: ({ filename }) => `https://cdn.balizen.ro/${filename}`,
+        },
+      },
     }),
   ],
 })
@@ -100,7 +104,9 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
     ({ getPlatformProxy }) =>
       getPlatformProxy({
         environment: process.env.CLOUDFLARE_ENV,
-        remoteBindings: isProduction,
+        // CF_REMOTE=1 forces remote bindings for one-off scripts (seeds) even
+        // outside production: `CF_REMOTE=1 pnpm tsx scripts/seed/1-images.ts`
+        remoteBindings: isProduction || process.env.CF_REMOTE === '1',
       } satisfies GetPlatformProxyOptions),
   )
 }

@@ -81,6 +81,9 @@ importers:
       prettier:
         specifier: ^3.4.2
         version: 3.9.6
+      sharp:
+        specifier: ^0.35.4
+        version: 0.35.4(@types/node@24.12.3)
       tsx:
         specifier: 4.22.4
         version: 4.22.4
@@ -11597,7 +11600,6 @@ snapshots:
       '@img/sharp-win32-ia32': 0.35.4
       '@img/sharp-win32-x64': 0.35.4
       '@types/node': 24.12.3
-    optional: true
 
   shebang-command@2.0.0:
     dependencies:

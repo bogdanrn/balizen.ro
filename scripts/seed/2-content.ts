@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { getSeedPayload, isRemote, LEGACY_DIR, log, OUT_DIR } from './lib/context'
+import { seedGlobals, seedSubscriptions, setImageMap } from './lib/seed-globals'
 
 // Imports the legacy JSON content (ro + en) into D1 via the Payload local API.
 // Run 1-images.ts first: image references resolve through out/image-map.json.
@@ -170,32 +171,9 @@ async function main() {
   }
   log(`faqs: ${FAQS_RO.length}`)
 
-  // --- subscriptions ---
-  for (let i = 0; i < homeRo.subscriptions.length; i++) {
-    const ro = homeRo.subscriptions[i]
-    const en = homeEn.subscriptions[i]
-    const sub = await payload.create({
-      collection: 'subscriptions',
-      data: {
-        title: ro.title,
-        summary: ro.summary,
-        highlights: ro.highlights.map((text: string) => ({ text })),
-        image: mediaId(ro.image?.src),
-        order: (i + 1) * 10,
-      },
-    })
-    await payload.update({
-      collection: 'subscriptions',
-      id: sub.id,
-      locale: 'en',
-      data: {
-        title: en.title,
-        summary: en.summary,
-        highlights: en.highlights.map((text: string) => ({ text })),
-      },
-    })
-  }
-  log(`subscriptions: ${homeRo.subscriptions.length}`)
+  // --- subscriptions: id-preserving per-locale writer (localized array children) ---
+  setImageMap(imageMap)
+  await seedSubscriptions(payload, log)
 
   // --- locations ---
   for (let i = 0; i < homeRo.location.locations.length; i++) {
@@ -231,126 +209,9 @@ async function main() {
   }
   log(`locations: ${homeRo.location.locations.length}`)
 
-  // --- site-config global ---
-  const telHref = `tel:${siteRo.contact.phone.replace(/[^+\d]/g, '')}`
-  await payload.updateGlobal({
-    slug: 'site-config',
-    data: {
-      name: siteRo.brand.name,
-      tagline: siteRo.brand.tagline,
-      legalName: siteRo.brand.legalName,
-      description: siteRo.brand.description,
-      copyright: siteRo.brand.copyright,
-      phone: siteRo.contact.phone,
-      phoneHref: telHref,
-      whatsappUrl: siteRo.contact.whatsapp,
-      email: siteRo.contact.email,
-      bookingUrl: siteRo.contact.bookingUrl,
-      googleReviewsUrl: siteRo.contact.googleReviewsUrl,
-      headerLinks: siteRo.header.links.map((l: any) => ({ label: l.label, href: l.href, className: l.class })),
-      primaryAction: { label: siteRo.header.primaryAction.label, href: siteRo.header.primaryAction.href },
-      footerColumns: siteRo.footer.columns.map((c: any) => ({
-        title: c.title,
-        links: c.links.map((l: any) => ({ text: l.text, href: l.href, className: l.class })),
-      })),
-      socialLinks: siteRo.footer.socialLinks.map((s: any) => ({ label: s.label, icon: stripIcon(s.icon), href: s.href })),
-      announcementEnabled: false,
-    },
-  })
-  await payload.updateGlobal({
-    slug: 'site-config',
-    locale: 'en',
-    data: {
-      tagline: siteEn.brand.tagline,
-      description: siteEn.brand.description,
-      copyright: siteEn.brand.copyright,
-      headerLinks: siteEn.header.links.map((l: any) => ({ label: l.label, href: l.href, className: l.class })),
-      primaryAction: { label: siteEn.header.primaryAction.label, href: siteEn.header.primaryAction.href },
-      footerColumns: siteEn.footer.columns.map((c: any) => ({
-        title: c.title,
-        links: c.links.map((l: any) => ({ text: l.text, href: l.href, className: l.class })),
-      })),
-    },
-  })
-  log('site-config global done')
-
-  // --- homepage global ---
-  const heroImageRo = homeRo.hero.image
-  await payload.updateGlobal({
-    slug: 'homepage',
-    data: {
-      heroTitle: homeRo.hero.title,
-      heroSubtitle: lines(homeRo.hero.subtitle),
-      heroText: homeRo.hero.heroText,
-      heroActions: mapActions([...homeRo.hero.primaryActions, ...(homeRo.hero.secondaryActions ?? [])]),
-      heroImage: mediaId(heroImageRo?.src),
-      aboutTagline: homeRo.about.tagline,
-      aboutTitle: homeRo.about.title,
-      aboutIntro: homeRo.about.intro,
-      aboutBullets: homeRo.about.bullets.map((b: any) => ({ title: b.title, description: b.description })),
-      aboutCta: mapAction(homeRo.about.cta),
-      aboutImage: mediaId(homeRo.about.image?.src),
-      servicesTitle: homeRo.services.title,
-      servicesDescription: homeRo.services.description,
-      servicesCta: mapAction(homeRo.services.cta),
-      subscriptionAction: mapAction(homeRo.subscriptionAction),
-      subscriptionDisclaimer: lines(homeRo.subscriptionDisclaimer),
-      giftCardTitle: homeRo.giftCard.title,
-      giftCardDescription: (homeRo.giftCard.description ?? []).map((paragraph: string) => ({ paragraph })),
-      giftCardFeatures: homeRo.giftCard.features.map((f: any) => ({
-        icon: stripIcon(f.icon),
-        title: f.title,
-        description: f.description,
-      })),
-      giftCardCta: mapAction(homeRo.giftCard.cta),
-      giftCardImage: mediaId(homeRo.giftCard.image?.src),
-      giftCardDisclaimer: lines(homeRo.giftCard.disclaimer),
-      socialTitle: homeRo.social.title,
-      socialSubtitle: homeRo.social.subtitle,
-      socialLinks: homeRo.social.links.map((s: any) => ({ label: s.label, handle: s.handle, href: s.href, icon: stripIcon(s.icon) })),
-      ctaTitle: homeRo.callToAction.title,
-      ctaSubtitle: homeRo.callToAction.subtitle,
-      ctaButton: mapAction(homeRo.callToAction.cta),
-      locationTitle: homeRo.location.title,
-      locationEmail: homeRo.location.email,
-    },
-  })
-  await payload.updateGlobal({
-    slug: 'homepage',
-    locale: 'en',
-    data: {
-      heroTitle: homeEn.hero.title,
-      heroSubtitle: lines(homeEn.hero.subtitle),
-      heroText: homeEn.hero.heroText,
-      heroActions: mapActions([...homeEn.hero.primaryActions, ...(homeEn.hero.secondaryActions ?? [])]),
-      aboutTagline: homeEn.about.tagline,
-      aboutTitle: homeEn.about.title,
-      aboutIntro: homeEn.about.intro,
-      aboutBullets: homeEn.about.bullets.map((b: any) => ({ title: b.title, description: b.description })),
-      aboutCta: mapAction(homeEn.about.cta),
-      servicesTitle: homeEn.services.title,
-      servicesDescription: homeEn.services.description,
-      servicesCta: mapAction(homeEn.services.cta),
-      subscriptionAction: mapAction(homeEn.subscriptionAction),
-      subscriptionDisclaimer: lines(homeEn.subscriptionDisclaimer),
-      giftCardTitle: homeEn.giftCard.title,
-      giftCardDescription: (homeEn.giftCard.description ?? []).map((paragraph: string) => ({ paragraph })),
-      giftCardFeatures: homeEn.giftCard.features.map((f: any) => ({
-        icon: stripIcon(f.icon),
-        title: f.title,
-        description: f.description,
-      })),
-      giftCardCta: mapAction(homeEn.giftCard.cta),
-      giftCardDisclaimer: lines(homeEn.giftCard.disclaimer),
-      socialTitle: homeEn.social.title,
-      socialSubtitle: homeEn.social.subtitle,
-      ctaTitle: homeEn.callToAction.title,
-      ctaSubtitle: homeEn.callToAction.subtitle,
-      ctaButton: mapAction(homeEn.callToAction.cta),
-      locationTitle: homeEn.location.title,
-    },
-  })
-  log('homepage global done')
+  // --- globals (site-config, homepage): id-preserving per-locale writer ---
+  setImageMap(imageMap)
+  await seedGlobals(payload, log)
 
   // carry hero/about/giftCard alt texts onto media docs (ro + en)
   for (const pair of [

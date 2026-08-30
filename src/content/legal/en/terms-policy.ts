@@ -1,4 +1,4 @@
-export const title = undefined
+export const title = 'Terms and Conditions'
 
 export const description = ""
 

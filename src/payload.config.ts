@@ -83,7 +83,7 @@ export default buildConfig({
     disable: true,
   },
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET || (cloudflare.env as unknown as Record<string, unknown>).PAYLOAD_SECRET as string || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

@@ -6,7 +6,9 @@ import '../../globals.css'
 
 import ConsentAnalytics from '@/components/ConsentAnalytics'
 import ConsentBanner from '@/components/ConsentBanner'
+import HeaderDrawer from '@/components/HeaderDrawer'
 import JsonLd from '@/components/JsonLd'
+import ServiceDescriptionToggles from '@/components/ServiceDescriptionToggles'
 import SiteInteractions from '@/components/SiteInteractions'
 import SiteFooter from '@/components/layout/SiteFooter'
 import SiteHeader from '@/components/layout/SiteHeader'
@@ -89,6 +91,8 @@ export default async function LocaleLayout({
         </main>
         <SiteFooter lang={lang} siteConfig={siteConfig} locations={locations} />
         <SiteInteractions lang={lang} bookingUrl={siteConfig.bookingUrl} />
+        <HeaderDrawer />
+        <ServiceDescriptionToggles />
         <ConsentBanner lang={lang} />
         <ConsentAnalytics />
       </body>

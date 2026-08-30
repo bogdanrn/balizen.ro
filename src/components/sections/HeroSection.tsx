@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { getTranslations, type Lang } from '@/i18n'
 import type { Homepage, SiteConfig } from '@/payload-types'
 
@@ -50,7 +52,7 @@ export default function HeroSection({ lang, homepage, siteConfig }: Props) {
       )
     }
 
-    return <span key={action.id ?? index} className="contents">{link}</span>
+    return <Fragment key={action.id ?? index}>{link}</Fragment>
   }
 
   return (
@@ -70,10 +72,10 @@ export default function HeroSection({ lang, homepage, siteConfig }: Props) {
           )}
           <h1 className="mt-6 font-heading text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-[3.5rem] lg:leading-[1.05] text-[#33291F]">
             {titleLines.map((line, index) => (
-              <span key={index} className="contents">
+              <Fragment key={index}>
                 {line}
                 {index < titleLines.length - 1 && <br />}
-              </span>
+              </Fragment>
             ))}
           </h1>
           <div className="mt-8 space-y-4 text-lg leading-relaxed text-[#33291F] sm:text-xl">

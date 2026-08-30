@@ -1,4 +1,4 @@
-export const title = undefined
+export const title = 'Politică de Prelucrare a Datelor Personale'
 
 export const description = ""
 

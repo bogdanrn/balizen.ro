@@ -62,11 +62,11 @@
   background-color: var(--aw-color-bg-page);
 }
 
-@layer components {
-  .btn {
-    @apply inline-flex cursor-pointer items-center justify-center rounded-full border border-gray-400 bg-transparent px-6 py-3.5 text-center text-base leading-snug font-medium text-page transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200 hover:border-gray-600 hover:bg-gray-100 md:px-8;
-  }
+@utility btn {
+  @apply inline-flex cursor-pointer items-center justify-center rounded-full border border-gray-400 bg-transparent px-6 py-3.5 text-center text-base leading-snug font-medium text-page transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200 hover:border-gray-600 hover:bg-gray-100 md:px-8;
+}
 
+@layer components {
   .btn-primary {
     @apply btn border-primary bg-primary font-semibold text-white hover:border-accent hover:bg-accent hover:text-white;
   }
@@ -78,4 +78,31 @@
   .btn-tertiary {
     @apply btn border-none text-muted shadow-none hover:text-gray-900;
   }
+}
+
+/* ServicesSection */
+.service-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.service-new {
+  --tw-ring-color: rgb(255 175 115 / 0.15);
+}
+
+.new-badge {
+  animation: new-badge-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes new-badge-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}
+
+.service-description.is-expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
 }

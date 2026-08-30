@@ -1,4 +1,4 @@
-export const title = undefined
+export const title = 'Privacy Policy'
 
 export const description = ""
 

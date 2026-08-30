@@ -1,4 +1,4 @@
-export const title = undefined
+export const title = 'Termeni și Condiții'
 
 export const description = ""
 

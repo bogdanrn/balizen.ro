@@ -1,4 +1,4 @@
-export const title = undefined
+export const title = 'Cancellation Policy'
 
 export const description = ""
 

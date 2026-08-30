@@ -31,12 +31,31 @@ export default function SiteHeader({ lang, siteConfig, hasNewServices }: Props) 
             className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-200 text-slate-700 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             type="button"
             aria-label={lang === 'ro' ? 'Deschide meniul' : 'Open menu'}
+            aria-expanded="false"
             data-nav-toggle
           >
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              data-icon-hamburger
+            >
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <line x1="3" y1="12" x2="21" y2="12"></line>
               <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <svg
+              className="h-5 w-5 hidden"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              data-icon-close
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
         </div>
@@ -79,7 +98,7 @@ export default function SiteHeader({ lang, siteConfig, hasNewServices }: Props) 
         </nav>
       </div>
 
-      <div className="border-t border-slate-200 bg-white px-4 py-4 shadow-sm lg:hidden" hidden data-nav-drawer>
+      <div className="hidden border-t border-slate-200 bg-white px-4 py-4 shadow-sm lg:hidden" data-nav-drawer>
         <nav className="space-y-3 text-sm font-medium uppercase tracking-wide text-slate-700">
           {navLinks.map((link) => {
             const isServicesLink = link.href?.includes('servicii')

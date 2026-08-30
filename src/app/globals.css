@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --breakpoint-custom-xl: 1150px;
+
+  /* Brand tokens, ported verbatim from the legacy Astro site */
+  --color-primary: var(--aw-color-primary);
+  --color-secondary: var(--aw-color-secondary);
+  --color-accent: var(--aw-color-accent);
+  --color-default: var(--aw-color-text-default);
+  --color-muted: var(--aw-color-text-muted);
+
+  --font-sans: var(--aw-font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--aw-font-serif), ui-serif, Georgia, serif;
+  --font-heading: var(--aw-font-heading), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-fade: fadeInUp 1s both;
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+:root {
+  --aw-font-sans: var(--font-source-sans), 'Source Sans Pro';
+  --aw-font-serif: var(--font-cormorant), 'Cormorant Garamond';
+  --aw-font-heading: var(--font-cormorant), 'Cormorant Garamond';
+
+  --aw-color-bg-page: rgb(155, 140, 113);
+  --aw-color-primary: rgb(255 175 115);
+  --aw-color-secondary: rgb(51, 41, 31);
+  --aw-color-accent: rgb(255 214 181);
+
+  --aw-color-text-heading: rgb(66, 62, 58);
+  --aw-color-text-default: rgb(48, 45, 42);
+  --aw-color-text-muted: rgb(48, 45, 42 / 66%);
+
+  ::selection {
+    background-color: var(--aw-color-accent);
+    color: var(--aw-color-text-default);
+  }
+}
+
+@utility text-muted {
+  color: var(--aw-color-text-muted);
+}
+
+@utility text-page {
+  color: var(--aw-color-text-default);
+}
+
+@utility bg-page {
+  background-color: var(--aw-color-bg-page);
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center rounded-full border border-gray-400 bg-transparent px-6 py-3.5 text-center text-base leading-snug font-medium text-page transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200 hover:border-gray-600 hover:bg-gray-100 md:px-8;
+  }
+
+  .btn-primary {
+    @apply btn border-primary bg-primary font-semibold text-white hover:border-accent hover:bg-accent hover:text-white;
+  }
+
+  .btn-secondary {
+    @apply btn border-none bg-secondary text-white hover:text-secondary;
+  }
+
+  .btn-tertiary {
+    @apply btn border-none text-muted shadow-none hover:text-gray-900;
+  }
+}

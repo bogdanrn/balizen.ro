@@ -1,0 +1,24 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
+
+import { getAlternateLocalePath, LANGUAGES, type Lang } from '@/i18n'
+
+// Single link to the OTHER locale, keeping the current page. Client-side only
+// because it needs usePathname; rendered from server components via `lang`.
+export default function LanguageSwitcherLink({ lang }: { lang: Lang }) {
+  const pathname = usePathname()
+  const other: Lang = lang === 'ro' ? 'en' : 'ro'
+  const data = LANGUAGES[other]
+
+  return (
+    <a
+      href={getAlternateLocalePath(pathname, lang)}
+      className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      aria-label={`Switch to ${data.label}`}
+    >
+      <span className="text-lg">{data.flag}</span>
+      <span>{data.label}</span>
+    </a>
+  )
+}

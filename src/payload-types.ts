@@ -69,6 +69,13 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    'service-categories': ServiceCategory;
+    services: Service;
+    reviews: Review;
+    faqs: Faq;
+    subscriptions: Subscription;
+    'exceptional-hours': ExceptionalHour;
+    locations: Location;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +85,13 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'service-categories': ServiceCategoriesSelect<false> | ServiceCategoriesSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
+    subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
+    'exceptional-hours': ExceptionalHoursSelect<false> | ExceptionalHoursSelect<true>;
+    locations: LocationsSelect<false> | LocationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -86,10 +100,16 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
-  locale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('ro' | 'en') | ('ro' | 'en')[];
+  globals: {
+    'site-config': SiteConfig;
+    homepage: Homepage;
+  };
+  globalsSelect: {
+    'site-config': SiteConfigSelect<false> | SiteConfigSelect<true>;
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
+  };
+  locale: 'ro' | 'en';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -143,12 +163,26 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Upload web-sized images: max 1600px wide, under 500KB. There is no server-side resizing.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: number;
   alt: string;
+  /**
+   * Pre-sized renditions, set by the image migration script.
+   */
+  variants?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -158,6 +192,181 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-categories".
+ */
+export interface ServiceCategory {
+  id: number;
+  /**
+   * E.g. "Masaje Full Body"
+   */
+  name: string;
+  /**
+   * Lower shows first. Categories are then sorted A-Z on the site.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  description: string;
+  category: number | ServiceCategory;
+  pricing: {
+    /**
+     * Minutes, e.g. 60
+     */
+    duration: number;
+    /**
+     * RON, digits only, e.g. "340"
+     */
+    price: string;
+    id?: string | null;
+  }[];
+  /**
+   * Web-sized image: max 1600px wide, under 500KB.
+   */
+  image?: (number | null) | Media;
+  /**
+   * Secondary sort within the category (lower first).
+   */
+  order?: number | null;
+  /**
+   * Drives the "New" badge: shown for 2 months after this date. Bump it when a service is meaningfully updated.
+   */
+  modifiedDate: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  author: string;
+  text: string;
+  rating: number;
+  date: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: string;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions".
+ */
+export interface Subscription {
+  id: number;
+  title: string;
+  summary: string;
+  /**
+   * Checkmark list items. Put the price line here too, as in the current site.
+   */
+  highlights: {
+    text: string;
+    id?: string | null;
+  }[];
+  image?: (number | null) | Media;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Date-specific overrides to opening hours, e.g. closed on December 25.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exceptional-hours".
+ */
+export interface ExceptionalHour {
+  id: number;
+  date: string;
+  /**
+   * Checked = closed all day. Unchecked = custom hours below.
+   */
+  closed?: boolean | null;
+  /**
+   * E.g. 10:00
+   */
+  opensAt?: string | null;
+  /**
+   * E.g. 15:00
+   */
+  closesAt?: string | null;
+  /**
+   * Optional explanation shown on the site, e.g. "Crăciun"
+   */
+  note?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Studio locations shown in the Contact/Location section, footer, and search-engine structured data.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations".
+ */
+export interface Location {
+  id: number;
+  /**
+   * Short display name, e.g. "Str. Gh Gr Cantacuzino 190 1B, Ploiești"
+   */
+  name: string;
+  address: string;
+  /**
+   * Opening hours text, e.g. "Monday - Sunday: 10:00 - 21:00"
+   */
+  schedule: string;
+  /**
+   * Display format, e.g. +40 733 211 325
+   */
+  phone: string;
+  /**
+   * tel: link, e.g. tel:+40733211325
+   */
+  phoneHref: string;
+  email?: string | null;
+  /**
+   * Google Maps share link
+   */
+  mapsUrl: string;
+  /**
+   * Google Maps "Share > Embed a map" iframe URL. Keep the hl parameter matching the locale.
+   */
+  mapsEmbedUrl?: string | null;
+  /**
+   * Latitude for structured data, e.g. 44.9364
+   */
+  geoLat?: number | null;
+  /**
+   * Longitude for structured data, e.g. 26.0325
+   */
+  geoLng?: number | null;
+  /**
+   * The primary location feeds the single-business structured data (JSON-LD). Exactly one should be primary.
+   */
+  primary?: boolean | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -190,6 +399,34 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'service-categories';
+        value: number | ServiceCategory;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: number | Review;
+      } | null)
+    | ({
+        relationTo: 'faqs';
+        value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'subscriptions';
+        value: number | Subscription;
+      } | null)
+    | ({
+        relationTo: 'exceptional-hours';
+        value: number | ExceptionalHour;
+      } | null)
+    | ({
+        relationTo: 'locations';
+        value: number | Location;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -261,6 +498,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  variants?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -270,6 +508,111 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-categories_select".
+ */
+export interface ServiceCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  category?: T;
+  pricing?:
+    | T
+    | {
+        duration?: T;
+        price?: T;
+        id?: T;
+      };
+  image?: T;
+  order?: T;
+  modifiedDate?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  author?: T;
+  text?: T;
+  rating?: T;
+  date?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions_select".
+ */
+export interface SubscriptionsSelect<T extends boolean = true> {
+  title?: T;
+  summary?: T;
+  highlights?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  image?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exceptional-hours_select".
+ */
+export interface ExceptionalHoursSelect<T extends boolean = true> {
+  date?: T;
+  closed?: T;
+  opensAt?: T;
+  closesAt?: T;
+  note?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations_select".
+ */
+export interface LocationsSelect<T extends boolean = true> {
+  name?: T;
+  address?: T;
+  schedule?: T;
+  phone?: T;
+  phoneHref?: T;
+  email?: T;
+  mapsUrl?: T;
+  mapsEmbedUrl?: T;
+  geoLat?: T;
+  geoLng?: T;
+  primary?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -310,6 +653,470 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Contact details, header/footer links, announcement banner.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-config".
+ */
+export interface SiteConfig {
+  id: number;
+  name: string;
+  tagline: string;
+  legalName: string;
+  description: string;
+  /**
+   * Use {year} for the current year.
+   */
+  copyright: string;
+  /**
+   * Display format, e.g. +40 733 211 325
+   */
+  phone: string;
+  /**
+   * tel: link, e.g. tel:+40733211325
+   */
+  phoneHref: string;
+  /**
+   * E.g. https://wa.me/40733211325
+   */
+  whatsappUrl: string;
+  email: string;
+  /**
+   * External booking app, e.g. https://programari.balizen.ro
+   */
+  bookingUrl: string;
+  googleReviewsUrl: string;
+  headerLinks?:
+    | {
+        label: string;
+        /**
+         * Anchor like /#servicii or full URL.
+         */
+        href: string;
+        /**
+         * Optional CSS/JS hook classes (e.g. js-location-button).
+         */
+        className?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  primaryAction: {
+    label: string;
+    href: string;
+  };
+  footerColumns?:
+    | {
+        title: string;
+        links?:
+          | {
+              text: string;
+              href: string;
+              className?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        label: string;
+        /**
+         * Tabler icon name, e.g. brand-instagram
+         */
+        icon: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Show a dismissible banner at the top of the site.
+   */
+  announcementEnabled?: boolean | null;
+  announcementText?: string | null;
+  /**
+   * Optional URL the banner links to.
+   */
+  announcementLink?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Copy for every homepage section, per locale.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: number;
+  /**
+   * Use
+   *  for a line break.
+   */
+  heroTitle: string;
+  heroSubtitle: {
+    line: string;
+    id?: string | null;
+  }[];
+  heroText?: string | null;
+  heroActions?:
+    | {
+        label: string;
+        href: string;
+        variant?: ('primary' | 'secondary') | null;
+        /**
+         * Tabler icon name, e.g. calendar
+         */
+        icon?: string | null;
+        target?: ('_self' | '_blank') | null;
+        /**
+         * Optional CSS/JS hook classes (e.g. js-programari-button).
+         */
+        className?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  heroImage?: (number | null) | Media;
+  aboutTagline?: string | null;
+  aboutTitle: string;
+  aboutIntro: string;
+  aboutBullets?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  aboutCta: {
+    label: string;
+    href: string;
+    variant?: ('primary' | 'secondary') | null;
+    /**
+     * Tabler icon name, e.g. calendar
+     */
+    icon?: string | null;
+    target?: ('_self' | '_blank') | null;
+    /**
+     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     */
+    className?: string | null;
+    id?: string | null;
+  };
+  aboutImage?: (number | null) | Media;
+  servicesTitle: string;
+  servicesDescription: string;
+  servicesCta: {
+    label: string;
+    href: string;
+    variant?: ('primary' | 'secondary') | null;
+    /**
+     * Tabler icon name, e.g. calendar
+     */
+    icon?: string | null;
+    target?: ('_self' | '_blank') | null;
+    /**
+     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     */
+    className?: string | null;
+    id?: string | null;
+  };
+  subscriptionAction: {
+    label: string;
+    href: string;
+    variant?: ('primary' | 'secondary') | null;
+    /**
+     * Tabler icon name, e.g. calendar
+     */
+    icon?: string | null;
+    target?: ('_self' | '_blank') | null;
+    /**
+     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     */
+    className?: string | null;
+    id?: string | null;
+  };
+  /**
+   * Markdown links supported: [text](/return-policy)
+   */
+  subscriptionDisclaimer?:
+    | {
+        line: string;
+        id?: string | null;
+      }[]
+    | null;
+  giftCardTitle: string;
+  giftCardDescription?:
+    | {
+        paragraph: string;
+        id?: string | null;
+      }[]
+    | null;
+  giftCardFeatures?:
+    | {
+        icon: string;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  giftCardCta: {
+    label: string;
+    href: string;
+    variant?: ('primary' | 'secondary') | null;
+    /**
+     * Tabler icon name, e.g. calendar
+     */
+    icon?: string | null;
+    target?: ('_self' | '_blank') | null;
+    /**
+     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     */
+    className?: string | null;
+    id?: string | null;
+  };
+  giftCardImage?: (number | null) | Media;
+  /**
+   * Markdown links supported: [text](/return-policy)
+   */
+  giftCardDisclaimer?:
+    | {
+        line: string;
+        id?: string | null;
+      }[]
+    | null;
+  socialTitle: string;
+  socialSubtitle?: string | null;
+  socialLinks?:
+    | {
+        label: string;
+        handle?: string | null;
+        href: string;
+        icon: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaTitle: string;
+  ctaSubtitle: string;
+  ctaButton: {
+    label: string;
+    href: string;
+    variant?: ('primary' | 'secondary') | null;
+    /**
+     * Tabler icon name, e.g. calendar
+     */
+    icon?: string | null;
+    target?: ('_self' | '_blank') | null;
+    /**
+     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     */
+    className?: string | null;
+    id?: string | null;
+  };
+  locationTitle: string;
+  locationEmail?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-config_select".
+ */
+export interface SiteConfigSelect<T extends boolean = true> {
+  name?: T;
+  tagline?: T;
+  legalName?: T;
+  description?: T;
+  copyright?: T;
+  phone?: T;
+  phoneHref?: T;
+  whatsappUrl?: T;
+  email?: T;
+  bookingUrl?: T;
+  googleReviewsUrl?: T;
+  headerLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        className?: T;
+        id?: T;
+      };
+  primaryAction?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  footerColumns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              text?: T;
+              href?: T;
+              className?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        icon?: T;
+        href?: T;
+        id?: T;
+      };
+  announcementEnabled?: T;
+  announcementText?: T;
+  announcementLink?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  heroTitle?: T;
+  heroSubtitle?:
+    | T
+    | {
+        line?: T;
+        id?: T;
+      };
+  heroText?: T;
+  heroActions?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        variant?: T;
+        icon?: T;
+        target?: T;
+        className?: T;
+        id?: T;
+      };
+  heroImage?: T;
+  aboutTagline?: T;
+  aboutTitle?: T;
+  aboutIntro?: T;
+  aboutBullets?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  aboutCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        variant?: T;
+        icon?: T;
+        target?: T;
+        className?: T;
+        id?: T;
+      };
+  aboutImage?: T;
+  servicesTitle?: T;
+  servicesDescription?: T;
+  servicesCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        variant?: T;
+        icon?: T;
+        target?: T;
+        className?: T;
+        id?: T;
+      };
+  subscriptionAction?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        variant?: T;
+        icon?: T;
+        target?: T;
+        className?: T;
+        id?: T;
+      };
+  subscriptionDisclaimer?:
+    | T
+    | {
+        line?: T;
+        id?: T;
+      };
+  giftCardTitle?: T;
+  giftCardDescription?:
+    | T
+    | {
+        paragraph?: T;
+        id?: T;
+      };
+  giftCardFeatures?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  giftCardCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        variant?: T;
+        icon?: T;
+        target?: T;
+        className?: T;
+        id?: T;
+      };
+  giftCardImage?: T;
+  giftCardDisclaimer?:
+    | T
+    | {
+        line?: T;
+        id?: T;
+      };
+  socialTitle?: T;
+  socialSubtitle?: T;
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        handle?: T;
+        href?: T;
+        icon?: T;
+        id?: T;
+      };
+  ctaTitle?: T;
+  ctaSubtitle?: T;
+  ctaButton?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        variant?: T;
+        icon?: T;
+        target?: T;
+        className?: T;
+        id?: T;
+      };
+  locationTitle?: T;
+  locationEmail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -38,8 +38,12 @@ A per-locale list of question/answer pairs shown on the site and emitted as stru
 ### Operations
 
 **Site Config**:
-The business's contact facts: phone, WhatsApp, email, address, regular opening hours, booking URL, map links, social links.
+The business's contact facts: phone, WhatsApp, email, regular opening hours, booking URL, map links, social links.
 _Avoid_: settings, preferences
+
+**Location**:
+A physical studio where clients receive services. Has a per-locale address and schedule, phone, map links, and geo coordinates; one Location is primary and feeds the business's search-engine structured data. Staff can add Locations over time.
+_Avoid_: branch, office
 
 **Booking**:
 An appointment a client makes. Always happens on the external booking app or via WhatsApp; this site only links out to it, never takes bookings itself.

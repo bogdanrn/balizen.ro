@@ -2,6 +2,7 @@ import { getTranslations, type Lang } from '@/i18n'
 import type { Homepage, Location, SiteConfig } from '@/payload-types'
 
 import Icon from '../Icon'
+import SectionEyebrow from '../SectionEyebrow'
 
 type Props = {
   lang: Lang
@@ -10,40 +11,46 @@ type Props = {
   siteConfig: SiteConfig
 }
 
-// Port of _legacy LocationSection.astro (section id "locatie"). The social
-// link cards come from homepage.socialLinks and carry the legacy
-// "social-media" anchor on the grid.
+// White band closing the page. The social link cards come from
+// homepage.socialLinks and keep the legacy "social-media" anchor on the grid.
 export default function LocationSection({ lang, homepage, locations }: Props) {
   const t = getTranslations(lang)
   const socialLinks = homepage.socialLinks ?? []
 
   return (
     <section id="locatie" className="bg-white">
-      <div className="mx-auto max-w-screen-xl px-4 py-24 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-screen-xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">{t.location.tagline}</p>
-          <h2 className="mt-4 font-heading text-3xl font-bold text-slate-900 sm:text-4xl">{homepage.locationTitle}</h2>
-          <p className="mt-3 text-base text-slate-600">{t.location.description}</p>
+          <SectionEyebrow>{t.location.tagline}</SectionEyebrow>
+          <h2 className="mt-5 font-heading text-4xl font-semibold leading-[1.1] text-ink sm:text-5xl">
+            {homepage.locationTitle}
+          </h2>
+          <p className="mx-auto mt-5 max-w-prose text-base leading-relaxed text-muted-warm">
+            {t.location.description}
+          </p>
         </div>
 
         {socialLinks.length ? (
-          <div id="social-media" className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div id="social-media" className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {socialLinks.map((link, index) => (
               <a
                 key={link.id ?? index}
                 href={link.href}
                 target="_blank"
                 rel="noopener"
-                className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/80 transition hover:-translate-y-1 hover:border-primary/60 hover:shadow-lg hover:shadow-primary/20"
+                className="focus-ring group flex min-h-16 items-center gap-4 rounded-2xl bg-cream p-5 ring-1 ring-ink/10 transition-colors hover:ring-ink/30"
               >
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-white">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent text-ink transition-colors group-hover:bg-primary">
                   <Icon name={link.icon} className="h-6 w-6" />
                 </span>
-                <div className="flex flex-col">
-                  <span className="text-base font-semibold text-slate-900">{link.label}</span>
-                  {link.handle && <span className="text-sm text-slate-600">{link.handle}</span>}
-                </div>
-                <span className="ml-auto inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition group-hover:bg-primary group-hover:text-white">
+                <span className="flex flex-col">
+                  <span className="text-base font-semibold text-ink">{link.label}</span>
+                  {link.handle && <span className="text-sm text-muted-warm">{link.handle}</span>}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="ml-auto inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted-warm transition-colors group-hover:text-ink"
+                >
                   <Icon name="arrow-up-right" className="h-5 w-5" />
                 </span>
               </a>
@@ -58,51 +65,56 @@ export default function LocationSection({ lang, homepage, locations }: Props) {
             const mapEmbedSrc = loc.mapsEmbedUrl || fallbackEmbedSrc
 
             return (
-              <div key={loc.id} className="grid gap-10 lg:grid-cols-2">
-                <div className="space-y-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-                  <div className="flex items-start gap-4">
-                    <span className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <Icon name="map-pin" className="h-5 w-5" />
-                    </span>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-slate-900">{loc.name}</h3>
-                      <a
-                        href={loc.mapsUrl}
-                        className="mt-1 block text-sm text-slate-600 hover:text-primary"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        {loc.address}
-                      </a>
-                    </div>
-                  </div>
+              <div key={loc.id} className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+                <div className="rounded-3xl bg-cream p-6 ring-1 ring-ink/10 sm:p-8">
+                  <h3 className="font-heading text-2xl font-semibold text-ink">{loc.name}</h3>
 
-                  <div className="flex items-start gap-4">
-                    <span className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <Icon name="clock" className="h-5 w-5" />
-                    </span>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-slate-900">{t.location.workingHours}</h4>
-                      <p className="mt-1 text-sm text-slate-600">{loc.schedule}</p>
+                  <dl className="mt-6 divide-y divide-ink/10 border-y border-ink/10">
+                    <div className="flex items-start gap-4 py-4">
+                      <dt className="mt-0.5 shrink-0 text-muted-warm">
+                        <Icon name="map-pin" className="h-5 w-5" />
+                        <span className="sr-only">{t.footer.address}</span>
+                      </dt>
+                      <dd>
+                        <a
+                          href={loc.mapsUrl}
+                          className="focus-ring rounded-sm text-sm leading-relaxed text-muted-warm underline-offset-4 transition-colors hover:text-ink hover:underline"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          {loc.address}
+                        </a>
+                      </dd>
                     </div>
-                  </div>
 
-                  <div className="flex items-start gap-4">
-                    <span className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <Icon name="phone" className="h-5 w-5" />
-                    </span>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-slate-900">{t.location.contact}</h4>
-                      <a href={loc.phoneHref} className="mt-1 block text-sm text-slate-600 hover:text-primary">
-                        {loc.phone}
-                      </a>
+                    <div className="flex items-start gap-4 py-4">
+                      <dt className="mt-0.5 shrink-0 text-muted-warm">
+                        <Icon name="clock" className="h-5 w-5" />
+                        <span className="sr-only">{t.location.workingHours}</span>
+                      </dt>
+                      <dd className="text-sm leading-relaxed text-muted-warm">{loc.schedule}</dd>
                     </div>
-                  </div>
 
-                  <div className="flex flex-wrap gap-4 pt-4">
+                    <div className="flex items-start gap-4 py-4">
+                      <dt className="mt-0.5 shrink-0 text-muted-warm">
+                        <Icon name="phone" className="h-5 w-5" />
+                        <span className="sr-only">{t.location.contact}</span>
+                      </dt>
+                      <dd>
+                        <a
+                          href={loc.phoneHref}
+                          className="focus-ring rounded-sm text-sm leading-relaxed text-muted-warm underline-offset-4 transition-colors hover:text-ink hover:underline"
+                        >
+                          {loc.phone}
+                        </a>
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                     <a
                       href={loc.mapsUrl}
-                      className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:opacity-90"
+                      className="btn-primary w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto"
                       target="_blank"
                       rel="noopener"
                     >
@@ -111,7 +123,7 @@ export default function LocationSection({ lang, homepage, locations }: Props) {
                     </a>
                     <a
                       href={loc.phoneHref}
-                      className="inline-flex items-center gap-2 rounded-full border border-primary px-6 py-3 text-sm font-semibold text-primary transition hover:bg-primary hover:text-white"
+                      className="btn-outline js-contact-button w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto"
                     >
                       <Icon name="phone" className="h-5 w-5" />
                       <span>{loc.phone}</span>
@@ -119,7 +131,7 @@ export default function LocationSection({ lang, homepage, locations }: Props) {
                   </div>
                 </div>
 
-                <div className="relative overflow-hidden rounded-3xl shadow-xl shadow-slate-200">
+                <div className="min-h-80 overflow-hidden rounded-3xl ring-1 ring-ink/10">
                   <iframe
                     src={mapEmbedSrc}
                     width="100%"
@@ -136,15 +148,15 @@ export default function LocationSection({ lang, homepage, locations }: Props) {
           })}
 
           {homepage.locationEmail && (
-            <div className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <span className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <div className="flex items-start gap-4 rounded-2xl bg-cream p-5 ring-1 ring-ink/10">
+              <span className="mt-0.5 shrink-0 text-muted-warm">
                 <Icon name="mail" className="h-5 w-5" />
               </span>
               <div>
-                <h3 className="font-semibold text-slate-900">{t.location.emailLabel}</h3>
+                <h3 className="font-semibold text-ink">{t.location.emailLabel}</h3>
                 <a
                   href={`mailto:${homepage.locationEmail}`}
-                  className="mt-1 block text-sm text-slate-600 hover:text-primary"
+                  className="focus-ring mt-1 block rounded-sm text-sm text-muted-warm underline-offset-4 transition-colors hover:text-ink hover:underline"
                 >
                   {homepage.locationEmail}
                 </a>

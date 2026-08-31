@@ -1,5 +1,5 @@
 import type { CdnMedia } from '@/lib/cdn'
-import { CDN_BASE, mediaUrl, mediaVariants } from '@/lib/cdn'
+import { assetUrl, mediaUrl, mediaVariants } from '@/lib/cdn'
 
 type Props = {
   media: CdnMedia | number | null | undefined
@@ -18,7 +18,7 @@ export default function CdnImage({ media, alt, sizes, className, eager = false, 
 
   const variants = mediaVariants(media)
   const wanted = widths ? variants.filter((v) => widths.includes(v.width)) : variants
-  const srcSet = wanted.map((v) => `${CDN_BASE}/${v.key} ${v.width}w`).join(', ')
+  const srcSet = wanted.map((v) => `${assetUrl(v.key)} ${v.width}w`).join(', ')
 
   return (
     // eslint-disable-next-line @next/next/no-img-element

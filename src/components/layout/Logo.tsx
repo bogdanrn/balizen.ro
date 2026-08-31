@@ -10,7 +10,7 @@ export default function Logo({ lang, name, tagline }: Props) {
   return (
     <a
       href={getLocalizedPath('/', lang)}
-      className="inline-flex items-center gap-3"
+      className="focus-ring inline-flex items-center gap-3 rounded-lg"
       aria-label={lang === 'ro' ? 'Bali Zen acasă' : 'Bali Zen home'}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -22,8 +22,8 @@ export default function Logo({ lang, name, tagline }: Props) {
         decoding="async"
       />
       <div className="flex-col text-left leading-tight flex">
-        <span className="font-heading text-xl font-semibold text-slate-900">{name}</span>
-        <span className="hidden text-xs font-medium uppercase tracking-[0.35em] text-slate-500 custom-xl:inline">
+        <span className="font-heading text-xl font-semibold text-ink">{name}</span>
+        <span className="hidden text-xs font-medium uppercase tracking-widest text-muted-warm custom-xl:inline">
           {tagline}
         </span>
       </div>

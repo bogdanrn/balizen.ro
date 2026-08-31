@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react'
 
+import { releaseScrollLock, setScrollLock } from '@/lib/scrollLock'
+
 // Behavior-only component: wires the header mobile drawer rendered by
 // SiteHeader (data-nav-toggle / data-nav-drawer). Port of the legacy
 // Header.astro script: toggle, close on link click, close on resize >=1024px.
@@ -19,7 +21,7 @@ export default function HeaderDrawer(): null {
       toggle.setAttribute('aria-expanded', String(open))
       hamburger?.classList.toggle('hidden', open)
       closeIcon?.classList.toggle('hidden', !open)
-      document.body.classList.toggle('overflow-hidden', open && window.innerWidth < 1024)
+      setScrollLock('nav-drawer', open && window.innerWidth < 1024)
     }
 
     const onToggleClick = () => setOpen(drawer.classList.contains('hidden'))
@@ -38,7 +40,7 @@ export default function HeaderDrawer(): null {
       toggle.removeEventListener('click', onToggleClick)
       drawer.removeEventListener('click', onDrawerClick)
       window.removeEventListener('resize', onResize)
-      document.body.classList.remove('overflow-hidden')
+      releaseScrollLock('nav-drawer')
     }
   }, [])
 

@@ -103,7 +103,7 @@ async function main() {
   for (let i = 0; i < roCategories.length; i++) {
     const category = await payload.create({
       collection: 'service-categories',
-      data: { name: roCategories[i], order: (i + 1) * 10 },
+      data: { name: roCategories[i] },
     })
     await payload.update({
       collection: 'service-categories',
@@ -125,7 +125,6 @@ async function main() {
           category: category.id,
           pricing: ro.pricing.map((p: any) => ({ price: String(p.price), duration: p.duration })),
           image: mediaId(ro.image?.src),
-          order: ro.order,
           modifiedDate: ro.modifiedDate ? new Date(ro.modifiedDate).toISOString() : undefined,
         },
       })
@@ -158,7 +157,7 @@ async function main() {
   for (let i = 0; i < FAQS_RO.length; i++) {
     const faq = await payload.create({
       collection: 'faqs',
-      data: { question: FAQS_RO[i].question, answer: FAQS_RO[i].answer, order: (i + 1) * 10 },
+      data: { question: FAQS_RO[i].question, answer: FAQS_RO[i].answer },
     })
     if (FAQS_EN[i]) {
       await payload.update({
@@ -193,7 +192,6 @@ async function main() {
         geoLat: 44.9364,
         geoLng: 26.0325,
         primary: i === 0,
-        order: (i + 1) * 10,
       },
     })
     await payload.update({

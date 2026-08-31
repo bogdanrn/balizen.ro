@@ -12,6 +12,11 @@
   --color-default: var(--aw-color-text-default);
   --color-muted: var(--aw-color-text-muted);
 
+  /* Fresh palette: warm cream page, ink text, warm muted secondary text */
+  --color-ink: #33291f;
+  --color-muted-warm: #6b5d4f;
+  --color-cream: #faf5ef;
+
   --font-sans: var(--aw-font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--aw-font-serif), ui-serif, Georgia, serif;
   --font-heading: var(--aw-font-heading), ui-sans-serif, system-ui, sans-serif;
@@ -35,18 +40,18 @@
   --aw-font-serif: var(--font-cormorant), 'Cormorant Garamond';
   --aw-font-heading: var(--font-cormorant), 'Cormorant Garamond';
 
-  --aw-color-bg-page: rgb(155, 140, 113);
+  --aw-color-bg-page: #faf5ef;
   --aw-color-primary: rgb(255 175 115);
   --aw-color-secondary: rgb(51, 41, 31);
   --aw-color-accent: rgb(255 214 181);
 
-  --aw-color-text-heading: rgb(66, 62, 58);
-  --aw-color-text-default: rgb(48, 45, 42);
-  --aw-color-text-muted: rgb(48, 45, 42 / 66%);
+  --aw-color-text-heading: #33291f;
+  --aw-color-text-default: #33291f;
+  --aw-color-text-muted: #6b5d4f;
 
   ::selection {
     background-color: var(--aw-color-accent);
-    color: var(--aw-color-text-default);
+    color: #33291f;
   }
 }
 
@@ -62,47 +67,100 @@
   background-color: var(--aw-color-bg-page);
 }
 
+/* Base pill shape only — color/hover live in the variants so nothing in the
+   cascade fights them. min-h keeps every pill at a 44px+ tap target. */
 @utility btn {
-  @apply inline-flex cursor-pointer items-center justify-center rounded-full border border-gray-400 bg-transparent px-6 py-3.5 text-center text-base leading-snug font-medium text-page transition duration-200 ease-in focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-200 hover:border-gray-600 hover:bg-gray-100 md:px-8;
+  @apply inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full px-6 py-3.5 text-center text-base leading-snug font-medium transition duration-200 ease-in focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:outline-none md:px-8;
+}
+
+/* Focus indicator for interactive elements that are not pills. Uses outline
+   rather than ring so it stays visible on cream, white, ink and primary bands
+   without needing a per-band offset color. */
+@utility focus-ring {
+  @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
 }
 
 @layer components {
   .btn-primary {
-    @apply btn border-primary bg-primary font-semibold text-white hover:border-accent hover:bg-accent hover:text-white;
+    @apply btn border border-primary bg-primary font-semibold text-ink hover:border-[#F59E5E] hover:bg-[#F59E5E] hover:text-ink;
   }
 
   .btn-secondary {
-    @apply btn border-none bg-secondary text-white hover:text-secondary;
+    @apply btn border-none bg-ink text-cream hover:bg-[#4A3B2C];
+  }
+
+  /* Quiet companion to btn-primary: a hairline pill that fills with ink on
+     hover. Used for every "secondary" CTA so a row of actions reads as one
+     primary plus supporting links, not three heavy slabs. */
+  .btn-outline {
+    @apply btn border-none text-ink ring-1 ring-inset ring-ink/20 hover:bg-ink hover:text-cream hover:ring-ink;
+  }
+
+  /* btn-outline tuned for the hero, where the pill sits on a scrimmed photo:
+     a translucent cream fill keeps the hairline ring and the ink label legible
+     over whatever the image is doing behind it. */
+  .btn-scrim {
+    @apply btn border-none bg-cream/70 text-ink ring-1 ring-inset ring-ink/25 backdrop-blur-sm hover:bg-ink hover:text-cream hover:ring-ink;
   }
 
   .btn-tertiary {
-    @apply btn border-none text-muted shadow-none hover:text-gray-900;
+    @apply btn border-none text-muted-warm shadow-none hover:text-ink;
   }
 }
 
-/* ServicesSection */
-.service-description {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
+/* HeroSection ambient zoom. Applied via motion-safe:animate-[hero-drift_…];
+   keyframes live top-level so the arbitrary animate utility can find them. */
+@keyframes hero-drift {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
 }
 
-.service-new {
-  --tw-ring-color: rgb(255 175 115 / 0.15);
+@media (prefers-reduced-motion: reduce) {
+  .hero-drift {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
-.new-badge {
-  animation: new-badge-pulse 2.5s ease-in-out infinite;
+/* Overlay + panel entrances. Applied via motion-safe:animate-[…] so the
+   reduced-motion preference skips them entirely. */
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-@keyframes new-badge-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.75; }
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.service-description.is-expanded {
-  display: block;
-  -webkit-line-clamp: unset;
-  overflow: visible;
+/* In-page anchor jumps (#servicii etc.) glide rather than teleport, and clear
+   the sticky header instead of landing under it. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+[id='despre-noi'],
+[id='servicii'],
+[id='abonamente'],
+[id='gift-card'],
+[id='programare'],
+[id='locatie'] {
+  scroll-margin-top: 6rem;
 }

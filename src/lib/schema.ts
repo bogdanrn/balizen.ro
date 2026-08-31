@@ -1,5 +1,7 @@
 import type { Faq, Location, Review, Service, ServiceCategory, SiteConfig } from '@/payload-types'
 
+import { CDN_BASE } from './cdn'
+
 const SITE_URL = 'https://balizen.ro'
 const SOCIAL_SAME_AS = [
   'https://www.instagram.com/balizen.ro',
@@ -49,7 +51,9 @@ export function buildJsonLd({ lang, siteConfig, categories, reviews, faqs, locat
     description: siteConfig.description,
     url: SITE_URL,
     logo: `${SITE_URL}/images/balizen_logo_color.png`,
-    image: [`${SITE_URL}/images/balizen_50.jpg`, 'https://cdn.balizen.ro/balizen_1.jpg'],
+    // JSON-LD must carry absolute production URLs in every environment, so this
+    // deliberately uses CDN_BASE directly rather than the env-aware assetUrl().
+    image: [`${SITE_URL}/images/balizen_50.jpg`, `${CDN_BASE}/balizen_1.jpg`],
     telephone: siteConfig.phone,
     email: siteConfig.email,
     priceRange: '$$',

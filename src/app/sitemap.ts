@@ -14,17 +14,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const urls = ['', ...LEGAL.map((slug) => `/${slug}`)]
 
-  return urls.flatMap((path) => [
-    {
-      url: `${SITE_URL}${path || '/'}`,
-      lastModified: lastmod,
-      alternates: {
-        languages: {
-          ro: `${SITE_URL}${path || '/'}`,
-          en: `${SITE_URL}/en${path}`,
-          'x-default': `${SITE_URL}${path || '/'}`,
-        },
+  // Both locales get their own <url> entry; the hreflang alternates cluster is
+  // identical on each so Google pairs them either way it crawls in.
+  return urls.flatMap((path) => {
+    const alternates = {
+      languages: {
+        ro: `${SITE_URL}${path || '/'}`,
+        en: `${SITE_URL}/en${path}`,
+        'x-default': `${SITE_URL}${path || '/'}`,
       },
-    },
-  ])
+    }
+    return [
+      { url: `${SITE_URL}${path || '/'}`, lastModified: lastmod, alternates },
+      { url: `${SITE_URL}/en${path}`, lastModified: lastmod, alternates },
+    ]
+  })
 }

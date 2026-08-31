@@ -3,6 +3,8 @@ import path from 'path'
 import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
+// Re-exported by `payload` itself, so no direct @payloadcms/translations dep.
+import { ro } from 'payload/i18n/ro'
 import { fileURLToPath } from 'url'
 import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
@@ -19,6 +21,7 @@ import { ExceptionalHours } from './collections/ExceptionalHours'
 import { Locations } from './collections/Locations'
 import { SiteConfig } from './globals/SiteConfig'
 import { Homepage } from './globals/Homepage'
+import { roAdminOverrides } from './admin-i18n'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -61,21 +64,54 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    avatar: 'default',
+    meta: {
+      // Payload already puts a space before the suffix; don't add a second one.
+      titleSuffix: '— Bali Zen',
+      description: 'Administrarea conținutului balizen.ro',
+      // No OG image generation for a private admin panel.
+      defaultOGImageType: 'off',
+    },
+    components: {
+      graphics: {
+        Icon: '/components-admin/BrandIcon#BrandIcon',
+        Logo: '/components-admin/BrandLogo#BrandLogo',
+      },
+    },
   },
+  // Sidebar groups render in the order their first member appears here
+  // (collections first, then globals), so this order is the nav order:
+  // Conținut · Program & locații · Sistem · Configurare.
   collections: [
-    Users,
-    Media,
-    ServiceCategories,
     Services,
+    ServiceCategories,
+    Subscriptions,
     Reviews,
     Faqs,
-    Subscriptions,
-    ExceptionalHours,
+    Media,
     Locations,
+    ExceptionalHours,
+    Users,
   ],
-  globals: [SiteConfig, Homepage],
+  globals: [Homepage, SiteConfig],
+  // Admin panel chrome (buttons, menus, validation messages) in Romanian.
+  // Content locales are configured separately, under `localization`.
+  //
+  // Romanian is the ONLY supported language on purpose. Payload resolves the
+  // admin language as cookie -> Accept-Language -> fallbackLanguage, so listing
+  // `en` here would hand an English-configured browser an English panel — which
+  // is exactly what the salon staff must never get. Add `en` back to
+  // `supportedLanguages` if a language switcher is ever wanted.
+  i18n: {
+    supportedLanguages: { ro },
+    fallbackLanguage: 'ro',
+    translations: { ro: roAdminOverrides },
+  },
   localization: {
-    locales: ['ro', 'en'],
+    locales: [
+      { code: 'ro', label: { en: 'Romanian', ro: 'Română' } },
+      { code: 'en', label: { en: 'English', ro: 'Engleză' } },
+    ],
     defaultLocale: 'ro',
     fallback: true,
   },

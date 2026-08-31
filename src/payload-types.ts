@@ -67,15 +67,15 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
-    media: Media;
-    'service-categories': ServiceCategory;
     services: Service;
+    'service-categories': ServiceCategory;
+    subscriptions: Subscription;
     reviews: Review;
     faqs: Faq;
-    subscriptions: Subscription;
-    'exceptional-hours': ExceptionalHour;
+    media: Media;
     locations: Location;
+    'exceptional-hours': ExceptionalHour;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -83,15 +83,15 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
-    'service-categories': ServiceCategoriesSelect<false> | ServiceCategoriesSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
+    'service-categories': ServiceCategoriesSelect<false> | ServiceCategoriesSelect<true>;
+    subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
-    subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
-    'exceptional-hours': ExceptionalHoursSelect<false> | ExceptionalHoursSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     locations: LocationsSelect<false> | LocationsSelect<true>;
+    'exceptional-hours': ExceptionalHoursSelect<false> | ExceptionalHoursSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -102,12 +102,12 @@ export interface Config {
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('ro' | 'en') | ('ro' | 'en')[];
   globals: {
-    'site-config': SiteConfig;
     homepage: Homepage;
+    'site-config': SiteConfig;
   };
   globalsSelect: {
-    'site-config': SiteConfigSelect<false> | SiteConfigSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
+    'site-config': SiteConfigSelect<false> | SiteConfigSelect<true>;
   };
   locale: 'ro' | 'en';
   widgets: {
@@ -138,6 +138,257 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Every massage in the catalog. Drag rows by the handle on the left to set the order. On the site, recently updated services come first inside their category; this order decides between services with the same date.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  _order?: string | null;
+  title: string;
+  /**
+   * Shown on the service card, under the title.
+   */
+  description: string;
+  /**
+   * One row per duration the service is offered at. Drag the rows to change the order they are listed in.
+   */
+  pricing: {
+    /**
+     * Minutes, e.g. 60
+     */
+    duration: number;
+    /**
+     * Digits only, no "RON" and no spaces. E.g. 340
+     */
+    price: string;
+    id?: string | null;
+  }[];
+  /**
+   * Which section of the catalog this service appears under.
+   */
+  category: number | ServiceCategory;
+  /**
+   * Web-sized image: max 1600px wide, under 500KB. It is not resized for you.
+   */
+  image?: (number | null) | Media;
+  /**
+   * Drives the "New" badge: shown for 2 months after this date, and pushes the service to the top of its category. Bump it when a service is meaningfully updated.
+   */
+  modifiedDate: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Sections of the service catalog. Drag rows by the handle on the left to change the order they appear on the site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-categories".
+ */
+export interface ServiceCategory {
+  id: number;
+  _order?: string | null;
+  /**
+   * E.g. "Masaje Full Body"
+   */
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Every image used on the site. Resize before uploading: max 1600px wide and under 500KB — images are stored exactly as uploaded, nothing is resized for you.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Describe what the image shows, in a few words. Read out to visually impaired visitors and used by search engines.
+   */
+  alt: string;
+  variants?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+}
+/**
+ * The subscription cards on the homepage. Drag rows by the handle on the left to change the order they appear in.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions".
+ */
+export interface Subscription {
+  id: number;
+  _order?: string | null;
+  title: string;
+  /**
+   * Short paragraph under the title.
+   */
+  summary: string;
+  /**
+   * The checkmark list on the card. Put the price line here too, as on the current site.
+   */
+  highlights: {
+    text: string;
+    id?: string | null;
+  }[];
+  /**
+   * Web-sized image: max 1600px wide, under 500KB.
+   */
+  image?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Client testimonials shown on the site, newest first. They are not translated: the same text is shown in both languages.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  /**
+   * Name as it should appear on the site, e.g. "Andreea M."
+   */
+  author: string;
+  /**
+   * The testimonial itself. Not translated — write it in the language the client used.
+   */
+  text: string;
+  /**
+   * Whole stars, 1 to 5. Feeds the average rating shown in search results.
+   */
+  rating: number;
+  /**
+   * When the review was left. Newest reviews are shown first.
+   */
+  date: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Questions and answers shown on the site and sent to search engines. Drag rows by the handle on the left to change the order.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  _order?: string | null;
+  question: string;
+  /**
+   * Plain text, no links. Search engines show this answer directly in results, so keep it complete on its own.
+   */
+  answer: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * The studios shown in the Location section, in the footer, and in the data sent to search engines. Drag rows by the handle on the left to change the order.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations".
+ */
+export interface Location {
+  id: number;
+  _order?: string | null;
+  /**
+   * Short display name, e.g. "Str. Gh Gr Cantacuzino 190 1B, Ploiești"
+   */
+  name: string;
+  /**
+   * Full address as clients should read it.
+   */
+  address: string;
+  /**
+   * Free text, e.g. "Monday - Sunday: 10:00 - 21:00". One-off closures go in Exceptional Hours.
+   */
+  schedule: string;
+  /**
+   * Display format, e.g. +40 733 211 325
+   */
+  phone: string;
+  /**
+   * Same number as a tel: link, no spaces. E.g. tel:+40733211325
+   */
+  phoneHref: string;
+  /**
+   * Optional. Leave empty to use the site-wide contact email.
+   */
+  email?: string | null;
+  /**
+   * In Google Maps: Share > Copy link. This is what the "Open in Maps" button uses.
+   */
+  mapsUrl: string;
+  /**
+   * In Google Maps: Share > Embed a map > copy only the src="..." address. Keep the hl parameter matching the language.
+   */
+  mapsEmbedUrl?: string | null;
+  /**
+   * Sent to search engines. E.g. 44.9364
+   */
+  geoLat?: number | null;
+  /**
+   * Sent to search engines. E.g. 26.0325
+   */
+  geoLng?: number | null;
+  /**
+   * The primary location is the one search engines treat as the business address. Exactly one location should be ticked.
+   */
+  primary?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * One row per day that differs from the regular opening hours, e.g. closed on December 25. Add a row only for the exceptions; ordinary days need nothing here.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exceptional-hours".
+ */
+export interface ExceptionalHour {
+  id: number;
+  /**
+   * The single day this applies to.
+   */
+  date: string;
+  /**
+   * Ticked = closed all day. Untick it to set special hours instead.
+   */
+  closed?: boolean | null;
+  /**
+   * E.g. 10:00
+   */
+  opensAt?: string | null;
+  /**
+   * E.g. 15:00
+   */
+  closesAt?: string | null;
+  /**
+   * Optional explanation shown on the site, e.g. "Crăciun".
+   */
+  note?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * People who can sign in to this admin panel. Everyone listed here can edit all content.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -161,212 +412,6 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
-}
-/**
- * Upload web-sized images: max 1600px wide, under 500KB. There is no server-side resizing.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  /**
-   * Pre-sized renditions, set by the image migration script.
-   */
-  variants?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "service-categories".
- */
-export interface ServiceCategory {
-  id: number;
-  /**
-   * E.g. "Masaje Full Body"
-   */
-  name: string;
-  /**
-   * Lower shows first. Categories are then sorted A-Z on the site.
-   */
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services".
- */
-export interface Service {
-  id: number;
-  title: string;
-  description: string;
-  category: number | ServiceCategory;
-  pricing: {
-    /**
-     * Minutes, e.g. 60
-     */
-    duration: number;
-    /**
-     * RON, digits only, e.g. "340"
-     */
-    price: string;
-    id?: string | null;
-  }[];
-  /**
-   * Web-sized image: max 1600px wide, under 500KB.
-   */
-  image?: (number | null) | Media;
-  /**
-   * Secondary sort within the category (lower first).
-   */
-  order?: number | null;
-  /**
-   * Drives the "New" badge: shown for 2 months after this date. Bump it when a service is meaningfully updated.
-   */
-  modifiedDate: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "reviews".
- */
-export interface Review {
-  id: number;
-  author: string;
-  text: string;
-  rating: number;
-  date: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
- */
-export interface Faq {
-  id: number;
-  question: string;
-  answer: string;
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscriptions".
- */
-export interface Subscription {
-  id: number;
-  title: string;
-  summary: string;
-  /**
-   * Checkmark list items. Put the price line here too, as in the current site.
-   */
-  highlights: {
-    text: string;
-    id?: string | null;
-  }[];
-  image?: (number | null) | Media;
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Date-specific overrides to opening hours, e.g. closed on December 25.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exceptional-hours".
- */
-export interface ExceptionalHour {
-  id: number;
-  date: string;
-  /**
-   * Checked = closed all day. Unchecked = custom hours below.
-   */
-  closed?: boolean | null;
-  /**
-   * E.g. 10:00
-   */
-  opensAt?: string | null;
-  /**
-   * E.g. 15:00
-   */
-  closesAt?: string | null;
-  /**
-   * Optional explanation shown on the site, e.g. "Crăciun"
-   */
-  note?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Studio locations shown in the Contact/Location section, footer, and search-engine structured data.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "locations".
- */
-export interface Location {
-  id: number;
-  /**
-   * Short display name, e.g. "Str. Gh Gr Cantacuzino 190 1B, Ploiești"
-   */
-  name: string;
-  address: string;
-  /**
-   * Opening hours text, e.g. "Monday - Sunday: 10:00 - 21:00"
-   */
-  schedule: string;
-  /**
-   * Display format, e.g. +40 733 211 325
-   */
-  phone: string;
-  /**
-   * tel: link, e.g. tel:+40733211325
-   */
-  phoneHref: string;
-  email?: string | null;
-  /**
-   * Google Maps share link
-   */
-  mapsUrl: string;
-  /**
-   * Google Maps "Share > Embed a map" iframe URL. Keep the hl parameter matching the locale.
-   */
-  mapsEmbedUrl?: string | null;
-  /**
-   * Latitude for structured data, e.g. 44.9364
-   */
-  geoLat?: number | null;
-  /**
-   * Longitude for structured data, e.g. 26.0325
-   */
-  geoLng?: number | null;
-  /**
-   * The primary location feeds the single-business structured data (JSON-LD). Exactly one should be primary.
-   */
-  primary?: boolean | null;
-  order?: number | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -393,20 +438,16 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
+        relationTo: 'services';
+        value: number | Service;
       } | null)
     | ({
         relationTo: 'service-categories';
         value: number | ServiceCategory;
       } | null)
     | ({
-        relationTo: 'services';
-        value: number | Service;
+        relationTo: 'subscriptions';
+        value: number | Subscription;
       } | null)
     | ({
         relationTo: 'reviews';
@@ -417,16 +458,20 @@ export interface PayloadLockedDocument {
         value: number | Faq;
       } | null)
     | ({
-        relationTo: 'subscriptions';
-        value: number | Subscription;
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'locations';
+        value: number | Location;
       } | null)
     | ({
         relationTo: 'exceptional-hours';
         value: number | ExceptionalHour;
       } | null)
     | ({
-        relationTo: 'locations';
-        value: number | Location;
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -472,61 +517,12 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
- */
-export interface UsersSelect<T extends boolean = true> {
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  variants?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "service-categories_select".
- */
-export interface ServiceCategoriesSelect<T extends boolean = true> {
-  name?: T;
-  order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
+  _order?: T;
   title?: T;
   description?: T;
-  category?: T;
   pricing?:
     | T
     | {
@@ -534,9 +530,37 @@ export interface ServicesSelect<T extends boolean = true> {
         price?: T;
         id?: T;
       };
+  category?: T;
   image?: T;
-  order?: T;
   modifiedDate?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-categories_select".
+ */
+export interface ServiceCategoriesSelect<T extends boolean = true> {
+  _order?: T;
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions_select".
+ */
+export interface SubscriptionsSelect<T extends boolean = true> {
+  _order?: T;
+  title?: T;
+  summary?: T;
+  highlights?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -557,27 +581,46 @@ export interface ReviewsSelect<T extends boolean = true> {
  * via the `definition` "faqs_select".
  */
 export interface FaqsSelect<T extends boolean = true> {
+  _order?: T;
   question?: T;
   answer?: T;
-  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscriptions_select".
+ * via the `definition` "media_select".
  */
-export interface SubscriptionsSelect<T extends boolean = true> {
-  title?: T;
-  summary?: T;
-  highlights?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  image?: T;
-  order?: T;
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  variants?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations_select".
+ */
+export interface LocationsSelect<T extends boolean = true> {
+  _order?: T;
+  name?: T;
+  address?: T;
+  schedule?: T;
+  phone?: T;
+  phoneHref?: T;
+  email?: T;
+  mapsUrl?: T;
+  mapsEmbedUrl?: T;
+  geoLat?: T;
+  geoLng?: T;
+  primary?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -596,23 +639,25 @@ export interface ExceptionalHoursSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "locations_select".
+ * via the `definition` "users_select".
  */
-export interface LocationsSelect<T extends boolean = true> {
-  name?: T;
-  address?: T;
-  schedule?: T;
-  phone?: T;
-  phoneHref?: T;
-  email?: T;
-  mapsUrl?: T;
-  mapsEmbedUrl?: T;
-  geoLat?: T;
-  geoLng?: T;
-  primary?: T;
-  order?: T;
+export interface UsersSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -655,96 +700,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Contact details, header/footer links, announcement banner.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-config".
- */
-export interface SiteConfig {
-  id: number;
-  name: string;
-  tagline: string;
-  legalName: string;
-  description: string;
-  /**
-   * Use {year} for the current year.
-   */
-  copyright: string;
-  /**
-   * Display format, e.g. +40 733 211 325
-   */
-  phone: string;
-  /**
-   * tel: link, e.g. tel:+40733211325
-   */
-  phoneHref: string;
-  /**
-   * E.g. https://wa.me/40733211325
-   */
-  whatsappUrl: string;
-  email: string;
-  /**
-   * External booking app, e.g. https://programari.balizen.ro
-   */
-  bookingUrl: string;
-  googleReviewsUrl: string;
-  headerLinks?:
-    | {
-        label: string;
-        /**
-         * Anchor like /#servicii or full URL.
-         */
-        href: string;
-        /**
-         * Optional CSS/JS hook classes (e.g. js-location-button).
-         */
-        className?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  primaryAction: {
-    label: string;
-    href: string;
-  };
-  footerColumns?:
-    | {
-        title: string;
-        links?:
-          | {
-              text: string;
-              href: string;
-              className?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  socialLinks?:
-    | {
-        label: string;
-        /**
-         * Tabler icon name, e.g. brand-instagram
-         */
-        icon: string;
-        href: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Show a dismissible banner at the top of the site.
-   */
-  announcementEnabled?: boolean | null;
-  announcementText?: string | null;
-  /**
-   * Optional URL the banner links to.
-   */
-  announcementLink?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * Copy for every homepage section, per locale.
+ * The text of every section on the homepage, per language. Services, subscriptions, locations, and reviews are edited in their own collections.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homepage".
@@ -752,36 +708,56 @@ export interface SiteConfig {
 export interface Homepage {
   id: number;
   /**
-   * Use
-   *  for a line break.
+   * Press Enter where you want the title to break onto a new line.
    */
   heroTitle: string;
+  /**
+   * One row per line of the subtitle.
+   */
   heroSubtitle: {
     line: string;
     id?: string | null;
   }[];
+  /**
+   * Optional short sentence under the subtitle.
+   */
   heroText?: string | null;
+  /**
+   * Drag the rows to change the order the buttons appear in.
+   */
   heroActions?:
     | {
         label: string;
+        /**
+         * Anchor like /#servicii, a page like /return-policy, or a full https:// address.
+         */
         href: string;
         variant?: ('primary' | 'secondary') | null;
         /**
-         * Tabler icon name, e.g. calendar
+         * Tabler icon name, e.g. calendar. Leave empty for no icon. Browse the names at tabler.io/icons.
          */
         icon?: string | null;
         target?: ('_self' | '_blank') | null;
         /**
-         * Optional CSS/JS hook classes (e.g. js-programari-button).
+         * Behaviour hooks only — just js-* classes (e.g. js-programari-button) are honoured; any styling classes are ignored. Use Style to change how the button looks.
          */
         className?: string | null;
         id?: string | null;
       }[]
     | null;
+  /**
+   * Web-sized image: max 1600px wide, under 500KB. It is not resized for you.
+   */
   heroImage?: (number | null) | Media;
+  /**
+   * Small line above the section title.
+   */
   aboutTagline?: string | null;
   aboutTitle: string;
   aboutIntro: string;
+  /**
+   * Drag the rows to change the order.
+   */
   aboutBullets?:
     | {
         title: string;
@@ -791,54 +767,66 @@ export interface Homepage {
     | null;
   aboutCta: {
     label: string;
+    /**
+     * Anchor like /#servicii, a page like /return-policy, or a full https:// address.
+     */
     href: string;
     variant?: ('primary' | 'secondary') | null;
     /**
-     * Tabler icon name, e.g. calendar
+     * Tabler icon name, e.g. calendar. Leave empty for no icon. Browse the names at tabler.io/icons.
      */
     icon?: string | null;
     target?: ('_self' | '_blank') | null;
     /**
-     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     * Behaviour hooks only — just js-* classes (e.g. js-programari-button) are honoured; any styling classes are ignored. Use Style to change how the button looks.
      */
     className?: string | null;
     id?: string | null;
   };
+  /**
+   * Web-sized image: max 1600px wide, under 500KB. It is not resized for you.
+   */
   aboutImage?: (number | null) | Media;
   servicesTitle: string;
   servicesDescription: string;
   servicesCta: {
     label: string;
+    /**
+     * Anchor like /#servicii, a page like /return-policy, or a full https:// address.
+     */
     href: string;
     variant?: ('primary' | 'secondary') | null;
     /**
-     * Tabler icon name, e.g. calendar
+     * Tabler icon name, e.g. calendar. Leave empty for no icon. Browse the names at tabler.io/icons.
      */
     icon?: string | null;
     target?: ('_self' | '_blank') | null;
     /**
-     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     * Behaviour hooks only — just js-* classes (e.g. js-programari-button) are honoured; any styling classes are ignored. Use Style to change how the button looks.
      */
     className?: string | null;
     id?: string | null;
   };
   subscriptionAction: {
     label: string;
+    /**
+     * Anchor like /#servicii, a page like /return-policy, or a full https:// address.
+     */
     href: string;
     variant?: ('primary' | 'secondary') | null;
     /**
-     * Tabler icon name, e.g. calendar
+     * Tabler icon name, e.g. calendar. Leave empty for no icon. Browse the names at tabler.io/icons.
      */
     icon?: string | null;
     target?: ('_self' | '_blank') | null;
     /**
-     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     * Behaviour hooks only — just js-* classes (e.g. js-programari-button) are honoured; any styling classes are ignored. Use Style to change how the button looks.
      */
     className?: string | null;
     id?: string | null;
   };
   /**
-   * Markdown links supported: [text](/return-policy)
+   * Fine print under the cards. Links are written as [text](/return-policy).
    */
   subscriptionDisclaimer?:
     | {
@@ -855,6 +843,9 @@ export interface Homepage {
     | null;
   giftCardFeatures?:
     | {
+        /**
+         * Tabler icon name, e.g. calendar. Leave empty for no icon. Browse the names at tabler.io/icons.
+         */
         icon: string;
         title: string;
         description: string;
@@ -863,22 +854,28 @@ export interface Homepage {
     | null;
   giftCardCta: {
     label: string;
+    /**
+     * Anchor like /#servicii, a page like /return-policy, or a full https:// address.
+     */
     href: string;
     variant?: ('primary' | 'secondary') | null;
     /**
-     * Tabler icon name, e.g. calendar
+     * Tabler icon name, e.g. calendar. Leave empty for no icon. Browse the names at tabler.io/icons.
      */
     icon?: string | null;
     target?: ('_self' | '_blank') | null;
     /**
-     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     * Behaviour hooks only — just js-* classes (e.g. js-programari-button) are honoured; any styling classes are ignored. Use Style to change how the button looks.
      */
     className?: string | null;
     id?: string | null;
   };
+  /**
+   * Web-sized image: max 1600px wide, under 500KB. It is not resized for you.
+   */
   giftCardImage?: (number | null) | Media;
   /**
-   * Markdown links supported: [text](/return-policy)
+   * Fine print under the section. Links are written as [text](/return-policy).
    */
   giftCardDisclaimer?:
     | {
@@ -893,6 +890,9 @@ export interface Homepage {
         label: string;
         handle?: string | null;
         href: string;
+        /**
+         * Tabler icon name, e.g. calendar. Leave empty for no icon. Browse the names at tabler.io/icons.
+         */
         icon: string;
         id?: string | null;
       }[]
@@ -901,82 +901,145 @@ export interface Homepage {
   ctaSubtitle: string;
   ctaButton: {
     label: string;
+    /**
+     * Anchor like /#servicii, a page like /return-policy, or a full https:// address.
+     */
     href: string;
     variant?: ('primary' | 'secondary') | null;
     /**
-     * Tabler icon name, e.g. calendar
+     * Tabler icon name, e.g. calendar. Leave empty for no icon. Browse the names at tabler.io/icons.
      */
     icon?: string | null;
     target?: ('_self' | '_blank') | null;
     /**
-     * Optional CSS/JS hook classes (e.g. js-programari-button).
+     * Behaviour hooks only — just js-* classes (e.g. js-programari-button) are honoured; any styling classes are ignored. Use Style to change how the button looks.
      */
     className?: string | null;
     id?: string | null;
   };
   locationTitle: string;
+  /**
+   * Shown next to the location cards.
+   */
   locationEmail?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
+ * Contact details, the links in the header and footer, and the announcement banner. These appear on every page.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-config_select".
+ * via the `definition` "site-config".
  */
-export interface SiteConfigSelect<T extends boolean = true> {
-  name?: T;
-  tagline?: T;
-  legalName?: T;
-  description?: T;
-  copyright?: T;
-  phone?: T;
-  phoneHref?: T;
-  whatsappUrl?: T;
-  email?: T;
-  bookingUrl?: T;
-  googleReviewsUrl?: T;
+export interface SiteConfig {
+  id: number;
+  /**
+   * Short name shown to visitors, e.g. Bali Zen. Not translated.
+   */
+  name: string;
+  tagline: string;
+  /**
+   * The registered company name, used in legal pages and in the data sent to search engines.
+   */
+  legalName: string;
+  /**
+   * One or two sentences. Used as the page description in Google results and when the site is shared on social media.
+   */
+  description: string;
+  /**
+   * Bottom line of the footer. Write {year} where the current year should go.
+   */
+  copyright: string;
+  /**
+   * Display format, e.g. +40 733 211 325
+   */
+  phone: string;
+  /**
+   * Same number as a tel: link, no spaces. E.g. tel:+40733211325
+   */
+  phoneHref: string;
+  email: string;
+  /**
+   * E.g. https://wa.me/40733211325 — the number with no plus sign and no spaces.
+   */
+  whatsappUrl: string;
+  /**
+   * Where every "Book" button sends the visitor. Bookings are never taken on this site.
+   */
+  bookingUrl: string;
+  /**
+   * The Google page where clients can leave a review.
+   */
+  googleReviewsUrl: string;
+  /**
+   * Drag the rows to change the order they appear in the menu.
+   */
   headerLinks?:
-    | T
     | {
-        label?: T;
-        href?: T;
-        className?: T;
-        id?: T;
-      };
-  primaryAction?:
-    | T
-    | {
-        label?: T;
-        href?: T;
-      };
+        label: string;
+        /**
+         * Anchor like /#servicii or a full address.
+         */
+        href: string;
+        /**
+         * Behaviour hooks only — just js-* classes (e.g. js-location-button) are honoured; any styling classes are ignored.
+         */
+        className?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The highlighted button on the right of the menu.
+   */
+  primaryAction: {
+    label: string;
+    href: string;
+  };
+  /**
+   * Drag the rows to change the order of the columns.
+   */
   footerColumns?:
-    | T
     | {
-        title?: T;
+        title: string;
         links?:
-          | T
           | {
-              text?: T;
-              href?: T;
-              className?: T;
-              id?: T;
-            };
-        id?: T;
-      };
+              text: string;
+              href: string;
+              /**
+               * Behaviour hooks only — just js-* classes are honoured; any styling classes are ignored.
+               */
+              className?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   socialLinks?:
-    | T
     | {
-        label?: T;
-        icon?: T;
-        href?: T;
-        id?: T;
-      };
-  announcementEnabled?: T;
-  announcementText?: T;
-  announcementLink?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+        label: string;
+        href: string;
+        /**
+         * Tabler icon name, e.g. brand-instagram. Browse the names at tabler.io/icons.
+         */
+        icon: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Untick to hide the banner without deleting its text.
+   */
+  announcementEnabled?: boolean | null;
+  /**
+   * Keep it to one short sentence.
+   */
+  announcementText?: string | null;
+  /**
+   * Optional. If filled in, the whole banner becomes clickable.
+   */
+  announcementLink?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1114,6 +1177,65 @@ export interface HomepageSelect<T extends boolean = true> {
       };
   locationTitle?: T;
   locationEmail?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-config_select".
+ */
+export interface SiteConfigSelect<T extends boolean = true> {
+  name?: T;
+  tagline?: T;
+  legalName?: T;
+  description?: T;
+  copyright?: T;
+  phone?: T;
+  phoneHref?: T;
+  email?: T;
+  whatsappUrl?: T;
+  bookingUrl?: T;
+  googleReviewsUrl?: T;
+  headerLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        className?: T;
+        id?: T;
+      };
+  primaryAction?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  footerColumns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              text?: T;
+              href?: T;
+              className?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        icon?: T;
+        id?: T;
+      };
+  announcementEnabled?: T;
+  announcementText?: T;
+  announcementLink?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

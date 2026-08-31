@@ -23,7 +23,7 @@ export const getServicesByCategory = cache(async (locale: Lang) => {
     collection: 'service-categories',
     locale,
     fallbackLocale: 'ro',
-    sort: 'order',
+    sort: '_order',
     limit: 100,
   })
   const services = await payload.find({
@@ -41,10 +41,15 @@ export const getServicesByCategory = cache(async (locale: Lang) => {
         const cat = service.category
         return (typeof cat === 'object' ? cat.id : cat) === category.id
       })
-      // legacy sort: modifiedDate desc, then order asc
+      // legacy sort: modifiedDate desc, then the admin drag order.
+      // `_order` is Payload's fractional index (a base-36 string added by
+      // `orderable: true`), so it compares lexicographically, not numerically.
       .sort((a, b) => {
         const dateDiff = new Date(b.modifiedDate).getTime() - new Date(a.modifiedDate).getTime()
-        return dateDiff !== 0 ? dateDiff : a.order - b.order
+        if (dateDiff !== 0) return dateDiff
+        const aOrder = a._order ?? ''
+        const bOrder = b._order ?? ''
+        return aOrder < bOrder ? -1 : aOrder > bOrder ? 1 : 0
       }),
   }))
 })
@@ -65,7 +70,7 @@ export const getFaqs = cache(async (locale: Lang) => {
     collection: 'faqs',
     locale,
     fallbackLocale: 'ro',
-    sort: 'order',
+    sort: '_order',
     limit: 100,
   })
   return result.docs
@@ -77,7 +82,7 @@ export const getSubscriptions = cache(async (locale: Lang) => {
     collection: 'subscriptions',
     locale,
     fallbackLocale: 'ro',
-    sort: 'order',
+    sort: '_order',
     limit: 100,
     depth: 1,
   })
@@ -90,7 +95,7 @@ export const getLocations = cache(async (locale: Lang) => {
     collection: 'locations',
     locale,
     fallbackLocale: 'ro',
-    sort: 'order',
+    sort: '_order',
     limit: 100,
   })
   return result.docs

@@ -21,7 +21,9 @@ export default async function JsonLd({ lang }: { lang: Lang }) {
         <script
           key={(schema as Record<string, unknown>)['@id'] as string ?? `${schema['@type']}-${index}`}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          // "<" escaped per the Next JSON-LD guide so CMS text can never close
+          // the script tag and inject markup.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
         />
       ))}
     </>

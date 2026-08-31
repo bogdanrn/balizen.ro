@@ -22,7 +22,17 @@ export const translations = {
       mapTitle: 'Harta',
       emailLabel: 'Email',
     },
-    services: { tagline: 'Servicii' },
+    services: {
+      tagline: 'Servicii',
+      listLabel: 'Lista servicii',
+      viewDetails: 'Vezi detalii',
+      closeDetails: 'Închide detaliile serviciului',
+    },
+    quickActions: {
+      label: 'Programări',
+      open: 'Deschide acțiunile rapide',
+      close: 'Închide acțiunile rapide',
+    },
     subscriptions: {
       tagline: 'Abonamente',
       title: 'Prețuri și pachete Bali Zen',
@@ -31,12 +41,15 @@ export const translations = {
       subscriptionLabel: 'Abonament',
     },
     giftCard: { tagline: 'Gift Card' },
+    cta: { tagline: 'Programare' },
     buttons: {
       bookHere: 'Programează-te aici',
       whatsapp: 'WhatsApp',
       showMore: 'Vezi mai mult',
       showLess: 'Vezi mai puțin',
+      call: 'Sună acum',
     },
+    announcement: { dismiss: 'Închide anunțul' },
     units: { minutes: 'min', currency: 'RON' },
     labels: { new: 'Nou', locationCaption: 'Gh. Gr. Cantacuzino' },
     reviews: {
@@ -91,7 +104,17 @@ export const translations = {
       mapTitle: 'Map',
       emailLabel: 'Email',
     },
-    services: { tagline: 'Services' },
+    services: {
+      tagline: 'Services',
+      listLabel: 'Services list',
+      viewDetails: 'View details',
+      closeDetails: 'Close service details',
+    },
+    quickActions: {
+      label: 'Book',
+      open: 'Open quick actions',
+      close: 'Close quick actions',
+    },
     subscriptions: {
       tagline: 'Subscriptions',
       title: 'Bali Zen Prices and Packages',
@@ -100,12 +123,15 @@ export const translations = {
       subscriptionLabel: 'Subscription',
     },
     giftCard: { tagline: 'Gift Card' },
+    cta: { tagline: 'Booking' },
     buttons: {
       bookHere: 'Book here',
       whatsapp: 'WhatsApp',
       showMore: 'Show more',
       showLess: 'Show less',
+      call: 'Call now',
     },
+    announcement: { dismiss: 'Dismiss announcement' },
     units: { minutes: 'min', currency: 'RON' },
     labels: { new: 'New', locationCaption: 'Gh. Gr. Cantacuzino' },
     reviews: {

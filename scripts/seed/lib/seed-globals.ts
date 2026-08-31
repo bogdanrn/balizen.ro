@@ -192,7 +192,6 @@ export async function seedSubscriptions(payload: Payload, log: (...args: any[]) 
         summary: ro.summary,
         highlights: ro.highlights.map((text: string) => ({ text })),
         image: mediaIdFor(ro.image?.src),
-        order: (i + 1) * 10,
       },
     })
     await payload.update({
@@ -215,7 +214,7 @@ export async function seedSubscriptions(payload: Payload, log: (...args: any[]) 
 export async function repairSubscriptions(payload: Payload, log: (...args: any[]) => void = console.log) {
   const homeRo = readJson('src/data/homepage.json')
   const homeEn = readJson('src/data/en/homepage.json')
-  const existing = await payload.find({ collection: 'subscriptions', sort: 'order', locale: 'ro', limit: 50 })
+  const existing = await payload.find({ collection: 'subscriptions', sort: '_order', locale: 'ro', limit: 50 })
 
   for (let i = 0; i < existing.docs.length; i++) {
     const doc = existing.docs[i]

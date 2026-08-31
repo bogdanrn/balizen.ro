@@ -75,7 +75,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <HeroSection lang={lang} homepage={homepage} siteConfig={siteConfig} />
       <AboutSection lang={lang} homepage={homepage} />
       <ServicesSection lang={lang} homepage={homepage} categories={categories} siteConfig={siteConfig} />
-      <SubscriptionsSection lang={lang} homepage={homepage} subscriptions={subscriptions} />
+      <SubscriptionsSection lang={lang} homepage={homepage} subscriptions={subscriptions} siteConfig={siteConfig} />
       <GiftCardSection lang={lang} homepage={homepage} />
       <ReviewsSection lang={lang} reviews={reviews} siteConfig={siteConfig} />
       <CallToActionSection lang={lang} homepage={homepage} />

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { getTranslations, type Lang } from '@/i18n'
+import { releaseScrollLock, setScrollLock } from '@/lib/scrollLock'
 
 declare global {
   interface Window {
@@ -23,12 +24,12 @@ export default function SiteInteractions({ lang, bookingUrl }: { lang: Lang; boo
 
   const show = useCallback(() => {
     setOpen(true)
-    document.body.classList.add('overflow-hidden')
+    setScrollLock('booking-modal', true)
   }, [])
 
   const hide = useCallback(() => {
     setOpen(false)
-    document.body.classList.remove('overflow-hidden')
+    setScrollLock('booking-modal', false)
   }, [])
 
   const confirm = useCallback(() => {
@@ -76,14 +77,14 @@ export default function SiteInteractions({ lang, bookingUrl }: { lang: Lang; boo
     return () => {
       document.removeEventListener('click', onClick)
       document.removeEventListener('keydown', onKeydown)
-      document.body.classList.remove('overflow-hidden')
+      releaseScrollLock('booking-modal')
     }
   }, [show, hide])
 
   return (
     <div
       id={MODAL_ID}
-      className={`fixed inset-0 z-[120] ${open ? 'flex' : 'hidden'} items-center justify-center bg-slate-900/70 px-4 backdrop-blur-sm`}
+      className={`fixed inset-0 z-[120] ${open ? 'flex' : 'hidden'} items-center justify-center bg-ink/70 px-4 backdrop-blur-sm`}
       role="dialog"
       aria-modal="true"
       aria-labelledby={`${MODAL_ID}-title`}
@@ -91,14 +92,14 @@ export default function SiteInteractions({ lang, bookingUrl }: { lang: Lang; boo
         if (event.target === event.currentTarget) hide()
       }}
     >
-      <div className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl">
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
-          <h2 id={`${MODAL_ID}-title`} className="font-heading text-lg font-semibold text-slate-900">
+      <div className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white ring-1 ring-ink/10">
+        <div className="flex items-center justify-between gap-4 border-b border-ink/10 px-6 py-5">
+          <h2 id={`${MODAL_ID}-title`} className="font-heading text-2xl font-semibold text-ink">
             {t.title}
           </h2>
           <button
             type="button"
-            className="rounded-full p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+            className="focus-ring -mr-2 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-muted-warm transition-colors hover:bg-cream hover:text-ink"
             aria-label={t.closeLabel}
             onClick={hide}
           >
@@ -109,39 +110,37 @@ export default function SiteInteractions({ lang, bookingUrl }: { lang: Lang; boo
           </button>
         </div>
 
-        <div className="space-y-4 px-6 py-6 text-sm text-slate-600">
+        <div className="space-y-5 px-6 py-6 text-sm leading-relaxed text-muted-warm">
           <p>{t.description}</p>
-          <ul className="space-y-2">
+          <ul className="space-y-2.5">
             {t.policies.map((policy) => (
               <li key={policy.href} className="flex items-start gap-3">
-                <span className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary">
-                  •
-                </span>
+                <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                 <a
                   href={policy.href}
                   target="_blank"
                   rel="noopener"
-                  className="underline-offset-2 transition hover:text-primary hover:underline"
+                  className="focus-ring rounded-sm underline-offset-4 transition-colors hover:text-ink hover:underline"
                 >
                   {policy.label}
                 </a>
               </li>
             ))}
           </ul>
-          <p className="border-t border-slate-200 pt-4 text-xs text-slate-500">{t.finePrint}</p>
+          <p className="border-t border-ink/10 pt-4 text-xs text-muted-warm">{t.finePrint}</p>
         </div>
 
-        <div className="flex items-center justify-end gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4">
+        <div className="flex flex-col-reverse gap-3 border-t border-ink/10 bg-cream px-6 py-4 sm:flex-row sm:items-center sm:justify-end">
           <button
             type="button"
-            className="inline-flex items-center rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100"
+            className="btn-outline px-5 py-2.5 text-sm font-semibold uppercase tracking-wide"
             onClick={hide}
           >
             {t.cancelLabel}
           </button>
           <button
             type="button"
-            className="inline-flex items-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
+            className="btn-primary px-5 py-2.5 text-sm font-semibold uppercase tracking-wide"
             onClick={confirm}
           >
             {t.confirmLabel}

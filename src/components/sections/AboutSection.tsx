@@ -1,48 +1,54 @@
 import type { Lang } from '@/i18n'
+import { ctaClass } from '@/lib/ui'
 import type { Homepage } from '@/payload-types'
 
 import CdnImage from '../CdnImage'
 import Icon from '../Icon'
 import LocalizedLink from '../LocalizedLink'
+import SectionEyebrow from '../SectionEyebrow'
 
 type Props = {
   lang: Lang
   homepage: Homepage
 }
 
-// Port of _legacy AboutSection.astro (section id "despre-noi").
+// White band. Copy left, portrait image right on desktop; stacked on mobile
+// with the copy first, so the section reads as prose rather than a card grid.
 export default function AboutSection({ lang, homepage }: Props) {
   const cta = homepage.aboutCta
 
   return (
-    <section id="despre-noi" className="bg-white">
-      <div className="mx-auto grid max-w-screen-xl gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
-        <div className="space-y-8">
-          {homepage.aboutTagline && (
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">{homepage.aboutTagline}</p>
-          )}
-          <h2 className="font-heading text-3xl font-bold text-slate-900 sm:text-4xl">{homepage.aboutTitle}</h2>
-          <p className="text-base leading-relaxed text-slate-600">{homepage.aboutIntro}</p>
+    <section id="despre-noi" className="border-t border-ink/10 bg-white">
+      <div className="mx-auto grid w-full max-w-screen-xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:py-28">
+        <div>
+          {homepage.aboutTagline && <SectionEyebrow>{homepage.aboutTagline}</SectionEyebrow>}
 
-          <ul className="space-y-6">
+          <h2 className="mt-5 font-heading text-4xl font-semibold leading-[1.1] text-ink sm:text-5xl">
+            {homepage.aboutTitle}
+          </h2>
+
+          <p className="mt-5 max-w-prose text-base leading-relaxed text-muted-warm">{homepage.aboutIntro}</p>
+
+          <ul className="mt-10 divide-y divide-ink/10 border-y border-ink/10">
             {(homepage.aboutBullets ?? []).map((item, index) => (
-              <li key={item.id ?? index} className="flex items-start gap-4">
-                <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                  <Icon name="star" className="h-4 w-4" />
-                </span>
+              <li key={item.id ?? index} className="flex items-start gap-4 py-5">
+                <span
+                  aria-hidden="true"
+                  className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                />
                 <div>
-                  <h3 className="font-semibold text-slate-900">{item.title}</h3>
-                  <p className="mt-1 text-sm text-slate-600">{item.description}</p>
+                  <h3 className="font-heading text-xl font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-1 max-w-prose text-sm leading-relaxed text-muted-warm">{item.description}</p>
                 </div>
               </li>
             ))}
           </ul>
 
-          <div>
+          <div className="mt-10">
             <LocalizedLink
               href={cta.href}
               lang={lang}
-              className={`inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:opacity-90 ${cta.className ?? ''}`.trim()}
+              className={ctaClass(cta, { extra: 'w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto' })}
               target={cta.target}
               rel="noopener"
             >
@@ -52,13 +58,12 @@ export default function AboutSection({ lang, homepage }: Props) {
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-3xl shadow-xl shadow-slate-200">
+        <div className="overflow-hidden rounded-3xl ring-1 ring-accent">
           <CdnImage
             media={homepage.aboutImage}
-            className="h-full w-full object-cover"
-            sizes="(min-width: 1024px) 40vw, 100vw"
+            className="aspect-[4/3] h-full w-full object-cover object-center lg:aspect-[4/5]"
+            sizes="(min-width: 1024px) 45vw, 100vw"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent"></div>
         </div>
       </div>
     </section>

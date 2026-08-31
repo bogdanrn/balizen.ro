@@ -22,9 +22,14 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.4",
     "@payloadcms/db-postgres": "3.82.1",
     "@payloadcms/next": "3.82.1",
     "@payloadcms/plugin-mcp": "3.82.1",
@@ -64,7 +69,8 @@
     "tsx": "4.22.4",
     "typescript": "6.0.3",
     "vite-tsconfig-paths": "6.0.5",
-    "vitest": "4.1.6"
+    "vitest": "4.1.6",
+    "wrangler": "^4.127.1"
   },
   "engines": {
     "node": ">=24.15.0",
@@ -75,6 +81,9 @@
       "sharp",
       "esbuild",
       "unrs-resolver"
-    ]
+    ],
+    "patchedDependencies": {
+      "@payloadcms/plugin-mcp@3.82.1": "patches/@payloadcms__plugin-mcp@3.82.1.patch"
+    }
   }
 }

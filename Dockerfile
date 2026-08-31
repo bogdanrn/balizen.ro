@@ -12,6 +12,9 @@ WORKDIR /app
 # ---- dependencies -----------------------------------------------------------
 FROM base AS deps
 COPY package.json pnpm-lock.yaml .npmrc ./
+# patches/ holds the pnpm patch for @payloadcms/plugin-mcp; without it the
+# install fails the frozen-lockfile check and /api/mcp hangs on every request.
+COPY patches ./patches
 # --ignore-workspace: this repo is standalone but sits under a directory that
 # may contain a pnpm workspace on a dev machine; keep both installs identical.
 RUN pnpm install --frozen-lockfile --ignore-workspace

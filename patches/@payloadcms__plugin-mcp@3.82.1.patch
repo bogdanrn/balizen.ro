@@ -1,0 +1,30 @@
+diff --git a/dist/utils/schemaConversion/convertCollectionSchemaToZod.js b/dist/utils/schemaConversion/convertCollectionSchemaToZod.js
+index 07a2628fdc987d663885c7e918152539ca7c1766..b62b5e4ca099be21bc44796aabfc4adc5de5b64a 100644
+--- a/dist/utils/schemaConversion/convertCollectionSchemaToZod.js
++++ b/dist/utils/schemaConversion/convertCollectionSchemaToZod.js
+@@ -28,7 +28,12 @@ export const convertCollectionSchemaToZod = (schema)=>{
+      * 4. The resulting Zod schema is used only for parameter validation in MCP tools, not for data processing
+      * 5. No user input or external data is involved in the schema generation process
+      */ // eslint-disable-next-line @typescript-eslint/no-implied-eval
+-        return new Function('z', `return ${transpileResult.outputText}`)(z);
++        // `ts.transpileModule` prepends a "use strict" directive, so `return <output>`
++        // returns that string instead of the schema, and every caller then gets a
++        // String where a ZodObject is expected (`.partial()` throws, `.shape` is
++        // undefined). Drop the prologue before building the function body.
++        const schemaExpression = transpileResult.outputText.replace(/^\s*(['"])use strict\1;?\s*/, '');
++        return new Function('z', `return ${schemaExpression}`)(z);
+     } catch (error) {
+         // If schema conversion fails (e.g., due to Zod v4 toJSONSchema null-check bug
+         // with record schemas that have undefined valueType, or bundler transforms
+@@ -36,7 +41,10 @@ export const convertCollectionSchemaToZod = (schema)=>{
+         // crash entirely. The tool will still be listed but without strict validation.
+         // See: https://github.com/colinhacks/zod/issues/5821
+         console.warn(`[plugin-mcp] Schema conversion failed, using permissive fallback:`, error instanceof Error ? error.message : error);
+-        return z.record(z.any());
++        // A ZodObject, not z.record(): callers reach for `.partial()` and `.shape`,
++        // neither of which a ZodRecord has, and the TypeError they throw escapes as
++        // an unhandled rejection that leaves the MCP request hanging forever.
++        return z.object({}).catchall(z.any());
+     }
+ };
+ 

@@ -22,7 +22,11 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # No database is reachable at build time and none is needed: every content page
 # is dynamic, so nothing queries Payload during `next build`.
-RUN pnpm build
+#
+# The heap ceiling is deliberately lower than the `build` script's 8000: the VPS
+# has ~7.7GB total with other services on it, and a ceiling above what the box
+# can give invites the OOM killer mid-build instead of a GC pass.
+RUN NODE_OPTIONS="--no-deprecation --max-old-space-size=3072" pnpm exec next build --webpack
 
 # ---- runtime ----------------------------------------------------------------
 FROM base AS runner

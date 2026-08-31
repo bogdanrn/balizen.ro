@@ -29,6 +29,13 @@ const dirname = path.dirname(filename)
 
 const isProduction = process.env.NODE_ENV === 'production'
 
+// Public hostname of the R2 bucket, when one is attached (R2 > bucket >
+// Settings > Custom Domains). Keep it in sync with src/lib/cdn.ts, which
+// builds the same base for the pre-sized variant keys.
+const mediaCdnBase = process.env.R2_CUSTOM_CDN_DOMAIN
+  ? `https://${process.env.R2_CUSTOM_CDN_DOMAIN.replace(/^https?:\/\//, '').replace(/\/$/, '')}`
+  : undefined
+
 const createLog =
   (level: string, fn: typeof console.log) => (objOrMsg: object | string, msg?: string) => {
     if (typeof objOrMsg === 'string') {
@@ -165,7 +172,15 @@ export default buildConfig({
         forcePathStyle: true,
       },
       collections: {
-        media: true,
+        // With a custom domain on the bucket, media docs carry absolute CDN
+        // URLs and requests never touch this server. Without it (local dev),
+        // Payload's own file route streams them out of the bucket instead.
+        media: mediaCdnBase
+          ? {
+              generateFileURL: ({ filename }: { filename: string }) =>
+                `${mediaCdnBase}/${filename}`,
+            }
+          : true,
       },
     }),
     // Lets an editor point an MCP client (e.g. Claude Code) at this site's own

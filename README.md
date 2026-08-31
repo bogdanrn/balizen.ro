@@ -35,15 +35,18 @@ Coolify application on the chuckle-cloud VPS, built from the `Dockerfile` in thi
 
 Migrations need no separate step: the Postgres adapter is configured with `prodMigrations`, so every container applies pending migrations when it connects with `NODE_ENV=production`. A failed migration fails the boot, which is the intended behavior.
 
-Environment variables set in Coolify: `DATABASE_URI`, `PAYLOAD_SECRET`, `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`. See `env.example`.
+Environment variables set in Coolify: `DATABASE_URI`, `PAYLOAD_SECRET`, `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `R2_CUSTOM_CDN_DOMAIN`. See `env.example`.
 
 Logs: `~/.chuckle-cloud/scripts/vps-logs.sh balizen` (Payload logs one JSON object per line in production).
 
 ## Images
 
-Uploads go to R2 through the S3 API and are served back from this domain at `/api/media/file/<filename>`, which streams the object straight out of the bucket. Cloudflare caches that path at the edge for a week (`Cache-Control` is set in `next.config.ts`), so there is no separate CDN hostname to attach, and no cross-account custom-domain problem.
+Uploads go to R2 through the S3 API. How they are read back depends on `R2_CUSTOM_CDN_DOMAIN`:
 
-The pre-sized webp variants written by `pnpm seed:images` are plain bucket objects with no media doc; they resolve through the same route because the storage adapter keys files by filename alone.
+- **set** (production, `cdn-balizen.chuckle-cloud.com`): media docs carry absolute URLs on that hostname and image requests go straight to the bucket, never through this server. The domain is attached in the Cloudflare dashboard under R2 > `balizen-media` > Settings > Custom Domains, and only works because that zone and the bucket sit in the same account.
+- **unset** (local dev): files are served from `/api/media/file/<filename>`, which streams the object out of the bucket. Cloudflare caches that path at the edge for a week (`Cache-Control` in `next.config.ts`).
+
+The pre-sized webp variants written by `pnpm seed:images` are plain bucket objects with no media doc of their own, so their URLs are built from whatever base the parent doc's `url` uses (`variantUrl` in `src/lib/cdn.ts`). That keeps them right in client components too, where the env var does not exist.
 
 If a file is ever deleted and re-uploaded under the exact same name, purge that path in the Cloudflare cache.
 

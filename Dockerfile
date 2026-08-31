@@ -34,6 +34,13 @@ ENV NODE_ENV=production \
     PORT=3000 \
     HOSTNAME=0.0.0.0
 
+# Coolify's healthcheck runs inside the container and shells out to curl or
+# wget; the slim image has neither, and without one the deploy rolls back as
+# "unhealthy" even though the server is serving.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends curl \
+ && rm -rf /var/lib/apt/lists/*
+
 COPY --from=builder --chown=node:node /app/public ./public
 # `server.js` plus the traced subset of node_modules (sharp and the AWS SDK
 # included), ~85MB rather than the full install.

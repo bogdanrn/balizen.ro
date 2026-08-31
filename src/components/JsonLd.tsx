@@ -1,19 +1,20 @@
-import { getFaqs, getLocations, getReviews, getServicesByCategory, getSiteConfig } from '@/lib/payload'
+import { getExceptionalHours, getFaqs, getLocations, getReviews, getServicesByCategory, getSiteConfig } from '@/lib/payload'
 import { buildJsonLd } from '@/lib/schema'
 import type { Lang } from '@/i18n'
 
 // Emits the six JSON-LD blocks. Runs per request (force-dynamic), so ratings
 // and content are always current.
 export default async function JsonLd({ lang }: { lang: Lang }) {
-  const [siteConfig, categories, reviews, faqs, locations] = await Promise.all([
+  const [siteConfig, categories, reviews, faqs, locations, exceptionalHours] = await Promise.all([
     getSiteConfig(lang),
     getServicesByCategory(lang),
     getReviews(),
     getFaqs(lang),
     getLocations(lang),
+    getExceptionalHours(lang),
   ])
 
-  const schemas = buildJsonLd({ lang, siteConfig, categories, reviews, faqs, locations })
+  const schemas = buildJsonLd({ lang, siteConfig, categories, reviews, faqs, locations, exceptionalHours })
 
   return (
     <>

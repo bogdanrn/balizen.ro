@@ -3,26 +3,25 @@
 import { useState } from 'react'
 
 import { getTranslations, type Lang } from '@/i18n'
-import type { SiteConfig } from '@/payload-types'
+import type { Announcement } from '@/payload-types'
 
 import Icon from './Icon'
 
 type Props = {
   lang: Lang
-  siteConfig: SiteConfig
+  announcement: Announcement
 }
 
-// Dismissible top-of-site announcement bar driven by the SiteConfig global
-// (announcementEnabled / announcementText / announcementLink). Client
-// component only because of the local dismissed state.
-export default function AnnouncementBanner({ lang, siteConfig }: Props) {
+// Dismissible top-of-site announcement bar driven by the Announcement global.
+// Client component only because of the local dismissed state.
+export default function AnnouncementBanner({ lang, announcement }: Props) {
   const t = getTranslations(lang)
   const [dismissed, setDismissed] = useState(false)
 
-  if (dismissed || !siteConfig.announcementEnabled || !siteConfig.announcementText) return null
+  if (dismissed || !announcement.enabled || !announcement.text) return null
 
-  const text = siteConfig.announcementText
-  const link = siteConfig.announcementLink
+  const text = announcement.text
+  const link = announcement.link
 
   return (
     <div className="relative bg-ink px-4 py-2 text-center text-sm text-cream">

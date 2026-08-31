@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { getSeedPayload, isRemote, log, OUT_DIR } from './lib/context'
+import { getSeedPayload, log, OUT_DIR } from './lib/context'
 import { repairSubscriptions, seedGlobals, setImageMap } from './lib/seed-globals'
 
 // Reruns ONLY the globals seed + repairs subscription highlights in place.
@@ -11,7 +11,7 @@ async function main() {
   const payload = await getSeedPayload()
   await seedGlobals(payload, log)
   await repairSubscriptions(payload, log)
-  log(`globals reseed complete. remote=${isRemote}`)
+  log(`globals reseed complete`)
   process.exit(0)
 }
 

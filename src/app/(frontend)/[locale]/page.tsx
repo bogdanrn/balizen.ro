@@ -11,6 +11,7 @@ import ServicesSection from '@/components/sections/ServicesSection'
 import SubscriptionsSection from '@/components/sections/SubscriptionsSection'
 import type { Lang } from '@/i18n'
 import {
+  getExceptionalHours,
   getHomepage,
   getLocations,
   getReviews,
@@ -61,25 +62,32 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   if (locale !== 'ro' && locale !== 'en') notFound()
   const lang = locale as Lang
 
-  const [siteConfig, homepage, categories, subscriptions, reviews, locations] = await Promise.all([
+  const [siteConfig, homepage, categories, subscriptions, reviews, locations, exceptionalHours] = await Promise.all([
     getSiteConfig(lang),
     getHomepage(lang),
     getServicesByCategory(lang),
     getSubscriptions(lang),
     getReviews(),
     getLocations(lang),
+    getExceptionalHours(lang),
   ])
 
   return (
     <>
-      <HeroSection lang={lang} homepage={homepage} siteConfig={siteConfig} />
+      <HeroSection lang={lang} homepage={homepage} siteConfig={siteConfig} locations={locations} />
       <AboutSection lang={lang} homepage={homepage} />
       <ServicesSection lang={lang} homepage={homepage} categories={categories} siteConfig={siteConfig} />
       <SubscriptionsSection lang={lang} homepage={homepage} subscriptions={subscriptions} siteConfig={siteConfig} />
       <GiftCardSection lang={lang} homepage={homepage} />
       <ReviewsSection lang={lang} reviews={reviews} siteConfig={siteConfig} />
       <CallToActionSection lang={lang} homepage={homepage} />
-      <LocationSection lang={lang} homepage={homepage} locations={locations} siteConfig={siteConfig} />
+      <LocationSection
+        lang={lang}
+        homepage={homepage}
+        locations={locations}
+        siteConfig={siteConfig}
+        exceptionalHours={exceptionalHours}
+      />
     </>
   )
 }

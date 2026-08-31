@@ -1,9 +1,9 @@
+import 'dotenv/config'
 import path from 'path'
 
-// Shared context for seed scripts. `--remote` targets the real D1/R2 via
-// wrangler remote bindings (payload.config.ts honors CF_REMOTE=1).
-export const isRemote = process.argv.includes('--remote')
-if (isRemote) process.env.CF_REMOTE = '1'
+// Shared context for seed scripts. They talk to whatever DATABASE_URI and R2
+// credentials the loaded dotenv file points at, so targeting production means
+// running them with the production env, not a flag.
 if (!process.env.PAYLOAD_SECRET) process.env.PAYLOAD_SECRET = 'ignore'
 
 export const LEGACY_DIR = path.resolve(process.cwd(), '_legacy')
@@ -15,15 +15,23 @@ export async function getSeedPayload() {
   return getPayload({ config })
 }
 
-export async function getCloudflareEnv() {
-  const { getPlatformProxy } = await import('wrangler')
-  const proxy = await getPlatformProxy({
-    environment: process.env.CLOUDFLARE_ENV,
-    remoteBindings: isRemote,
+// Raw bucket access, for the pre-sized webp variants: they are plain objects in
+// R2 with no media doc of their own, so they cannot go through Payload.
+export async function getBucketClient() {
+  const { S3Client } = await import('@aws-sdk/client-s3')
+  const client = new S3Client({
+    region: process.env.R2_REGION || 'auto',
+    endpoint:
+      process.env.R2_ENDPOINT || `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+    },
+    forcePathStyle: true,
   })
-  return proxy.env as unknown as { R2: R2Bucket }
+  return { client, bucket: process.env.R2_BUCKET || 'balizen-media' }
 }
 
 export function log(...args: unknown[]) {
-  console.log(`[seed${isRemote ? ' REMOTE' : ''}]`, ...args)
+  console.log('[seed]', ...args)
 }

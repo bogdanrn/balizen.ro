@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 
 import { getTranslations, type Lang } from '@/i18n'
 import { ctaClass } from '@/lib/ui'
-import type { Homepage, SiteConfig } from '@/payload-types'
+import type { Homepage, Location, SiteConfig } from '@/payload-types'
 
 import CdnImage from '../CdnImage'
 import HeroActionMenu from '../HeroActionMenu'
@@ -14,6 +14,7 @@ type Props = {
   lang: Lang
   homepage: Homepage
   siteConfig: SiteConfig
+  locations: Location[]
 }
 
 type HeroAction = NonNullable<Homepage['heroActions']>[number]
@@ -26,7 +27,7 @@ type HeroAction = NonNullable<Homepage['heroActions']>[number]
 // The first primary action becomes the contact picker (HeroActionMenu) instead
 // of a direct link; the js-programari-button hook moves onto the menu's booking
 // option. Any further actions render as ordinary pills.
-export default function HeroSection({ lang, homepage, siteConfig }: Props) {
+export default function HeroSection({ lang, homepage, siteConfig, locations }: Props) {
   const t = getTranslations(lang)
   const actions = homepage.heroActions ?? []
   const menuActionId = actions.find((action) => action.variant !== 'secondary')?.id
@@ -43,6 +44,7 @@ export default function HeroSection({ lang, homepage, siteConfig }: Props) {
           whatsappUrl={siteConfig.whatsappUrl}
           phone={siteConfig.phone}
           phoneHref={siteConfig.phoneHref}
+          locations={locations}
         />
       )
     }

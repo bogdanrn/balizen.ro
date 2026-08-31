@@ -64,6 +64,7 @@ export type SupportedTimezones =
 export interface Config {
   auth: {
     users: UserAuthOperations;
+    'payload-mcp-api-keys': PayloadMcpApiKeyAuthOperations;
   };
   blocks: {};
   collections: {
@@ -76,6 +77,7 @@ export interface Config {
     locations: Location;
     'exceptional-hours': ExceptionalHour;
     users: User;
+    'payload-mcp-api-keys': PayloadMcpApiKey;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +94,7 @@ export interface Config {
     locations: LocationsSelect<false> | LocationsSelect<true>;
     'exceptional-hours': ExceptionalHoursSelect<false> | ExceptionalHoursSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'payload-mcp-api-keys': PayloadMcpApiKeysSelect<false> | PayloadMcpApiKeysSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -103,23 +106,43 @@ export interface Config {
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('ro' | 'en') | ('ro' | 'en')[];
   globals: {
     homepage: Homepage;
+    announcement: Announcement;
     'site-config': SiteConfig;
   };
   globalsSelect: {
     homepage: HomepageSelect<false> | HomepageSelect<true>;
+    announcement: AnnouncementSelect<false> | AnnouncementSelect<true>;
     'site-config': SiteConfigSelect<false> | SiteConfigSelect<true>;
   };
   locale: 'ro' | 'en';
   widgets: {
     collections: CollectionsWidget;
   };
-  user: User;
+  user: User | PayloadMcpApiKey;
   jobs: {
     tasks: unknown;
     workflows: unknown;
   };
 }
 export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
+export interface PayloadMcpApiKeyAuthOperations {
   forgotPassword: {
     email: string;
     password: string;
@@ -414,6 +437,185 @@ export interface User {
   collection: 'users';
 }
 /**
+ * API keys control which collections, resources, tools, and prompts MCP clients can access
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-mcp-api-keys".
+ */
+export interface PayloadMcpApiKey {
+  id: number;
+  /**
+   * The user that the API key is associated with.
+   */
+  user: number | User;
+  /**
+   * A useful label for the API key.
+   */
+  label?: string | null;
+  /**
+   * The purpose of the API key.
+   */
+  description?: string | null;
+  services?: {
+    /**
+     * Allow clients to find services.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to create services.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update services.
+     */
+    update?: boolean | null;
+    /**
+     * Allow clients to delete services.
+     */
+    delete?: boolean | null;
+  };
+  serviceCategories?: {
+    /**
+     * Allow clients to find service-categories.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to create service-categories.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update service-categories.
+     */
+    update?: boolean | null;
+    /**
+     * Allow clients to delete service-categories.
+     */
+    delete?: boolean | null;
+  };
+  subscriptions?: {
+    /**
+     * Allow clients to find subscriptions.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to create subscriptions.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update subscriptions.
+     */
+    update?: boolean | null;
+    /**
+     * Allow clients to delete subscriptions.
+     */
+    delete?: boolean | null;
+  };
+  reviews?: {
+    /**
+     * Allow clients to find reviews.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to create reviews.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update reviews.
+     */
+    update?: boolean | null;
+    /**
+     * Allow clients to delete reviews.
+     */
+    delete?: boolean | null;
+  };
+  faqs?: {
+    /**
+     * Allow clients to find faqs.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to create faqs.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update faqs.
+     */
+    update?: boolean | null;
+    /**
+     * Allow clients to delete faqs.
+     */
+    delete?: boolean | null;
+  };
+  locations?: {
+    /**
+     * Allow clients to find locations.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to create locations.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update locations.
+     */
+    update?: boolean | null;
+    /**
+     * Allow clients to delete locations.
+     */
+    delete?: boolean | null;
+  };
+  exceptionalHours?: {
+    /**
+     * Allow clients to find exceptional-hours.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to create exceptional-hours.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update exceptional-hours.
+     */
+    update?: boolean | null;
+    /**
+     * Allow clients to delete exceptional-hours.
+     */
+    delete?: boolean | null;
+  };
+  media?: {
+    /**
+     * Allow clients to find media.
+     */
+    find?: boolean | null;
+  };
+  homepage?: {
+    /**
+     * Allow clients to find homepage global.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to update homepage global.
+     */
+    update?: boolean | null;
+  };
+  siteConfig?: {
+    /**
+     * Allow clients to find site-config global.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to update site-config global.
+     */
+    update?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
+  collection: 'payload-mcp-api-keys';
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -472,12 +674,21 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'payload-mcp-api-keys';
+        value: number | PayloadMcpApiKey;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: number | User;
+      }
+    | {
+        relationTo: 'payload-mcp-api-keys';
+        value: number | PayloadMcpApiKey;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -487,10 +698,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: number;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: number | User;
+      }
+    | {
+        relationTo: 'payload-mcp-api-keys';
+        value: number | PayloadMcpApiKey;
+      };
   key?: string | null;
   value?:
     | {
@@ -658,6 +874,93 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-mcp-api-keys_select".
+ */
+export interface PayloadMcpApiKeysSelect<T extends boolean = true> {
+  user?: T;
+  label?: T;
+  description?: T;
+  services?:
+    | T
+    | {
+        find?: T;
+        create?: T;
+        update?: T;
+        delete?: T;
+      };
+  serviceCategories?:
+    | T
+    | {
+        find?: T;
+        create?: T;
+        update?: T;
+        delete?: T;
+      };
+  subscriptions?:
+    | T
+    | {
+        find?: T;
+        create?: T;
+        update?: T;
+        delete?: T;
+      };
+  reviews?:
+    | T
+    | {
+        find?: T;
+        create?: T;
+        update?: T;
+        delete?: T;
+      };
+  faqs?:
+    | T
+    | {
+        find?: T;
+        create?: T;
+        update?: T;
+        delete?: T;
+      };
+  locations?:
+    | T
+    | {
+        find?: T;
+        create?: T;
+        update?: T;
+        delete?: T;
+      };
+  exceptionalHours?:
+    | T
+    | {
+        find?: T;
+        create?: T;
+        update?: T;
+        delete?: T;
+      };
+  media?:
+    | T
+    | {
+        find?: T;
+      };
+  homepage?:
+    | T
+    | {
+        find?: T;
+        update?: T;
+      };
+  siteConfig?:
+    | T
+    | {
+        find?: T;
+        update?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -926,7 +1229,30 @@ export interface Homepage {
   createdAt?: string | null;
 }
 /**
- * Contact details, the links in the header and footer, and the announcement banner. These appear on every page.
+ * A strip at the very top of the site for temporary messages: holiday closures, promotions. Visitors can dismiss it.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcement".
+ */
+export interface Announcement {
+  id: number;
+  /**
+   * Untick to hide the banner without deleting its text.
+   */
+  enabled?: boolean | null;
+  /**
+   * Keep it to one short sentence. The banner stays hidden while this is empty.
+   */
+  text?: string | null;
+  /**
+   * Optional. If filled in, the whole banner becomes clickable.
+   */
+  link?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Contact details and the links in the header and footer. These appear on every page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-config".
@@ -1026,18 +1352,6 @@ export interface SiteConfig {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Untick to hide the banner without deleting its text.
-   */
-  announcementEnabled?: boolean | null;
-  /**
-   * Keep it to one short sentence.
-   */
-  announcementText?: string | null;
-  /**
-   * Optional. If filled in, the whole banner becomes clickable.
-   */
-  announcementLink?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1183,6 +1497,18 @@ export interface HomepageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcement_select".
+ */
+export interface AnnouncementSelect<T extends boolean = true> {
+  enabled?: T;
+  text?: T;
+  link?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-config_select".
  */
 export interface SiteConfigSelect<T extends boolean = true> {
@@ -1233,9 +1559,6 @@ export interface SiteConfigSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
-  announcementEnabled?: T;
-  announcementText?: T;
-  announcementLink?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

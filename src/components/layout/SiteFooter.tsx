@@ -1,6 +1,11 @@
 import { getTranslations, type Lang } from '@/i18n'
+import {
+  formatExceptionalHourDate,
+  getUpcomingExceptionalHours,
+  isExceptionalHourClosed,
+} from '@/lib/exceptionalHours'
 import { hookClasses } from '@/lib/ui'
-import type { Location, SiteConfig } from '@/payload-types'
+import type { ExceptionalHour, Location, SiteConfig } from '@/payload-types'
 
 import Icon from '../Icon'
 import LanguageSwitcherLink from '../LanguageSwitcherLink'
@@ -10,6 +15,7 @@ type Props = {
   lang: Lang
   siteConfig: SiteConfig
   locations: Location[]
+  exceptionalHours: ExceptionalHour[]
 }
 
 // Dark ink close to the page, matching the announcement banner and btn-secondary.
@@ -19,12 +25,13 @@ type Props = {
 const LABEL = 'text-xs font-semibold uppercase tracking-widest text-cream/50'
 const LINK = 'focus-ring rounded-sm text-cream/75 underline-offset-4 transition-colors hover:text-cream hover:underline'
 
-export default function SiteFooter({ lang, siteConfig, locations }: Props) {
+export default function SiteFooter({ lang, siteConfig, locations, exceptionalHours }: Props) {
   const t = getTranslations(lang)
   const currentYear = new Date().getFullYear()
   const dynamicFootnote = siteConfig.copyright.replace(/\d{4}/g, String(currentYear))
   const columns = siteConfig.footerColumns ?? []
   const socialLinks = siteConfig.socialLinks ?? []
+  const upcomingHours = getUpcomingExceptionalHours(exceptionalHours)
 
   return (
     <footer className="bg-ink text-cream">
@@ -57,6 +64,22 @@ export default function SiteFooter({ lang, siteConfig, locations }: Props) {
               </dl>
             ))}
           </div>
+
+          {upcomingHours.length > 0 && (
+            // Business-wide, so it sits once here rather than per location.
+            <div className="mt-8 space-y-2 border-t border-cream/10 pt-6 text-sm text-cream/75">
+              <h3 className={LABEL}>{t.exceptionalHours.heading}</h3>
+              <ul className="space-y-1">
+                {upcomingHours.map((hour) => (
+                  <li key={hour.id}>
+                    {formatExceptionalHourDate(hour, lang)}:{' '}
+                    {isExceptionalHourClosed(hour) ? t.exceptionalHours.closed : `${hour.opensAt} - ${hour.closesAt}`}
+                    {hour.note ? ` (${hour.note})` : ''}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:col-span-3">

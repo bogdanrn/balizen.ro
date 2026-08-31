@@ -1,9 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-import { getSeedPayload, isRemote, LEGACY_DIR, log, OUT_DIR } from './lib/context'
+import { getSeedPayload, LEGACY_DIR, log, OUT_DIR } from './lib/context'
 import { seedGlobals, seedSubscriptions, setImageMap } from './lib/seed-globals'
 
-// Imports the legacy JSON content (ro + en) into D1 via the Payload local API.
+// Imports the legacy JSON content (ro + en) into Postgres via the Payload local API.
 // Run 1-images.ts first: image references resolve through out/image-map.json.
 
 const readJson = (rel: string) => JSON.parse(fs.readFileSync(path.join(LEGACY_DIR, rel), 'utf8'))
@@ -225,7 +225,7 @@ async function main() {
     }
   }
 
-  log(`content seed complete. remote=${isRemote}`)
+  log(`content seed complete`)
   process.exit(0)
 }
 

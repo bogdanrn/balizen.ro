@@ -1,4 +1,4 @@
-import { getSeedPayload, isRemote } from './lib/context'
+import { getSeedPayload } from './lib/context'
 
 // Diagnostic: compare ro vs en array row counts on both globals.
 async function main() {
@@ -15,7 +15,6 @@ async function main() {
     console.log(`${slug} ro:`, JSON.stringify(count(ro as unknown as Record<string, unknown>)))
     console.log(`${slug} en:`, JSON.stringify(count(en as unknown as Record<string, unknown>)))
   }
-  console.log('remote =', isRemote)
   process.exit(0)
 }
 

@@ -1,7 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import sharp from 'sharp'
-import { getCloudflareEnv, getSeedPayload, isRemote, LEGACY_DIR, log, OUT_DIR } from './lib/context'
+import { PutObjectCommand } from '@aws-sdk/client-s3'
+import { getBucketClient, getSeedPayload, LEGACY_DIR, log, OUT_DIR } from './lib/context'
 
 // Migrates every image from the legacy Astro site into R2 + media docs.
 // Generates 640/1280/1920w webp variants (sharp, dev-time only) and stores
@@ -14,7 +15,7 @@ type Variant = { key: string; width: number; height: number }
 
 async function main() {
   const payload = await getSeedPayload()
-  const env = await getCloudflareEnv()
+  const { client, bucket } = await getBucketClient()
 
   const files = IMAGE_DIRS.flatMap((dir) =>
     fs
@@ -43,7 +44,14 @@ async function main() {
           if (w >= meta.width) continue
           const key = `${stem}-${w}.webp`
           const buffer = await sharp(filePath).resize({ width: w }).webp({ quality: 82 }).toBuffer()
-          await env.R2.put(key, buffer, { httpMetadata: { contentType: 'image/webp' } })
+          await client.send(
+            new PutObjectCommand({
+              Bucket: bucket,
+              Key: key,
+              Body: buffer,
+              ContentType: 'image/webp',
+            }),
+          )
           variants.push({ key, width: w, height: Math.round((meta.height * w) / meta.width) })
         }
       }
@@ -62,9 +70,9 @@ async function main() {
 
   fs.mkdirSync(OUT_DIR, { recursive: true })
   fs.writeFileSync(path.join(OUT_DIR, 'image-map.json'), JSON.stringify(imageMap, null, 2))
-  log(`done. ${Object.keys(imageMap).length} media docs. remote=${isRemote}`)
+  log(`done. ${Object.keys(imageMap).length} media docs.`)
 
-  // getPlatformProxy keeps the process alive; force-exit
+  // the postgres pool keeps the process alive; force-exit
   process.exit(0)
 }
 

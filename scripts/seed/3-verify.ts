@@ -1,4 +1,4 @@
-import { getSeedPayload, isRemote, log } from './lib/context'
+import { getSeedPayload, log } from './lib/context'
 
 // Sanity checks after seeding: doc counts per collection and media URL shape.
 async function main() {
@@ -12,7 +12,7 @@ async function main() {
 
   const media = await payload.find({ collection: 'media', limit: 5 })
   for (const doc of media.docs) {
-    if (!String(doc.url).startsWith('https://cdn.balizen.ro/')) {
+    if (!String(doc.url).startsWith('/api/media/file/')) {
       throw new Error(`media ${doc.id} has unexpected url: ${doc.url}`)
     }
   }
@@ -24,7 +24,7 @@ async function main() {
   if (!homepage.heroTitle || !siteConfig.phone) throw new Error('globals look empty')
   log('globals OK')
 
-  log(`verify complete. remote=${isRemote}`)
+  log(`verify complete`)
   process.exit(0)
 }
 

@@ -12,6 +12,11 @@ export const getSiteConfig = cache(async (locale: Lang) => {
   return payload.findGlobal({ slug: 'site-config', locale, fallbackLocale: 'ro' })
 })
 
+export const getAnnouncement = cache(async (locale: Lang) => {
+  const payload = await getPayloadClient()
+  return payload.findGlobal({ slug: 'announcement', locale, fallbackLocale: 'ro' })
+})
+
 export const getHomepage = cache(async (locale: Lang) => {
   const payload = await getPayloadClient()
   return payload.findGlobal({ slug: 'homepage', locale, fallbackLocale: 'ro' })

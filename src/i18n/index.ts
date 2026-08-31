@@ -19,8 +19,14 @@ export const translations = {
       workingHours: 'Program de lucru',
       contact: 'Contact',
       openInGoogleMaps: 'Deschide în Google Maps',
+      openInWaze: 'Deschide în Waze',
+      openInAppleMaps: 'Deschide în Apple Maps',
       mapTitle: 'Harta',
       emailLabel: 'Email',
+    },
+    exceptionalHours: {
+      heading: 'Program excepțional',
+      closed: 'Închis',
     },
     services: {
       tagline: 'Servicii',
@@ -101,8 +107,14 @@ export const translations = {
       workingHours: 'Working Hours',
       contact: 'Contact',
       openInGoogleMaps: 'Open in Google Maps',
+      openInWaze: 'Open in Waze',
+      openInAppleMaps: 'Open in Apple Maps',
       mapTitle: 'Map',
       emailLabel: 'Email',
+    },
+    exceptionalHours: {
+      heading: 'Exceptional Hours',
+      closed: 'Closed',
     },
     services: {
       tagline: 'Services',

@@ -1,5 +1,10 @@
 import { getTranslations, type Lang } from '@/i18n'
-import type { Homepage, Location, SiteConfig } from '@/payload-types'
+import {
+  formatExceptionalHourDate,
+  getUpcomingExceptionalHours,
+  isExceptionalHourClosed,
+} from '@/lib/exceptionalHours'
+import type { ExceptionalHour, Homepage, Location, SiteConfig } from '@/payload-types'
 
 import Icon from '../Icon'
 import SectionEyebrow from '../SectionEyebrow'
@@ -9,13 +14,15 @@ type Props = {
   homepage: Homepage
   locations: Location[]
   siteConfig: SiteConfig
+  exceptionalHours: ExceptionalHour[]
 }
 
 // White band closing the page. The social link cards come from
 // homepage.socialLinks and keep the legacy "social-media" anchor on the grid.
-export default function LocationSection({ lang, homepage, locations }: Props) {
+export default function LocationSection({ lang, homepage, locations, exceptionalHours }: Props) {
   const t = getTranslations(lang)
   const socialLinks = homepage.socialLinks ?? []
+  const upcomingHours = getUpcomingExceptionalHours(exceptionalHours)
 
   return (
     <section id="locatie" className="bg-white">
@@ -57,6 +64,33 @@ export default function LocationSection({ lang, homepage, locations }: Props) {
             ))}
           </div>
         ) : null}
+
+        {upcomingHours.length > 0 && (
+          // One callout for the whole business (exceptions have no per-location
+          // relation), placed before the location cards, not repeated per card.
+          <div className="mx-auto mt-14 max-w-3xl rounded-2xl bg-cream p-6 ring-1 ring-ink/10 sm:p-8">
+            <div className="flex items-start gap-4">
+              <span className="mt-0.5 shrink-0 text-muted-warm">
+                <Icon name="clock" className="h-5 w-5" />
+              </span>
+              <div>
+                <h3 className="font-heading text-lg font-semibold text-ink">{t.exceptionalHours.heading}</h3>
+                <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-warm">
+                  {upcomingHours.map((hour) => (
+                    <li key={hour.id}>
+                      <span className="font-medium text-ink">{formatExceptionalHourDate(hour, lang)}</span>
+                      {': '}
+                      {isExceptionalHourClosed(hour)
+                        ? t.exceptionalHours.closed
+                        : `${hour.opensAt} - ${hour.closesAt}`}
+                      {hour.note ? ` (${hour.note})` : ''}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="mt-16 space-y-16">
           {locations.map((loc) => {

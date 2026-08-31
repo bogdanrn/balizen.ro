@@ -2,10 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 import { CONTENT_GROUP } from './shared/groups'
 
-// Uploaded images stored in R2, served from the cdn.balizen.ro public hostname.
-// `variants` holds pre-sized webp renditions generated at seed time
-// (sharp is unavailable on Workers, so runtime uploads keep variants empty and
-// the site renders the original).
+// Uploaded images stored in R2 (S3 API) and served back through Payload's own
+// /api/media/file route on this domain. `variants` holds pre-sized webp
+// renditions generated at seed time; images uploaded through the admin keep
+// variants empty and the site renders the original.
 export const Media: CollectionConfig = {
   slug: 'media',
   defaultSort: '-updatedAt',
@@ -52,7 +52,9 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    // These are not supported on Workers yet due to lack of sharp
+    // Deliberate: staff resize before uploading (see the description above),
+    // so the admin does not offer cropping. sharp is available on this host,
+    // so flipping these on is a config change, nothing more.
     crop: false,
     focalPoint: false,
     mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],

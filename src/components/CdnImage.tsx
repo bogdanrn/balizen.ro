@@ -11,8 +11,10 @@ type Props = {
 }
 
 // Plain <img> with a srcset built from the pre-sized webp variants stored on
-// the media doc (next/image optimization is unavailable on Workers). Media
-// uploaded at runtime has no variants and renders the original.
+// the media doc. next/image would work now that the site runs on Node, but the
+// variants already cover the sizes the layout asks for, so the extra optimizer
+// hop buys nothing. Media uploaded at runtime has no variants and renders the
+// original.
 export default function CdnImage({ media, alt, sizes, className, eager = false, widths }: Props) {
   if (!media || typeof media === 'number') return null
 

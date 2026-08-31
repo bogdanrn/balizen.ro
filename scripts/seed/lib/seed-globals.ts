@@ -63,9 +63,12 @@ export async function seedGlobals(payload: Payload, log: (...args: any[]) => voi
         links: c.links.map((l: any) => ({ text: l.text, href: l.href, className: l.class })),
       })),
       socialLinks: siteRo.footer.socialLinks.map((s: any) => ({ label: s.label, icon: stripIcon(s.icon), href: s.href })),
-      announcementEnabled: false,
     },
   })
+
+  // The announcement strip ships off: staff turn it on when they have
+  // something temporary to say.
+  await payload.updateGlobal({ slug: 'announcement', locale: 'ro', data: { enabled: false } })
   const scRo = await payload.findGlobal({ slug: 'site-config', locale: 'ro' })
   await payload.updateGlobal({
     slug: 'site-config',

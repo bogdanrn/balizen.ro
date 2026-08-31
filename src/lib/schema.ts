@@ -1,6 +1,7 @@
-import type { Faq, Location, Review, Service, ServiceCategory, SiteConfig } from '@/payload-types'
+import type { ExceptionalHour, Faq, Location, Review, Service, ServiceCategory, SiteConfig } from '@/payload-types'
 
-import { CDN_BASE } from './cdn'
+import { absoluteAssetUrl } from './cdn'
+import { exceptionalHourDateKey, getUpcomingExceptionalHours, isExceptionalHourClosed } from './exceptionalHours'
 
 const SITE_URL = 'https://balizen.ro'
 const SOCIAL_SAME_AS = [
@@ -16,13 +17,14 @@ type Args = {
   reviews: Review[]
   faqs: Faq[]
   locations: Location[]
+  exceptionalHours: ExceptionalHour[]
 }
 
 // Builds the six JSON-LD blocks the legacy SchemaMarkup.astro emitted, now
 // sourced from the CMS. Address/geo/opening hours come from the primary
 // location; aggregate rating is computed per request (legacy froze it at
 // build time). Fixes the legacy broken /images/logo.png and balizen_1.jpg refs.
-export function buildJsonLd({ lang, siteConfig, categories, reviews, faqs, locations }: Args) {
+export function buildJsonLd({ lang, siteConfig, categories, reviews, faqs, locations, exceptionalHours }: Args) {
   const primary = locations.find((l) => l.primary) ?? locations[0]
   const allServices = categories.flatMap((c) => c.services)
 
@@ -41,6 +43,20 @@ export function buildJsonLd({ lang, siteConfig, categories, reviews, faqs, locat
     },
   ]
 
+  // Date-specific overrides (closures, reduced hours), business-wide rather
+  // than per location. Only upcoming ones are ever published.
+  const specialOpeningHoursSpecification = getUpcomingExceptionalHours(exceptionalHours).map((hour) => {
+    const date = exceptionalHourDateKey(hour)
+    const closed = isExceptionalHourClosed(hour)
+    return {
+      '@type': 'OpeningHoursSpecification',
+      validFrom: date,
+      validThrough: date,
+      opens: closed ? '00:00' : hour.opensAt,
+      closes: closed ? '00:00' : hour.closesAt,
+    }
+  })
+
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'HealthAndBeautyBusiness',
@@ -51,9 +67,9 @@ export function buildJsonLd({ lang, siteConfig, categories, reviews, faqs, locat
     description: siteConfig.description,
     url: SITE_URL,
     logo: `${SITE_URL}/images/balizen_logo_color.png`,
-    // JSON-LD must carry absolute production URLs in every environment, so this
-    // deliberately uses CDN_BASE directly rather than the env-aware assetUrl().
-    image: [`${SITE_URL}/images/balizen_50.jpg`, `${CDN_BASE}/balizen_1.jpg`],
+    // JSON-LD must carry absolute production URLs in every environment, hence
+    // absoluteAssetUrl() rather than the relative assetUrl().
+    image: [`${SITE_URL}/images/balizen_50.jpg`, absoluteAssetUrl('balizen_1.jpg')],
     telephone: siteConfig.phone,
     email: siteConfig.email,
     priceRange: '$$',
@@ -72,6 +88,9 @@ export function buildJsonLd({ lang, siteConfig, categories, reviews, faqs, locat
         ? { '@type': 'GeoCoordinates', latitude: primary.geoLat, longitude: primary.geoLng }
         : undefined,
     openingHoursSpecification,
+    specialOpeningHoursSpecification: specialOpeningHoursSpecification.length
+      ? specialOpeningHoursSpecification
+      : undefined,
     aggregateRating: avgRating
       ? {
           '@type': 'AggregateRating',

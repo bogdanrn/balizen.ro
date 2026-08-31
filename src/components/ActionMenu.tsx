@@ -6,14 +6,25 @@ import { trackGtag } from '@/lib/analytics'
 
 import Icon from './Icon'
 
+export type ActionMenuSubAction = {
+  key: string
+  href: string
+  icon: string
+  /** Icon-only button: this is its only accessible name. */
+  ariaLabel: string
+  target?: string | null
+  /** js-* hook so SiteInteractions' fbq delegation still fires, e.g. js-location-button. */
+  hookClass?: string
+}
+
 export type ActionMenuOption = {
   key: string
   label: string
   /**
    * External URL, tel:, or an in-page fragment (#servicii). Fragments stay plain
    * anchors on purpose: a Next <Link> to "/#servicii" triggers a router
-   * navigation, which on these force-dynamic pages refetches the page from D1
-   * instead of jumping to the section.
+   * navigation, which on these force-dynamic pages refetches the whole page
+   * from the database instead of jumping to the section.
    */
   href: string
   icon?: string | null
@@ -23,6 +34,12 @@ export type ActionMenuOption = {
   variant?: 'primary' | 'outline'
   /** Accessible name when the visible label is not enough (e.g. "Call"). */
   ariaLabel?: string
+  /**
+   * Renders this option as a combined control: the option itself plus a
+   * right-hand strip of icon-only buttons (e.g. Waze/Apple Maps next to a
+   * Google Maps link for the same place).
+   */
+  actions?: ActionMenuSubAction[]
 }
 
 type Props = {
@@ -122,6 +139,43 @@ export default function ActionMenu({
       .filter(Boolean)
       .join(' ')
 
+  // A split row reads as one control: the wrapper owns the pill shape and
+  // clips both segments into it, so the main link keeps optionClass's colors
+  // but none of its own rounding.
+  const splitWrapClass = (option: ActionMenuOption) =>
+    [
+      'flex w-full items-stretch overflow-hidden rounded-full',
+      option.variant === 'primary' ? 'border border-primary bg-primary' : 'ring-1 ring-inset ring-ink/20',
+    ].join(' ')
+
+  // Same focus color as .btn's own focus-visible ring, but inset: the
+  // wrapper's overflow-hidden (needed to clip the pill's outer corners) would
+  // otherwise cut off the usual outline-based focus-ring, since that draws
+  // outside the element and both segments sit flush against the wrapper edge.
+  const SPLIT_FOCUS_CLASS = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/70'
+
+  const splitMainClass = (option: ActionMenuOption) =>
+    [
+      // min-w-0 lets the flex item shrink past its content width, which is what
+      // makes the label's truncate actually clip instead of wrapping to a
+      // second line next to the icon buttons.
+      'inline-flex min-h-11 min-w-0 flex-1 items-center gap-3 px-5 py-3 text-sm font-semibold uppercase tracking-wide text-ink transition duration-200 ease-in',
+      SPLIT_FOCUS_CLASS,
+      option.variant === 'primary' ? 'hover:bg-[#F59E5E]' : 'hover:bg-ink hover:text-cream',
+      option.hookClass,
+    ]
+      .filter(Boolean)
+      .join(' ')
+
+  const splitActionClass = (action: ActionMenuSubAction) =>
+    [
+      'inline-flex h-11 w-11 shrink-0 items-center justify-center border-l border-ink/15 text-ink transition-colors hover:bg-ink hover:text-cream',
+      SPLIT_FOCUS_CLASS,
+      action.hookClass,
+    ]
+      .filter(Boolean)
+      .join(' ')
+
   return (
     <div ref={wrapRef} className={wrapClassName}>
       {open && (
@@ -135,22 +189,52 @@ export default function ActionMenu({
             className="origin-bottom scale-95 rounded-3xl bg-cream p-3 opacity-0 ring-1 ring-ink/15 transition duration-150 ease-out motion-reduce:transition-none"
           >
             <div className="flex flex-col gap-2">
-              {options.map((option) => (
-                <a
-                  key={option.key}
-                  href={option.href}
-                  target={option.target ?? undefined}
-                  rel={option.target === '_blank' ? 'noopener' : undefined}
-                  className={optionClass(option)}
-                  aria-label={option.ariaLabel}
-                  // Never preventDefault here: the menu closes and the anchor's
-                  // own navigation (external URL, tel:, or in-page hash) proceeds.
-                  onClick={close}
-                >
-                  {option.icon && <Icon name={option.icon} className="h-5 w-5" />}
-                  <span>{option.label}</span>
-                </a>
-              ))}
+              {/* Never preventDefault on any of these: the menu closes and the
+                  anchor's own navigation (external URL, tel:, or in-page hash)
+                  proceeds. */}
+              {options.map((option) =>
+                option.actions?.length ? (
+                  <div key={option.key} className={splitWrapClass(option)}>
+                    <a
+                      href={option.href}
+                      target={option.target ?? undefined}
+                      rel={option.target === '_blank' ? 'noopener' : undefined}
+                      className={splitMainClass(option)}
+                      aria-label={option.ariaLabel}
+                      onClick={close}
+                    >
+                      {option.icon && <Icon name={option.icon} className="h-5 w-5 shrink-0" />}
+                      <span className="truncate">{option.label}</span>
+                    </a>
+                    {option.actions.map((action) => (
+                      <a
+                        key={action.key}
+                        href={action.href}
+                        target={action.target ?? undefined}
+                        rel={action.target === '_blank' ? 'noopener' : undefined}
+                        className={splitActionClass(action)}
+                        aria-label={action.ariaLabel}
+                        onClick={close}
+                      >
+                        <Icon name={action.icon} className="h-5 w-5" />
+                      </a>
+                    ))}
+                  </div>
+                ) : (
+                  <a
+                    key={option.key}
+                    href={option.href}
+                    target={option.target ?? undefined}
+                    rel={option.target === '_blank' ? 'noopener' : undefined}
+                    className={optionClass(option)}
+                    aria-label={option.ariaLabel}
+                    onClick={close}
+                  >
+                    {option.icon && <Icon name={option.icon} className="h-5 w-5" />}
+                    <span>{option.label}</span>
+                  </a>
+                ),
+              )}
             </div>
           </div>
         </div>

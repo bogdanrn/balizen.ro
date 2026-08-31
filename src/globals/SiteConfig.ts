@@ -3,16 +3,16 @@ import type { GlobalConfig } from 'payload'
 import { SETTINGS_GROUP } from '../collections/shared/groups'
 
 // The business's contact facts and site-wide chrome: header nav, footer link
-// columns, social links, and the Announcement Banner (CONTEXT.md). Locations
-// live in their own collection; the footer reads from it.
+// columns, and social links. The announcement strip has its own global, and
+// locations live in their own collection; the footer reads from it.
 export const SiteConfig: GlobalConfig = {
   slug: 'site-config',
   label: { en: 'Site settings', ro: 'Setări site' },
   admin: {
     group: SETTINGS_GROUP,
     description: {
-      en: 'Contact details, the links in the header and footer, and the announcement banner. These appear on every page.',
-      ro: 'Datele de contact, linkurile din header și footer și bannerul de anunțuri. Apar pe fiecare pagină.',
+      en: 'Contact details and the links in the header and footer. These appear on every page.',
+      ro: 'Datele de contact și linkurile din header și footer. Apar pe fiecare pagină.',
     },
   },
   access: {
@@ -386,52 +386,6 @@ export const SiteConfig: GlobalConfig = {
                   ],
                 },
               ],
-            },
-          ],
-        },
-        {
-          label: { en: 'Announcement Banner', ro: 'Banner de anunț' },
-          description: {
-            en: 'A strip at the very top of the site for temporary messages: holiday closures, promotions. Visitors can dismiss it.',
-            ro: 'O bandă în capul site-ului pentru mesaje temporare: zile libere, promoții. Vizitatorii o pot închide.',
-          },
-          fields: [
-            {
-              name: 'announcementEnabled',
-              type: 'checkbox',
-              defaultValue: false,
-              label: { en: 'Show the banner', ro: 'Afișează bannerul' },
-              admin: {
-                description: {
-                  en: 'Untick to hide the banner without deleting its text.',
-                  ro: 'Debifează pentru a ascunde bannerul fără a-i șterge textul.',
-                },
-              },
-            },
-            {
-              name: 'announcementText',
-              type: 'text',
-              localized: true,
-              label: { en: 'Message', ro: 'Mesaj' },
-              admin: {
-                condition: (_, data) => Boolean(data?.announcementEnabled),
-                description: {
-                  en: 'Keep it to one short sentence.',
-                  ro: 'Păstrează-l la o singură propoziție scurtă.',
-                },
-              },
-            },
-            {
-              name: 'announcementLink',
-              type: 'text',
-              label: { en: 'Link', ro: 'Link' },
-              admin: {
-                condition: (_, data) => Boolean(data?.announcementEnabled),
-                description: {
-                  en: 'Optional. If filled in, the whole banner becomes clickable.',
-                  ro: 'Opțional. Dacă e completat, tot bannerul devine clicabil.',
-                },
-              },
             },
           ],
         },

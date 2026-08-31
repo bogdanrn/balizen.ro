@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 
 import { getTranslations, type Lang } from '@/i18n'
+import { getAppleMapsUrl, getWazeUrl } from '@/lib/locationLinks'
+import type { Location } from '@/payload-types'
 
 import ActionMenu, { type ActionMenuOption } from './ActionMenu'
 
@@ -16,6 +18,7 @@ type Props = {
   whatsappUrl: string
   phone: string
   phoneHref: string
+  locations: Location[]
 }
 
 // The hero's primary CTA is a disclosure, not a link: it opens the four ways to
@@ -48,6 +51,7 @@ export default function HeroActionMenu({
   whatsappUrl,
   phone,
   phoneHref,
+  locations,
 }: Props) {
   const t = getTranslations(lang)
 
@@ -78,6 +82,42 @@ export default function HeroActionMenu({
     return () => observer.disconnect()
   }, [])
 
+  // One combined row per studio location: Google Maps is the main tap target
+  // (same js-location-button hook the legacy "Open in Maps" buttons use, so
+  // fbq FindLocation still fires), Waze and Apple Maps ride along as icon
+  // buttons so visitors can pick their own navigation app without a second
+  // screen. mapsUrl is required on the collection, but skip defensively
+  // rather than emit a broken link.
+  const locationOptions: ActionMenuOption[] = locations
+    .filter((location) => location.mapsUrl)
+    .map((location) => ({
+      key: `location-${location.id}`,
+      label: location.name,
+      href: location.mapsUrl,
+      icon: 'map',
+      target: '_blank',
+      hookClass: 'js-location-button',
+      ariaLabel: `${t.location.openInGoogleMaps}: ${location.name}`,
+      actions: [
+        {
+          key: `location-${location.id}-waze`,
+          href: getWazeUrl(location),
+          icon: 'brand-waze',
+          ariaLabel: `${t.location.openInWaze}: ${location.name}`,
+          target: '_blank',
+          hookClass: 'js-location-button',
+        },
+        {
+          key: `location-${location.id}-apple`,
+          href: getAppleMapsUrl(location),
+          icon: 'brand-apple',
+          ariaLabel: `${t.location.openInAppleMaps}: ${location.name}`,
+          target: '_blank',
+          hookClass: 'js-location-button',
+        },
+      ],
+    }))
+
   const options: ActionMenuOption[] = [
     {
       key: 'book',
@@ -103,6 +143,7 @@ export default function HeroActionMenu({
       icon: 'phone',
       hookClass: 'js-contact-button',
     },
+    ...locationOptions,
     {
       key: 'services',
       label: t.services.listLabel,

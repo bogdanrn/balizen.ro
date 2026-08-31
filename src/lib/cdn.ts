@@ -1,20 +1,16 @@
 // URL helpers for uploaded media.
 //
-// In production the R2 bucket is exposed on the cdn.balizen.ro custom hostname
-// (payload.config.ts wires the same base into storage-r2's generateFileURL).
-// That hostname only attaches at cutover, so in dev/preview nothing resolves
-// there — Payload's own file route serves both originals and the pre-sized
-// webp variant keys, so every asset URL has to go through assetUrl().
-export const CDN_BASE = 'https://cdn.balizen.ro'
+// Every asset is served from this domain through Payload's own file route,
+// which streams the object straight out of the R2 bucket by key (see the
+// s3Storage block in payload.config.ts). Variant keys work the same way even
+// though they have no media doc. Cloudflare caches the route at the edge
+// (Cache-Control set in next.config.ts), so there is no separate CDN hostname.
+const MEDIA_ROUTE = '/api/media/file'
 
-// Payload's local file route. Keys are the stored filenames, variants included
-// (e.g. "4_maini_1-640.webp").
-const LOCAL_MEDIA_ROUTE = '/api/media/file'
+export const assetUrl = (key: string): string => `${MEDIA_ROUTE}/${key}`
 
-const useCdn = process.env.NODE_ENV === 'production'
-
-export const assetUrl = (key: string): string =>
-  useCdn ? `${CDN_BASE}/${key}` : `${LOCAL_MEDIA_ROUTE}/${key}`
+// Absolute form, for JSON-LD and other places that must not emit a relative URL.
+export const absoluteAssetUrl = (key: string): string => `https://balizen.ro${assetUrl(key)}`
 
 export type MediaVariant = { key: string; width: number; height: number }
 
@@ -32,8 +28,8 @@ export function mediaVariants(media: CdnMedia): MediaVariant[] {
 }
 
 export function mediaUrl(media: CdnMedia): string {
-  // Payload already resolves `url` per environment (CDN in prod via
-  // generateFileURL, the local route in dev); only synthesize when it is absent.
+  // Payload already resolves `url` to the file route; only synthesize when
+  // it is absent.
   if (media.url) return media.url
   return media.filename ? assetUrl(media.filename) : ''
 }

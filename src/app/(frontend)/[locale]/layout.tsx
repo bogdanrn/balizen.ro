@@ -14,7 +14,14 @@ import SiteInteractions from '@/components/SiteInteractions'
 import SiteFooter from '@/components/layout/SiteFooter'
 import SiteHeader from '@/components/layout/SiteHeader'
 import { getTranslations, type Lang } from '@/i18n'
-import { getLocations, getServicesByCategory, getSiteConfig, isNewService } from '@/lib/payload'
+import {
+  getAnnouncement,
+  getExceptionalHours,
+  getLocations,
+  getServicesByCategory,
+  getSiteConfig,
+  isNewService,
+} from '@/lib/payload'
 
 const sourceSans = localFont({
   src: [
@@ -66,10 +73,12 @@ export default async function LocaleLayout({
   const lang = locale as Lang
   const t = getTranslations(lang)
 
-  const [siteConfig, locations, categories] = await Promise.all([
+  const [siteConfig, announcement, locations, categories, exceptionalHours] = await Promise.all([
     getSiteConfig(lang),
+    getAnnouncement(lang),
     getLocations(lang),
     getServicesByCategory(lang),
+    getExceptionalHours(lang),
   ])
   const hasNewServices = categories.some((c) => c.services.some((s) => isNewService(s.modifiedDate)))
 
@@ -92,12 +101,12 @@ export default async function LocaleLayout({
         >
           {t.skipToContent}
         </a>
-        <AnnouncementBanner lang={lang} siteConfig={siteConfig} />
+        <AnnouncementBanner lang={lang} announcement={announcement} />
         <SiteHeader lang={lang} siteConfig={siteConfig} hasNewServices={hasNewServices} />
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <SiteFooter lang={lang} siteConfig={siteConfig} locations={locations} />
+        <SiteFooter lang={lang} siteConfig={siteConfig} locations={locations} exceptionalHours={exceptionalHours} />
         <SiteInteractions lang={lang} bookingUrl={siteConfig.bookingUrl} />
         <HeaderDrawer />
         <ConsentBanner lang={lang} />

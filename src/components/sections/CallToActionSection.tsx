@@ -1,22 +1,22 @@
 import { getTranslations, type Lang } from '@/i18n'
-import { ctaClass } from '@/lib/ui'
-import type { Homepage } from '@/payload-types'
+import type { Homepage, SiteConfig } from '@/payload-types'
 
-import Icon from '../Icon'
-import LocalizedLink from '../LocalizedLink'
+import BookNowMenu from '../BookNowMenu'
 import SectionEyebrow from '../SectionEyebrow'
 
 type Props = {
   lang: Lang
   homepage: Homepage
+  siteConfig: SiteConfig
 }
 
 // The peach band: the loudest brand moment on the page, so it stays plain
-// colour with ink type — no dot pattern, no gradient. The CTA is forced to the
-// ink pill because a peach primary would vanish into the background.
-export default function CallToActionSection({ lang, homepage }: Props) {
+// colour with ink type — no dot pattern, no gradient. The book-now control is
+// forced to the ink pill (triggerVariant="secondary") because a peach primary
+// would vanish into the background; the panel opens upward, away from the
+// footer below.
+export default function CallToActionSection({ lang, homepage, siteConfig }: Props) {
   const t = getTranslations(lang)
-  const cta = homepage.ctaButton
 
   return (
     <section id="programare" className="bg-primary text-ink">
@@ -27,23 +27,20 @@ export default function CallToActionSection({ lang, homepage }: Props) {
           {homepage.ctaTitle}
         </h2>
 
-        <p className="mt-5 max-w-prose text-base leading-relaxed text-ink/75">{homepage.ctaSubtitle}</p>
+        <p className="mt-5 max-w-prose text-base leading-relaxed text-ink/75">
+          {homepage.ctaSubtitle}
+        </p>
 
         <div className="mt-10 w-full sm:w-auto">
-          <LocalizedLink
-            href={cta.href}
+          <BookNowMenu
             lang={lang}
-            className={ctaClass(cta, {
-              primary: 'btn-secondary',
-              secondary: 'btn border-none text-ink ring-1 ring-inset ring-ink/40 hover:bg-ink hover:text-cream',
-              extra: 'w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto',
-            })}
-            target={cta.target}
-            rel="noopener"
-          >
-            <Icon name={cta.icon ?? 'calendar'} className="h-5 w-5" />
-            <span>{cta.label}</span>
-          </LocalizedLink>
+            bookingUrl={siteConfig.bookingUrl}
+            whatsappUrl={siteConfig.whatsappUrl}
+            phone={siteConfig.phone}
+            phoneHref={siteConfig.phoneHref}
+            triggerVariant="secondary"
+            analyticsLocation="cta"
+          />
         </div>
       </div>
     </section>

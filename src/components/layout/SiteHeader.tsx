@@ -2,7 +2,7 @@ import { getTranslations, type Lang } from '@/i18n'
 import { hookClasses } from '@/lib/ui'
 import type { SiteConfig } from '@/payload-types'
 
-import Icon from '../Icon'
+import BookNowMenu from '../BookNowMenu'
 import LanguageSwitcherLink from '../LanguageSwitcherLink'
 import LocalizedLink from '../LocalizedLink'
 import Logo from './Logo'
@@ -14,14 +14,24 @@ type Props = {
 }
 
 // Fresh mobile-first header. The drawer toggle/drawer keep the data-*
-// hooks (HeaderDrawer client component wires the behavior); the legacy
-// primaryAction hook class "js-programari-button" stays hardcoded here.
+// hooks (HeaderDrawer client component wires the behavior). Every CTA is the
+// shared book-now control: the left segment fires WhatsApp directly (with the
+// js-contact-button hook), the chevron opens the contact picker below the
+// bar. Mobile uses the compact icon-only variant next to the hamburger.
 // The bar carries backdrop-blur (not the <header> element) so the fixed
 // drawer overlay positions against the viewport, not the header.
 export default function SiteHeader({ lang, siteConfig, hasNewServices }: Props) {
   const t = getTranslations(lang)
   const navLinks = siteConfig.headerLinks ?? []
-  const primaryAction = siteConfig.primaryAction
+
+  const bookNowProps = {
+    lang,
+    bookingUrl: siteConfig.bookingUrl,
+    whatsappUrl: siteConfig.whatsappUrl,
+    phone: siteConfig.phone,
+    phoneHref: siteConfig.phoneHref,
+    direction: 'down' as const,
+  }
 
   return (
     <header className="top-0 z-40 lg:sticky">
@@ -30,13 +40,13 @@ export default function SiteHeader({ lang, siteConfig, hasNewServices }: Props) 
           <Logo lang={lang} name={siteConfig.name} tagline={siteConfig.tagline} />
 
           <div className="flex items-center gap-2 lg:hidden">
-            <a
-              href={siteConfig.phoneHref}
-              className="js-contact-button inline-flex h-10 w-10 items-center justify-center rounded-full ring-1 ring-ink/15 text-ink transition hover:bg-cream"
-              aria-label={t.buttons.call}
-            >
-              <Icon name="phone" className="h-5 w-5" />
-            </a>
+            <BookNowMenu
+              {...bookNowProps}
+              analyticsLocation="header-mobile"
+              wrapClassName="relative"
+              triggerLabel={t.buttons.whatsapp}
+              triggerClassName="gap-2 px-5 py-3 text-sm font-semibold uppercase tracking-wide"
+            />
             <button
               className="inline-flex h-10 w-10 items-center justify-center rounded-full ring-1 ring-ink/15 text-ink transition hover:bg-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               type="button"
@@ -70,7 +80,10 @@ export default function SiteHeader({ lang, siteConfig, hasNewServices }: Props) 
             </button>
           </div>
 
-          <nav className="hidden flex-1 items-center justify-center gap-8 text-sm font-medium text-muted-warm lg:flex" data-nav-menu>
+          <nav
+            className="hidden flex-1 items-center justify-center gap-8 text-sm font-medium text-muted-warm lg:flex"
+            data-nav-menu
+          >
             {navLinks.map((link) => {
               const isServicesLink = link.href?.includes('servicii')
               return (
@@ -93,16 +106,7 @@ export default function SiteHeader({ lang, siteConfig, hasNewServices }: Props) 
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
-            {primaryAction && (
-              <LocalizedLink
-                href={primaryAction.href}
-                lang={lang}
-                className="btn-primary js-programari-button whitespace-nowrap px-5 py-2.5 text-sm"
-                rel="noopener"
-              >
-                {primaryAction.label}
-              </LocalizedLink>
-            )}
+            <BookNowMenu {...bookNowProps} analyticsLocation="header" />
             <LanguageSwitcherLink lang={lang} />
           </div>
         </div>
@@ -132,16 +136,11 @@ export default function SiteHeader({ lang, siteConfig, hasNewServices }: Props) 
           </nav>
 
           <div className="mt-auto flex flex-col items-stretch gap-4 pt-8">
-            {primaryAction && (
-              <LocalizedLink
-                href={primaryAction.href}
-                lang={lang}
-                className="btn-primary js-programari-button whitespace-nowrap"
-                rel="noopener"
-              >
-                {primaryAction.label}
-              </LocalizedLink>
-            )}
+            <BookNowMenu
+              {...bookNowProps}
+              analyticsLocation="drawer"
+              triggerClassName="w-full px-5 py-3 text-sm font-semibold uppercase tracking-wide"
+            />
             <div className="flex justify-center">
               <LanguageSwitcherLink lang={lang} />
             </div>

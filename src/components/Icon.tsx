@@ -11,6 +11,7 @@ import {
   IconCalendar,
   IconCertificate,
   IconCheck,
+  IconChevronDown,
   IconClock,
   IconGift,
   IconList,
@@ -50,6 +51,7 @@ const ICONS = {
   'arrow-right': IconArrowRight,
   'arrow-up-right': IconArrowUpRight,
   check: IconCheck,
+  'chevron-down': IconChevronDown,
   'menu-2': IconMenu2,
   x: IconX,
 } as const

@@ -21,7 +21,12 @@ const nextConfig: NextConfig = {
   // migration path), `pg-cloudflare` (an optional native-ish dep of `pg`),
   // and the MCP transport pair (`mcp-handler` + the MCP SDK), which reach for
   // Node's http/net at module load and monkey-patch global Request/Response.
-  serverExternalPackages: ['drizzle-kit', 'pg-cloudflare', 'mcp-handler', '@modelcontextprotocol/sdk'],
+  serverExternalPackages: [
+    'drizzle-kit',
+    'pg-cloudflare',
+    'mcp-handler',
+    '@modelcontextprotocol/sdk',
+  ],
 
   async headers() {
     return [

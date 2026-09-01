@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 
 import AboutSection from '@/components/sections/AboutSection'
 import CallToActionSection from '@/components/sections/CallToActionSection'
@@ -22,9 +21,7 @@ import {
 
 const SITE_URL = 'https://balizen.ro'
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params
-  const lang = (locale === 'en' ? 'en' : 'ro') as Lang
+export async function homeMetadata(lang: Lang): Promise<Metadata> {
   const [siteConfig, homepage] = await Promise.all([getSiteConfig(lang), getHomepage(lang)])
 
   const canonical = lang === 'en' ? `${SITE_URL}/en` : `${SITE_URL}/`
@@ -57,30 +54,37 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
-export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params
-  if (locale !== 'ro' && locale !== 'en') notFound()
-  const lang = locale as Lang
-
-  const [siteConfig, homepage, categories, subscriptions, reviews, locations, exceptionalHours] = await Promise.all([
-    getSiteConfig(lang),
-    getHomepage(lang),
-    getServicesByCategory(lang),
-    getSubscriptions(lang),
-    getReviews(),
-    getLocations(lang),
-    getExceptionalHours(lang),
-  ])
+export default async function HomePage({ lang }: { lang: Lang }) {
+  const [siteConfig, homepage, categories, subscriptions, reviews, locations, exceptionalHours] =
+    await Promise.all([
+      getSiteConfig(lang),
+      getHomepage(lang),
+      getServicesByCategory(lang),
+      getSubscriptions(lang),
+      getReviews(),
+      getLocations(lang),
+      getExceptionalHours(lang),
+    ])
 
   return (
     <>
       <HeroSection lang={lang} homepage={homepage} siteConfig={siteConfig} locations={locations} />
-      <AboutSection lang={lang} homepage={homepage} />
-      <ServicesSection lang={lang} homepage={homepage} categories={categories} siteConfig={siteConfig} />
-      <SubscriptionsSection lang={lang} homepage={homepage} subscriptions={subscriptions} siteConfig={siteConfig} />
-      <GiftCardSection lang={lang} homepage={homepage} />
+      <AboutSection lang={lang} homepage={homepage} siteConfig={siteConfig} />
+      <ServicesSection
+        lang={lang}
+        homepage={homepage}
+        categories={categories}
+        siteConfig={siteConfig}
+      />
+      <SubscriptionsSection
+        lang={lang}
+        homepage={homepage}
+        subscriptions={subscriptions}
+        siteConfig={siteConfig}
+      />
+      <GiftCardSection lang={lang} homepage={homepage} siteConfig={siteConfig} />
       <ReviewsSection lang={lang} reviews={reviews} siteConfig={siteConfig} />
-      <CallToActionSection lang={lang} homepage={homepage} />
+      <CallToActionSection lang={lang} homepage={homepage} siteConfig={siteConfig} />
       <LocationSection
         lang={lang}
         homepage={homepage}

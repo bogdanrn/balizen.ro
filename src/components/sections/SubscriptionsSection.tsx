@@ -23,23 +23,17 @@ export default function SubscriptionsSection({ lang, homepage, subscriptions, si
   const disclaimer = (homepage.subscriptionDisclaimer ?? []).map((item) => item.line)
 
   // Subscriptions convert through a conversation, not the booking site, so the
-  // CMS action opens a two-option contact picker instead of linking out. Both
-  // options keep js-contact-button so the fbq Contact event still fires.
-  const contactOptions: ActionMenuOption[] = [
+  // action is a direct WhatsApp button (js-contact-button keeps the fbq
+  // Contact event firing). It goes through ActionMenu's single-option
+  // segmented mode — same wiring as the pickers, so adding a second option
+  // later upgrades it to a full picker with a chevron for free.
+  const whatsappOptions: ActionMenuOption[] = [
     {
       key: 'whatsapp',
       label: t.buttons.whatsapp,
       href: siteConfig.whatsappUrl,
       icon: 'brand-whatsapp',
       target: '_blank',
-      hookClass: 'js-contact-button',
-      variant: 'primary',
-    },
-    {
-      key: 'phone',
-      label: siteConfig.phone,
-      href: siteConfig.phoneHref,
-      icon: 'phone',
       hookClass: 'js-contact-button',
     },
   ]
@@ -74,12 +68,17 @@ export default function SubscriptionsSection({ lang, homepage, subscriptions, si
                     {subscription.title}
                   </h3>
 
-                  <p className="mt-4 max-w-prose text-sm leading-relaxed text-muted-warm">{subscription.summary}</p>
+                  <p className="mt-4 max-w-prose text-sm leading-relaxed text-muted-warm">
+                    {subscription.summary}
+                  </p>
 
                   <ul className="mt-6 space-y-3 text-sm text-ink">
                     {subscription.highlights.map((highlight, highlightIndex) => (
                       <li key={highlight.id ?? highlightIndex} className="flex items-start gap-3">
-                        <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                        <span
+                          aria-hidden="true"
+                          className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
+                        />
                         <span className="leading-relaxed">{highlight.text}</span>
                       </li>
                     ))}
@@ -87,15 +86,19 @@ export default function SubscriptionsSection({ lang, homepage, subscriptions, si
 
                   <div className="mt-8 flex">
                     <ActionMenu
-                      options={contactOptions}
-                      analyticsLocation="subscription"
-                      triggerLabel={action.label}
+                      options={whatsappOptions}
+                      segmented
+                      triggerLabel={t.buttons.orderSubscription}
+                      triggerIcon="brand-whatsapp"
                       // Variant only: the CMS js-programari-button hook must NOT
-                      // ride on a disclosure trigger, or the booking consent
-                      // modal would open instead of the contact picker.
+                      // ride on this trigger, or the booking consent modal
+                      // would open instead of the WhatsApp conversation.
                       triggerClassName={ctaClass(
                         { variant: action.variant },
-                        { extra: 'w-full text-sm font-semibold uppercase tracking-wide sm:w-auto' },
+                        {
+                          extra:
+                            'w-full gap-2 px-5 py-3 text-sm font-semibold uppercase tracking-wide sm:w-auto',
+                        },
                       )}
                     />
                   </div>

@@ -52,7 +52,7 @@ If a file is ever deleted and re-uploaded under the exact same name, purge that 
 
 ## MCP (talk to the CMS from Claude Code)
 
-The `/api/mcp` endpoint lets an MCP client manage content conversationally: services, categories, subscriptions, reviews, FAQs, locations, exceptional hours, and the Homepage/Site settings globals. Images are read only over MCP (uploads still go through the admin panel), and admin accounts (`users`) are never exposed this way.
+The `/api/mcp` endpoint lets an MCP client manage content conversationally: services, categories, subscriptions, reviews, FAQs, locations, exceptional hours, and the Homepage/Site settings globals. Images are read only over MCP (uploads go through the admin panel or `pnpm cms`, below), and admin accounts (`users`) are not listed as MCP tools.
 
 It runs in production as well as locally. It was disabled in production while the site ran on Cloudflare Workers, where the plugin's Streamable HTTP transport never resolved a response; on a Node server that limitation is gone.
 
@@ -75,6 +75,39 @@ curl -s https://balizen.ro/api/mcp \
 ```
 
 A request with no `Authorization` header (or a wrong key) gets an unauthorized error before any tool runs.
+
+**A key is not scoped to MCP.** The per-key checkboxes only gate the MCP tool layer. The same key is a valid Payload API key on the REST API (`Authorization: payload-mcp-api-keys API-Key <key>`), where it authenticates as a user and passes the default access control on every collection, `users` included. Treat any key you issue as full admin, and revoke it in `/admin` rather than leaving it lying around.
+
+## CMS CLI (talk to the CMS from the terminal)
+
+`pnpm cms` is a thin client over the REST API, for scripts, one-offs, and the things MCP cannot do: **image upload** above all, since the MCP plugin's generic create tool has no multipart handling. `pnpm cms help` prints the full usage.
+
+**Two environments, two sets of variables** (see `env.example`). `pnpm cms` reads `CMS_URL` and `CMS_API_KEY`; `pnpm prod:cms` reads `CMS_PROD_URL` and `CMS_PROD_API_KEY` instead. Pointing at production is therefore something you type, never something you inherit from a stale shell export, and the two cannot share a key. Any command that is not a `get` prints its target to stderr first:
+
+```
+[cms] update on https://balizen.ro (PRODUCTION)
+```
+
+For a local server, `pnpm cms:key` creates a dev admin user and an API key and prints both, since a freshly seeded database has no account to sign in with. It refuses to run against anything but a localhost `DATABASE_URI`.
+
+```sh
+pnpm cms get services --locale all --depth 1
+pnpm cms get services '--where[title][contains]' Thai     # quote brackets in zsh
+pnpm cms create media --file ./hands.jpg --data '{"alt":"Masaj de maini"}'
+pnpm cms update services 27 --data '{"pricing":[{"duration":45,"price":"160"}]}'
+pnpm cms delete media 167
+pnpm prod:cms get services 27                              # same, against production
+```
+
+The target is used verbatim as a URL path, so `globals/site-config` works the same way, and any collection added later needs no change to the script. Unrecognised flags become query params untouched, which is how `where`, `select` and `sort` get their bracket notation across.
+
+Localized fields are per-request in Payload, so a second locale is a second call. `--data:<locale>` does that for you as a follow-up patch on the doc just written:
+
+```sh
+pnpm cms create services --data '{"title":"Ritual pentru maini",...}' --data:en '{"title":"Hand Ritual"}'
+```
+
+Uploads are refused over 500KB unless you pass `--force`: nothing resizes images for you (see [Images](#images)), so an oversized file here is a slow page in production.
 
 ## Backups
 

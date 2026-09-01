@@ -2,10 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // Locale routing: ro is default and unprefixed, en lives under /en.
 // /ro/... is 308-redirected to its unprefixed twin to avoid duplicate URLs.
+// No rewrites: unprefixed URLs are real static routes in the (ro) route group,
+// so 404s never pass through a rewrite (a notFound() fired on a rewritten
+// request redirects back to the original URL, which 404s again — a loop).
+// The locale is stamped as a request header so the global 404 page
+// (src/app/not-found.tsx) can render in the right language: during SSR of a
+// 404, usePathname reports the internal /_not-found route, not the URL.
 // The matcher excludes /admin, /api, /_next, and any path containing a dot
 // (favicons, manifest, sitemap.xml, robots.txt, /images/*).
-const LOCALES = ['ro', 'en'] as const
 const DEFAULT_LOCALE = 'ro'
+const LOCALE_HEADER = 'x-balizen-locale'
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
@@ -17,13 +23,10 @@ export function proxy(req: NextRequest) {
     return NextResponse.redirect(url, 308)
   }
 
-  if (LOCALES.includes(firstSegment as (typeof LOCALES)[number])) {
-    return NextResponse.next()
-  }
-
-  const url = req.nextUrl.clone()
-  url.pathname = `/${DEFAULT_LOCALE}${pathname === '/' ? '' : pathname}`
-  return NextResponse.rewrite(url)
+  const lang = firstSegment === 'en' ? 'en' : DEFAULT_LOCALE
+  const headers = new Headers(req.headers)
+  headers.set(LOCALE_HEADER, lang)
+  return NextResponse.next({ request: { headers } })
 }
 
 export const config = {

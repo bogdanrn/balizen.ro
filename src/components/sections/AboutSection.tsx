@@ -1,22 +1,19 @@
 import type { Lang } from '@/i18n'
-import { ctaClass } from '@/lib/ui'
-import type { Homepage } from '@/payload-types'
+import type { Homepage, SiteConfig } from '@/payload-types'
 
+import BookNowMenu from '../BookNowMenu'
 import CdnImage from '../CdnImage'
-import Icon from '../Icon'
-import LocalizedLink from '../LocalizedLink'
 import SectionEyebrow from '../SectionEyebrow'
 
 type Props = {
   lang: Lang
   homepage: Homepage
+  siteConfig: SiteConfig
 }
 
 // White band. Copy left, portrait image right on desktop; stacked on mobile
 // with the copy first, so the section reads as prose rather than a card grid.
-export default function AboutSection({ lang, homepage }: Props) {
-  const cta = homepage.aboutCta
-
+export default function AboutSection({ lang, homepage, siteConfig }: Props) {
   return (
     <section id="despre-noi" className="border-t border-ink/10 bg-white">
       <div className="mx-auto grid w-full max-w-screen-xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:py-28">
@@ -27,7 +24,9 @@ export default function AboutSection({ lang, homepage }: Props) {
             {homepage.aboutTitle}
           </h2>
 
-          <p className="mt-5 max-w-prose text-base leading-relaxed text-muted-warm">{homepage.aboutIntro}</p>
+          <p className="mt-5 max-w-prose text-base leading-relaxed text-muted-warm">
+            {homepage.aboutIntro}
+          </p>
 
           <ul className="mt-10 divide-y divide-ink/10 border-y border-ink/10">
             {(homepage.aboutBullets ?? []).map((item, index) => (
@@ -38,23 +37,23 @@ export default function AboutSection({ lang, homepage }: Props) {
                 />
                 <div>
                   <h3 className="font-heading text-xl font-semibold text-ink">{item.title}</h3>
-                  <p className="mt-1 max-w-prose text-sm leading-relaxed text-muted-warm">{item.description}</p>
+                  <p className="mt-1 max-w-prose text-sm leading-relaxed text-muted-warm">
+                    {item.description}
+                  </p>
                 </div>
               </li>
             ))}
           </ul>
 
           <div className="mt-10">
-            <LocalizedLink
-              href={cta.href}
+            <BookNowMenu
               lang={lang}
-              className={ctaClass(cta, { extra: 'w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto' })}
-              target={cta.target}
-              rel="noopener"
-            >
-              <Icon name={cta.icon ?? 'calendar'} className="h-5 w-5" />
-              <span>{cta.label}</span>
-            </LocalizedLink>
+              bookingUrl={siteConfig.bookingUrl}
+              whatsappUrl={siteConfig.whatsappUrl}
+              phone={siteConfig.phone}
+              phoneHref={siteConfig.phoneHref}
+              analyticsLocation="about"
+            />
           </div>
         </div>
 

@@ -1,9 +1,5 @@
 import localFont from 'next/font/local'
-import { notFound } from 'next/navigation'
 import Script from 'next/script'
-import React from 'react'
-
-import '../../globals.css'
 
 import AnnouncementBanner from '@/components/AnnouncementBanner'
 import ConsentAnalytics from '@/components/ConsentAnalytics'
@@ -23,11 +19,25 @@ import {
   isNewService,
 } from '@/lib/payload'
 
+import '../../app/globals.css'
+
 const sourceSans = localFont({
   src: [
-    { path: '../../fonts/source-sans-pro-latin-ext-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../fonts/source-sans-pro-latin-ext-600-normal.woff2', weight: '600', style: 'normal' },
-    { path: '../../fonts/source-sans-pro-latin-ext-700-normal.woff2', weight: '700', style: 'normal' },
+    {
+      path: '../../app/fonts/source-sans-pro-latin-ext-400-normal.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../app/fonts/source-sans-pro-latin-ext-600-normal.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../app/fonts/source-sans-pro-latin-ext-700-normal.woff2',
+      weight: '700',
+      style: 'normal',
+    },
   ],
   variable: '--font-source-sans',
   display: 'swap',
@@ -35,16 +45,25 @@ const sourceSans = localFont({
 
 const cormorant = localFont({
   src: [
-    { path: '../../fonts/cormorant-garamond-latin-ext-500-normal.woff2', weight: '500', style: 'normal' },
-    { path: '../../fonts/cormorant-garamond-latin-ext-600-normal.woff2', weight: '600', style: 'normal' },
-    { path: '../../fonts/cormorant-garamond-latin-ext-700-normal.woff2', weight: '700', style: 'normal' },
+    {
+      path: '../../app/fonts/cormorant-garamond-latin-ext-500-normal.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../app/fonts/cormorant-garamond-latin-ext-600-normal.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../app/fonts/cormorant-garamond-latin-ext-700-normal.woff2',
+      weight: '700',
+      style: 'normal',
+    },
   ],
   variable: '--font-cormorant',
   display: 'swap',
 })
-
-// CMS edits must be visible within seconds: render per request, no ISR.
-export const dynamic = 'force-dynamic'
 
 // Consent Mode v2 default: everything denied until the visitor chooses.
 // Must run before any Google/Meta script; the loaders live in ConsentAnalytics.
@@ -61,16 +80,15 @@ gtag('consent', 'default', {
 });
 `
 
-export default async function LocaleLayout({
-  children,
-  params,
-}: {
+type Props = {
+  lang: Lang
   children: React.ReactNode
-  params: Promise<{ locale: string }>
-}) {
-  const { locale } = await params
-  if (locale !== 'ro' && locale !== 'en') notFound()
-  const lang = locale as Lang
+}
+
+// Full page shell (html/body + header/footer chrome) shared by the (ro) and
+// (en) root layouts. CMS edits must be visible within seconds: the data
+// fetches here require per-request rendering (force-dynamic in the layouts).
+export default async function SiteShell({ lang, children }: Props) {
   const t = getTranslations(lang)
 
   const [siteConfig, announcement, locations, categories, exceptionalHours] = await Promise.all([
@@ -80,7 +98,9 @@ export default async function LocaleLayout({
     getServicesByCategory(lang),
     getExceptionalHours(lang),
   ])
-  const hasNewServices = categories.some((c) => c.services.some((s) => isNewService(s.modifiedDate)))
+  const hasNewServices = categories.some((c) =>
+    c.services.some((s) => isNewService(s.modifiedDate)),
+  )
 
   return (
     <html lang={lang} className={`${sourceSans.variable} ${cormorant.variable}`}>
@@ -106,7 +126,12 @@ export default async function LocaleLayout({
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <SiteFooter lang={lang} siteConfig={siteConfig} locations={locations} exceptionalHours={exceptionalHours} />
+        <SiteFooter
+          lang={lang}
+          siteConfig={siteConfig}
+          locations={locations}
+          exceptionalHours={exceptionalHours}
+        />
         <SiteInteractions lang={lang} bookingUrl={siteConfig.bookingUrl} />
         <HeaderDrawer />
         <ConsentBanner lang={lang} />

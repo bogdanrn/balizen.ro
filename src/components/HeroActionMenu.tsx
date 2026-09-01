@@ -3,17 +3,14 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 
+import { buildBookingOptions, buildLocationOptions } from '@/lib/bookingOptions'
 import { getTranslations, type Lang } from '@/i18n'
-import { getAppleMapsUrl, getWazeUrl } from '@/lib/locationLinks'
 import type { Location } from '@/payload-types'
 
-import ActionMenu, { type ActionMenuOption } from './ActionMenu'
+import ActionMenu from './ActionMenu'
 
 type Props = {
   lang: Lang
-  /** Label of the hero's primary CMS action; the menu replaces its direct link. */
-  label: string
-  icon?: string | null
   bookingUrl: string
   whatsappUrl: string
   phone: string
@@ -21,15 +18,19 @@ type Props = {
   locations: Location[]
 }
 
-// The hero's primary CTA is a disclosure, not a link: it opens the four ways to
-// reach the salon. The js-programari-button hook lives on the booking option
-// inside the menu, so SiteInteractions' fbq ViewContent + booking consent flow
-// fire on the actual booking choice rather than on opening the menu.
+// The hero's primary CTA is the shared book-now control: a segmented pill
+// whose left segment fires WhatsApp directly (via the js-contact-button hook)
+// and whose chevron opens the "Rezervă acum" picker with the three ways to
+// reach the salon. Locations and the services list stay out of the inline
+// picker — the hero shows them via the dedicated services button and the
+// docked mobile selector below.
 //
-// On mobile the button also docks to the bottom of the viewport once its
-// in-hero position scrolls off the top. An in-flow sentinel drives the
-// IntersectionObserver, so nothing is measured during layout and the hero never
-// shifts. Desktop never docks — the sticky header keeps its own booking CTA.
+// On mobile the icon-only quick selector also docks to the bottom of the
+// viewport once its in-hero position scrolls off the top; that one keeps the
+// full option set (three ways + locations + services list). An in-flow
+// sentinel drives the IntersectionObserver, so nothing is measured during
+// layout and the hero never shifts. Desktop never docks — the sticky header
+// keeps its own booking CTA.
 const MOBILE_QUERY = '(max-width: 1023px)'
 
 // False while server-rendering, true once hydrated — the portal needs a real
@@ -45,8 +46,6 @@ const useIsHydrated = () =>
 
 export default function HeroActionMenu({
   lang,
-  label,
-  icon,
   bookingUrl,
   whatsappUrl,
   phone,
@@ -82,68 +81,13 @@ export default function HeroActionMenu({
     return () => observer.disconnect()
   }, [])
 
-  // One combined row per studio location: Google Maps is the main tap target
-  // (same js-location-button hook the legacy "Open in Maps" buttons use, so
-  // fbq FindLocation still fires), Waze and Apple Maps ride along as icon
-  // buttons so visitors can pick their own navigation app without a second
-  // screen. mapsUrl is required on the collection, but skip defensively
-  // rather than emit a broken link.
-  const locationOptions: ActionMenuOption[] = locations
-    .filter((location) => location.mapsUrl)
-    .map((location) => ({
-      key: `location-${location.id}`,
-      label: location.name,
-      href: location.mapsUrl,
-      icon: 'map',
-      target: '_blank',
-      hookClass: 'js-location-button',
-      ariaLabel: `${t.location.openInGoogleMaps}: ${location.name}`,
-      actions: [
-        {
-          key: `location-${location.id}-waze`,
-          href: getWazeUrl(location),
-          icon: 'brand-waze',
-          ariaLabel: `${t.location.openInWaze}: ${location.name}`,
-          target: '_blank',
-          hookClass: 'js-location-button',
-        },
-        {
-          key: `location-${location.id}-apple`,
-          href: getAppleMapsUrl(location),
-          icon: 'brand-apple',
-          ariaLabel: `${t.location.openInAppleMaps}: ${location.name}`,
-          target: '_blank',
-          hookClass: 'js-location-button',
-        },
-      ],
-    }))
+  const ways = buildBookingOptions(lang, { bookingUrl, whatsappUrl, phone, phoneHref })
 
-  const options: ActionMenuOption[] = [
-    {
-      key: 'book',
-      label: t.buttons.bookHere,
-      href: bookingUrl,
-      icon: 'calendar',
-      target: '_blank',
-      hookClass: 'js-programari-button',
-      variant: 'primary',
-    },
-    {
-      key: 'whatsapp',
-      label: t.buttons.whatsapp,
-      href: whatsappUrl,
-      icon: 'brand-whatsapp',
-      target: '_blank',
-      hookClass: 'js-contact-button',
-    },
-    {
-      key: 'phone',
-      label: phone,
-      href: phoneHref,
-      icon: 'phone',
-      hookClass: 'js-contact-button',
-    },
-    ...locationOptions,
+  // Only the docked mobile selector carries the extras (locations with their
+  // Waze/Apple sub-actions, and the services list jump).
+  const dockedOptions = [
+    ...ways,
+    ...buildLocationOptions(lang, locations),
     {
       key: 'services',
       label: t.services.listLabel,
@@ -160,11 +104,15 @@ export default function HeroActionMenu({
           is docked, so docking never shifts the hero layout. */}
       <div ref={sentinelRef} className="w-full sm:w-auto">
         <ActionMenu
-          options={options}
+          options={ways}
           analyticsLocation="inline"
-          triggerLabel={label}
-          triggerIcon={icon}
-          triggerClassName="btn-primary w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto"
+          title={t.buttons.bookNow}
+          segmented
+          triggerVariant="primary"
+          triggerLabel={t.buttons.bookNow}
+          triggerIcon="brand-whatsapp"
+          chevronLabel={t.buttons.openOptions}
+          triggerClassName="w-full gap-2 px-5 py-3 text-sm font-semibold uppercase tracking-wide sm:w-auto"
         />
       </div>
 
@@ -180,8 +128,10 @@ export default function HeroActionMenu({
             aria-hidden={!docked}
           >
             <ActionMenu
-              options={options}
+              options={dockedOptions}
               analyticsLocation="docked"
+              title={t.buttons.bookNow}
+              direction="up"
               triggerIcon="calendar"
               triggerOpenIcon="x"
               triggerAriaLabel={`${t.quickActions.label} — ${t.quickActions.open}`}

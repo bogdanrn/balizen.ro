@@ -9,6 +9,7 @@ import type { CdnMedia } from '@/lib/cdn'
 import { setScrollLock } from '@/lib/scrollLock'
 
 import CdnImage from '../CdnImage'
+import BookingContactButtons from '../BookingContactButtons'
 import Icon from '../Icon'
 import SectionEyebrow from '../SectionEyebrow'
 
@@ -344,36 +345,14 @@ export default function ServiceExplorer({
                   {openService.description}
                 </p>
 
-                <div className="mt-auto flex flex-col gap-2.5 pb-[env(safe-area-inset-bottom)] sm:mt-0 sm:flex-row sm:flex-wrap sm:pb-0">
-                  <a
-                    href={bookingUrl}
-                    target="_blank"
-                    rel="noopener"
-                    className="btn-primary js-programari-button w-full gap-2 px-4 py-2.5 text-sm font-semibold uppercase tracking-wide sm:w-auto sm:flex-1"
-                  >
-                    <Icon name="calendar" className="h-5 w-5" />
-                    <span>{t.buttons.bookHere}</span>
-                  </a>
-                  <div className="grid grid-cols-2 gap-2.5 sm:contents">
-                    <a
-                      href={whatsappUrl}
-                      target="_blank"
-                      rel="noopener"
-                      className="btn-outline js-contact-button gap-2 px-4 py-2.5 text-sm font-semibold uppercase tracking-wide"
-                    >
-                      <Icon name="brand-whatsapp" className="h-5 w-5" />
-                      <span>{t.buttons.whatsapp}</span>
-                    </a>
-                    <a
-                      href={phoneHref}
-                      className="btn-outline js-contact-button gap-2 px-4 py-2.5 text-sm font-semibold uppercase tracking-wide"
-                      aria-label={phone}
-                    >
-                      <Icon name="phone" className="h-5 w-5" />
-                      <span aria-hidden="true">{t.buttons.call}</span>
-                    </a>
-                  </div>
-                </div>
+                <BookingContactButtons
+                  lang={lang}
+                  layout="modal"
+                  bookingUrl={bookingUrl}
+                  whatsappUrl={whatsappUrl}
+                  phone={phone}
+                  phoneHref={phoneHref}
+                />
               </div>
             </div>
           </div>

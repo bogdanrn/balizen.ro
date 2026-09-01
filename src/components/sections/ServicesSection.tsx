@@ -2,11 +2,10 @@ import { Suspense } from 'react'
 
 import { getTranslations, type Lang } from '@/i18n'
 import { isNewService } from '@/lib/payload'
-import { ctaClass } from '@/lib/ui'
 import type { Homepage, Service, ServiceCategory, SiteConfig } from '@/payload-types'
 
-import Icon from '../Icon'
-import LocalizedLink from '../LocalizedLink'
+import BookNowMenu from '../BookNowMenu'
+import BookingContactButtons from '../BookingContactButtons'
 import SectionEyebrow from '../SectionEyebrow'
 import ServiceExplorer, { type ExplorerCategory } from '../services/ServiceExplorer'
 
@@ -25,7 +24,6 @@ type Props = {
 // section stays a server component for the heading, CTA and contact row.
 export default function ServicesSection({ lang, homepage, categories, siteConfig }: Props) {
   const t = getTranslations(lang)
-  const cta = homepage.servicesCta
 
   // Narrow the CMS docs to the serializable shape the client component needs.
   const explorerCategories: ExplorerCategory[] = categories.map((category) => ({
@@ -53,16 +51,15 @@ export default function ServicesSection({ lang, homepage, categories, siteConfig
           <p className="mx-auto mt-5 max-w-prose text-base leading-relaxed text-muted-warm">
             {homepage.servicesDescription}
           </p>
-          <div className="mt-8">
-            <LocalizedLink
-              href={cta.href}
+          <div className="mt-8 flex justify-center">
+            <BookNowMenu
               lang={lang}
-              className={ctaClass(cta, { extra: 'text-sm font-semibold uppercase tracking-wide' })}
-              target={cta.target}
-              rel="noopener"
-            >
-              {cta.label}
-            </LocalizedLink>
+              bookingUrl={siteConfig.bookingUrl}
+              whatsappUrl={siteConfig.whatsappUrl}
+              phone={siteConfig.phone}
+              phoneHref={siteConfig.phoneHref}
+              analyticsLocation="services"
+            />
           </div>
         </div>
 
@@ -78,36 +75,15 @@ export default function ServicesSection({ lang, homepage, categories, siteConfig
         </Suspense>
 
         <div className="mt-16 flex flex-col items-center gap-4 border-t border-ink/10 pt-12">
-          <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-start sm:justify-center sm:gap-4">
-            <a
-              href={siteConfig.bookingUrl}
-              className="btn-primary js-programari-button w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto"
-              target="_blank"
-              rel="noopener"
-            >
-              <Icon name="calendar" className="h-5 w-5" />
-              <span>{t.buttons.bookHere}</span>
-            </a>
-            <a
-              href={siteConfig.whatsappUrl}
-              className="btn-outline js-contact-button w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto"
-              target="_blank"
-              rel="noopener"
-            >
-              <Icon name="brand-whatsapp" className="h-5 w-5" />
-              <span>{t.buttons.whatsapp}</span>
-            </a>
-            <div className="flex w-full flex-col items-center gap-1.5 sm:w-auto">
-              <a
-                href={siteConfig.phoneHref}
-                className="btn-outline js-contact-button w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto"
-              >
-                <Icon name="phone" className="h-5 w-5" />
-                <span>{siteConfig.phone}</span>
-              </a>
-              <span className="text-xs font-medium text-muted-warm">{t.labels.locationCaption}</span>
-            </div>
-          </div>
+          <BookingContactButtons
+            lang={lang}
+            layout="row"
+            bookingUrl={siteConfig.bookingUrl}
+            whatsappUrl={siteConfig.whatsappUrl}
+            phone={siteConfig.phone}
+            phoneHref={siteConfig.phoneHref}
+            phoneCaption={t.labels.locationCaption}
+          />
         </div>
       </div>
     </section>

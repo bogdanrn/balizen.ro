@@ -1,13 +1,9 @@
-import { Fragment } from 'react'
-
 import { getTranslations, type Lang } from '@/i18n'
-import { ctaClass } from '@/lib/ui'
 import type { Homepage, Location, SiteConfig } from '@/payload-types'
 
 import CdnImage from '../CdnImage'
 import HeroActionMenu from '../HeroActionMenu'
 import Icon from '../Icon'
-import LocalizedLink from '../LocalizedLink'
 import SectionEyebrow from '../SectionEyebrow'
 
 type Props = {
@@ -17,66 +13,14 @@ type Props = {
   locations: Location[]
 }
 
-type HeroAction = NonNullable<Homepage['heroActions']>[number]
-
 // Full-bleed photographic hero, as on the legacy Astro site: the image is the
-// background, a cream scrim carries the type. Action styling is driven by each
-// action's `variant` field — the CMS className is a behavior-hook field only
-// (see lib/ui), so the legacy per-button color soup never reaches the DOM.
-//
-// The first primary action becomes the contact picker (HeroActionMenu) instead
-// of a direct link; the js-programari-button hook moves onto the menu's booking
-// option. Any further actions render as ordinary pills.
+// background, a cream scrim carries the type. The CTA row is fixed: the shared
+// book-now control (labelled "Rezervă acum", WhatsApp on the left segment,
+// chevron opens the picker) plus a direct services-list jump. Labels are
+// hardcoded via i18n so every surface reads identically; the CMS hero actions
+// no longer drive this row.
 export default function HeroSection({ lang, homepage, siteConfig, locations }: Props) {
   const t = getTranslations(lang)
-  const actions = homepage.heroActions ?? []
-  const menuActionId = actions.find((action) => action.variant !== 'secondary')?.id
-
-  const renderAction = (action: HeroAction, index: number) => {
-    if (action.id && action.id === menuActionId) {
-      return (
-        <HeroActionMenu
-          key={action.id}
-          lang={lang}
-          label={action.label}
-          icon={action.icon}
-          bookingUrl={siteConfig.bookingUrl}
-          whatsappUrl={siteConfig.whatsappUrl}
-          phone={siteConfig.phone}
-          phoneHref={siteConfig.phoneHref}
-          locations={locations}
-        />
-      )
-    }
-
-    const link = (
-      <LocalizedLink
-        href={action.href}
-        lang={lang}
-        className={ctaClass(action, {
-          secondary: 'btn-scrim',
-          extra: 'w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto',
-        })}
-        target={action.target}
-        rel="noopener"
-      >
-        {action.icon && <Icon name={action.icon} className="h-5 w-5" />}
-        <span>{action.label}</span>
-      </LocalizedLink>
-    )
-
-    // tel: actions keep the legacy caption naming the branch you reach.
-    if (action.href?.startsWith('tel:')) {
-      return (
-        <div key={action.id ?? index} className="flex w-full flex-col items-center gap-1.5 sm:w-auto">
-          {link}
-          <span className="text-xs font-medium text-muted-warm">{t.labels.locationCaption}</span>
-        </div>
-      )
-    }
-
-    return <Fragment key={action.id ?? index}>{link}</Fragment>
-  }
 
   return (
     <section className="relative isolate overflow-hidden bg-cream text-ink">
@@ -112,11 +56,23 @@ export default function HeroSection({ lang, homepage, siteConfig, locations }: P
             ))}
           </div>
 
-          {actions.length > 0 && (
-            <div className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-center sm:gap-4 lg:justify-start">
-              {actions.map(renderAction)}
-            </div>
-          )}
+          <div className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-center sm:gap-4 lg:justify-start">
+            <HeroActionMenu
+              lang={lang}
+              bookingUrl={siteConfig.bookingUrl}
+              whatsappUrl={siteConfig.whatsappUrl}
+              phone={siteConfig.phone}
+              phoneHref={siteConfig.phoneHref}
+              locations={locations}
+            />
+            <a
+              href="#servicii"
+              className="btn-scrim w-full gap-2 text-sm font-semibold uppercase tracking-wide sm:w-auto"
+            >
+              <Icon name="list" className="h-5 w-5" />
+              <span>{t.services.listLabel}</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

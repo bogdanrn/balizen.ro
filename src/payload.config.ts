@@ -1,7 +1,8 @@
 import path from 'path'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { buildConfig } from 'payload'
+import { buildConfig, APIError } from 'payload'
+import type { PayloadEmailAdapter } from 'payload'
 // Re-exported by `payload` itself, so no direct @payloadcms/translations dep.
 import { ro } from 'payload/i18n/ro'
 import { fileURLToPath } from 'url'
@@ -57,6 +58,53 @@ const jsonLogger = {
   fatal: createLog('fatal', console.error),
   silent: () => {},
 } as any // Use PayloadLogger type when it's exported
+
+// Transactional email (admin password resets, etc.) goes through the
+// self-hosted UseSend instance, sending as the notifications.balizen.ro domain
+// configured there. With no USESEND_API_KEY (local dev) the adapter stays
+// undefined and Payload logs emails to the console instead.
+const EMAIL_FROM = 'no-reply@notifications.balizen.ro'
+const EMAIL_FROM_NAME = 'Bali Zen'
+const EMAIL_REPLY_TO = 'contact@balizen.ro'
+
+const usesendAdapter = (): PayloadEmailAdapter | undefined => {
+  const apiKey = process.env.USESEND_API_KEY
+  if (!apiKey) return undefined
+
+  const baseUrl = process.env.USESEND_URL || 'https://usesend.chuckle-cloud.com'
+
+  return () => ({
+    name: 'usesend',
+    defaultFromAddress: EMAIL_FROM,
+    defaultFromName: EMAIL_FROM_NAME,
+    sendEmail: async ({ from, html, subject, text, to }) => {
+      const res = await fetch(`${baseUrl}/api/v1/emails`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from:
+            typeof from === 'string'
+              ? from
+              : `${from?.name || EMAIL_FROM_NAME} <${from?.address || EMAIL_FROM}>`,
+          to: Array.isArray(to)
+            ? to.map((address) => (typeof address === 'string' ? address : address.address))
+            : to,
+          subject,
+          html: html?.toString(),
+          text: text?.toString(),
+          replyTo: EMAIL_REPLY_TO,
+        }),
+      })
+
+      if (!res.ok) {
+        throw new APIError(`Error sending email: ${res.status} ${await res.text()}`, res.status)
+      }
+    },
+  })
+}
 
 export default buildConfig({
   admin: {
@@ -148,6 +196,7 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   logger: isProduction ? jsonLogger : undefined,
+  email: usesendAdapter(),
   plugins: [
     // R2 over its S3-compatible API (the app is a plain Node server now, so
     // there is no R2 binding to use). Files are served back through Payload's
@@ -162,7 +211,8 @@ export default buildConfig({
         // R2 wants 'auto'; a local MinIO wants a real region name.
         region: process.env.R2_REGION || 'auto',
         endpoint:
-          process.env.R2_ENDPOINT || `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+          process.env.R2_ENDPOINT ||
+          `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
         credentials: {
           accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
           secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
@@ -195,47 +245,57 @@ export default buildConfig({
     mcpPlugin({
       collections: {
         services: {
-          description: 'Massages clients can book. Each has a title, description, category, image, one or more Pricing Tiers (duration/price pairs), and a display order.',
+          description:
+            'Massages clients can book. Each has a title, description, category, image, one or more Pricing Tiers (duration/price pairs), and a display order.',
           enabled: { find: true, create: true, update: true, delete: true },
         },
         'service-categories': {
-          description: 'Named groupings of Services shown as sections of the catalog, e.g. "Masaje Full Body".',
+          description:
+            'Named groupings of Services shown as sections of the catalog, e.g. "Masaje Full Body".',
           enabled: { find: true, create: true, update: true, delete: true },
         },
         subscriptions: {
-          description: 'Prepaid bundles of sessions (abonamente) sold at a fixed price, shown as cards on the homepage.',
+          description:
+            'Prepaid bundles of sessions (abonamente) sold at a fixed price, shown as cards on the homepage.',
           enabled: { find: true, create: true, update: true, delete: true },
         },
         reviews: {
-          description: 'Curated client testimonials (author, text, rating, date) shown on the site, newest first.',
+          description:
+            'Curated client testimonials (author, text, rating, date) shown on the site, newest first.',
           enabled: { find: true, create: true, update: true, delete: true },
         },
         faqs: {
-          description: 'Per-locale question/answer pairs shown on the site and sent to search engines as FAQ structured data.',
+          description:
+            'Per-locale question/answer pairs shown on the site and sent to search engines as FAQ structured data.',
           enabled: { find: true, create: true, update: true, delete: true },
         },
         locations: {
-          description: 'Physical studios where clients receive services: address, schedule, phone, and map links. One is marked primary.',
+          description:
+            'Physical studios where clients receive services: address, schedule, phone, and map links. One is marked primary.',
           enabled: { find: true, create: true, update: true, delete: true },
         },
         'exceptional-hours': {
-          description: 'Date-specific overrides to the regular opening hours, e.g. closed on a holiday.',
+          description:
+            'Date-specific overrides to the regular opening hours, e.g. closed on a holiday.',
           enabled: { find: true, create: true, update: true, delete: true },
         },
         // Find only: uploads need real file handling (multipart data, R2
         // storage), which the plugin's generic create/update tools do not do.
         media: {
-          description: 'Images already uploaded to the site (read only; new images must be uploaded through the admin panel).',
+          description:
+            'Images already uploaded to the site (read only; new images must be uploaded through the admin panel).',
           enabled: { find: true },
         },
       },
       globals: {
         homepage: {
-          description: 'Homepage section copy: hero, service highlights, subscriptions, locations, and reviews.',
+          description:
+            'Homepage section copy: hero, service highlights, subscriptions, locations, and reviews.',
           enabled: { find: true, update: true },
         },
         'site-config': {
-          description: "The business's contact facts and site-wide chrome: phone, WhatsApp, email, opening hours, booking URL, header/footer links, announcement banner.",
+          description:
+            "The business's contact facts and site-wide chrome: phone, WhatsApp, email, opening hours, booking URL, header/footer links, announcement banner.",
           enabled: { find: true, update: true },
         },
       },
